@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Матрица Судьбы</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#0f172a;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.container{
+    text-align:center;
+    max-width:600px;
+    padding:20px;
+}
+
+h1{
+    font-size:48px;
+    margin-bottom:10px;
+}
+
+p{
+    color:#cbd5e1;
+}
+
+input{
+    padding:15px;
+    border:none;
+    border-radius:10px;
+    margin-top:20px;
+    font-size:18px;
+}
+
+button{
+    margin-top:20px;
+    padding:15px 30px;
+    border:none;
+    border-radius:10px;
+    background:#f97316;
+    color:white;
+    font-size:18px;
+    cursor:pointer;
+}
+
+#result{
+    margin-top:30px;
+    font-size:24px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Матрица Судьбы</h1>
+
+<p>Введите дату рождения</p>
+
+<input type="date" id="birthdate">
+
+<br>
+
+<button onclick="calculate()">
+Рассчитать
+</button>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+
+function calculate(){
+
+const date = document.getElementById('birthdate').value;
+
+if(!date){
+alert('Введите дату рождения');
+return;
+}
+
+const numbers = date.replaceAll('-','');
+
+let sum = 0;
+
+for(let digit of numbers){
+sum += Number(digit);
+}
+
+document.getElementById('result').innerHTML =
+'Ваше число судьбы: <b>' + sum + '</b>';
+
+}
+
+</script>
+
+</body>
+</html>
