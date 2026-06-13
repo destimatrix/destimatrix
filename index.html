@@ -2400,184 +2400,7 @@ var njt_wa = {"gdprStatus":"","accounts":[{"accountId":3350,"accountName":"Anna"
 		
 <script>
 (function () {
-  function reduceArcana(n) {
-    n = Number(n);
-    while (n > 22) {
-      n = String(n).split('').reduce((s, d) => s + Number(d), 0);
-    }
-    return n;
-  }
-
-  function parseDate(v) {
-    const m = v.trim().match(/^(\d{2})\.(\d{2})\.(\d{4})$/);
-    if (!m) return null;
-    return { day: Number(m[1]), month: Number(m[2]), year: m[3] };
-  }
-
-  function calc(v) {
-    const p = parseDate(v);
-    if (!p) {
-      alert('Please enter date in DD.MM.YYYY format.');
-      return null;
-    }
-
-    const a = reduceArcana(p.day);
-    const b = reduceArcana(p.month);
-    const c = reduceArcana(String(p.year).split('').reduce((s, d) => s + Number(d), 0));
-    const d = reduceArcana(a + b + c);
-    const e = reduceArcana(a + b + c + d);
-
-    const a1 = reduceArcana(a + e);
-    const a2 = reduceArcana(a + a1);
-    const b1 = reduceArcana(b + e);
-    const b2 = reduceArcana(b + b1);
-
-    const a3 = reduceArcana(a1 + e);
-    const b3 = reduceArcana(b1 + e);
-
-    const c1 = reduceArcana(c + e);
-    const c2 = reduceArcana(c + c1);
-    const d1 = reduceArcana(d + e);
-    const d2 = reduceArcana(d + d1);
-
-    const e1 = reduceArcana(c1 + d1);
-    const e2 = reduceArcana(c1 + e1);
-    const e4 = reduceArcana(d1 + e1);
-
-    const f = reduceArcana(a + b);
-    const g = reduceArcana(b + c);
-    const y = reduceArcana(c + d);
-    const k = reduceArcana(d + a);
-
-    const generationPower = reduceArcana(f + g + y + k);
-
-    const o = reduceArcana(f + generationPower);
-    const u = reduceArcana(g + generationPower);
-    const n = reduceArcana(y + generationPower);
-    const t = reduceArcana(k + generationPower);
-
-    const x = reduceArcana(b + d);
-    const h = reduceArcana(a + c);
-    const m = reduceArcana(x + h);
-
-    const z = generationPower;
-    const s = reduceArcana(m + z);
-
-    const l = reduceArcana(a + b);
-    const l1 = reduceArcana(a2 + b2);
-    const l2 = reduceArcana(a1 + b1);
-    const l3 = reduceArcana(a3 + b3);
-    const l4 = reduceArcana(e + e);
-    const l5 = reduceArcana(c1 + d1);
-    const l6 = reduceArcana(c + d);
-
-    const d3 = reduceArcana(a + a2 + a1 + a3 + e + c1 + c);
-    const c3 = reduceArcana(b + b2 + b1 + b3 + e + d1 + d);
-    const e3 = reduceArcana(l + l1 + l2 + l3 + l4 + l5 + l6);
-
-    return {
-      a,b,c,d,e,
-      a1,a2,a3,b1,b2,b3,c1,c2,d1,d2,e1,e2,e3,
-      f,g,y,k,o,u,n,t,x,h,m,z,s,
-      l,l1,l2,l3,l4,l5,l6,d3,c3
-    };
-  }
-
-  function fill(result) {
-    if (!result) return;
-
-    document.querySelectorAll('.js-calculation-block').forEach(el => el.classList.remove('d-none'));
-    document.querySelectorAll('.js-calculation-comp-block, .js-calculation-kid-block').forEach(el => el.classList.add('d-none'));
-
-    Object.keys(result).forEach(key => {
-      document.querySelectorAll('.js-calculation-block [data-personal-calculation-position="' + key + '"]').forEach(el => {
-        el.textContent = result[key];
-      });
-    });
-
-    const name = document.querySelector('#name')?.value.trim() || '';
-    const dob = document.querySelector('#dob')?.value.trim() || '';
-    document.querySelectorAll('.js-calculation-block .js-name-and-dob').forEach(el => {
-      el.textContent = name ? name + ' (' + dob + ')' : dob;
-    });
-
-    document.querySelector('#resultBlock')?.scrollIntoView({ behavior: 'smooth' });
-  }
-
-  function addColorFix() {
-    const style = document.createElement('style');
-    style.innerHTML = `
-      .matrix-diagram__circle {
-        color: #222831 !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        border-radius: 50% !important;
-        font-weight: 700 !important;
-      }
-
-      .matrix-diagram__circle.-purple { background: #8A46A3 !important; color: #fff !important; }
-      .matrix-diagram__circle.-blue { background: #4D6DFF !important; color: #fff !important; }
-      .matrix-diagram__circle.-cyan { background: #45CFE1 !important; color: #fff !important; }
-      .matrix-diagram__circle.-green { background: #9BE15D !important; color: #fff !important; }
-      .matrix-diagram__circle.-yellow { background: #FFED47 !important; color: #222831 !important; }
-      .matrix-diagram__circle.-orange { background: #FFB02E !important; color: #fff !important; }
-      .matrix-diagram__circle.-red { background: #EF4141 !important; color: #fff !important; }
-      .matrix-diagram__circle.-white { background: #fff !important; color: #222831 !important; border: 2px solid #222831 !important; }
-
-      .diagram-value {
-        color: #222831 !important;
-        font-weight: 700 !important;
-      }
-
-      .round-values-list .diagram-value,
-      .small-diagram-values .diagram-value {
-        background: #d1d5db !important;
-        border-radius: 50% !important;
-      }
-    `;
-    document.head.appendChild(style);
-  }
-
-  function hideChild() {
-    document.querySelector('[data-tab-target="#form3"]')?.remove();
-    document.querySelector('#form3')?.remove();
-    document.querySelectorAll('.js-calculation-kid-block').forEach(el => el.remove());
-  }
-
-  function setup() {
-    addColorFix();
-    hideChild();
-
-    document.querySelectorAll('.form-tabs input[type="submit"]').forEach(btn => btn.disabled = false);
-
-    document.querySelectorAll('.tab-item').forEach(tab => {
-      tab.addEventListener('click', function () {
-        document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.form-tabs .form').forEach(f => f.classList.remove('active'));
-        tab.classList.add('active');
-        document.querySelector(tab.getAttribute('data-tab-target'))?.classList.add('active');
-      });
-    });
-
-    const form = document.querySelector('#form1');
-    if (form) {
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        fill(calc(document.querySelector('#dob').value));
-      }, true);
-    }
-  }
-
-  document.addEventListener('DOMContentLoaded', setup);
-})();
-</script>
-
-
-<script>
-(function () {
-  function r(n) {
+  function arc(n) {
     n = Number(n);
     while (n > 22) {
       n = String(n).split('').reduce((s, d) => s + Number(d), 0);
@@ -2586,148 +2409,330 @@ var njt_wa = {"gdprStatus":"","accounts":[{"accountId":3350,"accountName":"Anna"
   }
 
   function parseDate(value) {
-    const match = value.trim().match(/^(\d{2})[./-](\d{2})[./-](\d{4})$/);
-    if (!match) return null;
-
+    const m = value.trim().match(/^(\d{2})[./-](\d{2})[./-](\d{4})$/);
+    if (!m) return null;
     return {
-      day: Number(match[1]),
-      month: Number(match[2]),
-      year: match[3]
+      day: Number(m[1]),
+      month: Number(m[2]),
+      year: m[3]
     };
   }
 
-  function calculateMatrix(value) {
-    const p = parseDate(value);
+  function middle(a, b) {
+    return arc(a + b);
+  }
 
+  function calculate(dateValue) {
+    const p = parseDate(dateValue);
     if (!p) {
       alert('Please enter date in DD.MM.YYYY format');
       return null;
     }
 
-    const a = r(p.day);
-    const b = r(p.month);
-    const c = r(String(p.year).split('').reduce((s, d) => s + Number(d), 0));
-    const d = r(a + b + c);
-    const e = r(a + b + c + d);
+    const a = arc(p.day);
+    const b = arc(p.month);
+    const c = arc(String(p.year).split('').reduce((s, d) => s + Number(d), 0));
+    const d = arc(a + b + c);
+    const e = arc(a + b + c + d);
 
-    const a1 = r(a + e);
-    const a2 = r(a + a1);
-    const a3 = r(a1 + e);
+    const a1 = middle(a, e);
+    const a2 = middle(a, a1);
+    const a3 = middle(a1, e);
 
-    const b1 = r(b + e);
-    const b2 = r(b + b1);
-    const b3 = r(b1 + e);
+    const b1 = middle(b, e);
+    const b2 = middle(b, b1);
+    const b3 = middle(b1, e);
 
-    const c1 = r(c + e);
-    const c2 = r(c + c1);
+    const c1 = middle(c, e);
+    const c2 = middle(c, c1);
 
-    const d1 = r(d + e);
-    const d2 = r(d + d1);
+    const d1 = middle(d, e);
+    const d2 = middle(d, d1);
 
-    const e1 = r(c1 + d1);
-    const e2 = r(c1 + e1);
-    const e4 = r(d1 + e1);
+    const e1 = middle(c1, d1);
+    const e2 = middle(c1, e1);
+    const e3 = middle(d1, e1);
 
-    const f = r(a + b);
-    const g = r(b + c);
-    const y = r(c + d);
-    const k = r(d + a);
+    const f = middle(a, b);
+    const g = middle(b, c);
+    const y = middle(c, d);
+    const k = middle(d, a);
 
-    const o = r(f + y);
-    const u = r(g + k);
+    const o = middle(f, y);
+    const u = middle(g, k);
 
-    const p1 = r(f + e);
-    const p2 = r(f + p1);
-    const p3 = r(g + e);
-    const p4 = r(g + p3);
+    const generationPower = arc(f + g + y + k);
 
-    const s1 = r(y + e);
-    const s2 = r(y + s1);
-    const s3 = r(k + e);
-    const s4 = r(k + s3);
+    const p1 = middle(f, generationPower);
+    const p2 = middle(f, p1);
+    const p3 = middle(g, generationPower);
+    const p4 = middle(g, p3);
 
-    const h = r(b + d);
-    const j = r(a + c);
-    const m = r(h + j);
+    const s1 = middle(y, generationPower);
+    const s2 = middle(y, s1);
+    const s3 = middle(k, generationPower);
+    const s4 = middle(k, s3);
+
+    const x = e3;
+    const x1 = middle(e1, x);
+    const x2 = middle(e2, x);
+
+    const h = middle(b, d);
+    const j = middle(a, c);
+    const m = middle(h, j);
 
     const n = o;
     const t = u;
-    const z = r(n + t);
-    const s = r(m + z);
+    const z = middle(n, t);
 
-    const l = r(a + b);
-    const l1 = r(a2 + b2);
-    const l2 = r(a1 + b1);
-    const l3 = r(a3 + b3);
-    const l4 = r(e + e);
-    const l5 = r(c1 + d1);
-    const l6 = r(c + d);
+    const s = middle(m, z);
 
-    const d3 = r(a + a2 + a1 + a3 + e + c1 + c);
-    const c3 = r(b + b2 + b1 + b3 + e + d1 + d);
-    const e3 = r(l + l1 + l2 + l3 + l4 + l5 + l6);
+    const l = middle(a, b);
+    const l1 = middle(a2, b2);
+    const l2 = middle(a1, b1);
+    const l3 = middle(a3, b3);
+    const l4 = middle(e, e);
+    const l5 = middle(c1, d1);
+    const l6 = middle(c, d);
+
+    const d3 = arc(a + a2 + a1 + a3 + e + c1 + c);
+    const c3 = arc(b + b2 + b1 + b3 + e + d1 + d);
+    const healthResult = arc(l + l1 + l2 + l3 + l4 + l5 + l6);
+
+    const a4 = middle(a, f);
+    const a5 = middle(a4, f);
+    const a6 = middle(a5, f);
+
+    const b4 = middle(b, g);
+    const b5 = middle(b4, g);
+    const b6 = middle(b5, g);
+    const b7 = middle(b6, g);
+    const b8 = middle(b7, g);
+
+    const c4 = middle(c, g);
+    const c5 = middle(c4, g);
+    const c6 = middle(c5, g);
+    const c7 = middle(c6, g);
+
+    const d4 = middle(d, y);
+    const d5 = middle(d4, y);
+    const d6 = middle(d5, y);
+    const d7 = middle(d6, y);
+    const d8 = middle(d7, y);
+    const d9 = middle(d8, y);
+
+    const f1 = middle(f, b);
+    const f2 = middle(f1, b);
+    const f3 = middle(f2, b);
+    const f4 = middle(f3, b);
+    const f5 = middle(y, c);
+    const f6 = middle(f5, c);
+    const f7 = middle(f6, c);
+    const f8 = middle(f7, c);
+
+    const g1 = middle(g, c);
+    const g2 = middle(g1, c);
+    const g3 = middle(g2, c);
+    const g4 = middle(g3, c);
+    const g5 = middle(g4, c);
+    const g6 = middle(g5, c);
+    const g7 = middle(g6, c);
+
+    const y1 = middle(y, d);
+    const y2 = middle(y1, d);
+    const y3 = middle(y2, d);
+    const y4 = middle(y3, d);
+    const y5 = middle(y4, d);
+    const y6 = middle(y5, d);
+    const y7 = middle(y6, d);
+    const y8 = middle(y7, d);
+
+    const k1 = middle(k, a);
+    const k2 = middle(k1, a);
+    const k3 = middle(k2, a);
+    const k4 = middle(k3, a);
+    const k5 = middle(k4, a);
+    const k6 = middle(k5, a);
+    const k7 = middle(k6, a);
+    const k8 = middle(k7, a);
+
+    const t1 = middle(t, z);
+    const t2 = middle(t1, z);
+    const t3 = middle(t2, z);
+    const t4 = middle(t3, z);
+    const t5 = middle(t4, z);
+    const t6 = middle(t5, z);
+    const t7 = middle(t6, z);
+
+    const m1 = middle(h, m);
+    const m2 = middle(j, m);
+    const m3 = middle(n, z);
+    const m4 = middle(t, z);
 
     return {
-      a,b,c,d,e,
-      a1,a2,a3,
-      b1,b2,b3,
-      c1,c2,
-      d1,d2,
-      e1,e2,e3,e4,
-      f,g,y,k,o,u,
-      p1,p2,p3,p4,
-      s1,s2,s3,s4,
-      h,j,m,n,t,z,s,
-      l,l1,l2,l3,l4,l5,l6,
-      d3,c3
+      a, b, c, d, e,
+      a1, a2, a3, a4, a5, a6,
+      b1, b2, b3, b4, b5, b6, b7, b8,
+      c1, c2, c3, c4, c5, c6, c7,
+      d1, d2, d3, d4, d5, d6, d7, d8, d9,
+      e1, e2, e3: healthResult,
+      f, f1, f2, f3, f4, f5, f6, f7, f8,
+      g, g1, g2, g3, g4, g5, g6, g7,
+      y, y1, y2, y3, y4, y5, y6, y7, y8,
+      k, k1, k2, k3, k4, k5, k6, k7, k8,
+      o, u,
+      p1, p2, p3, p4,
+      s1, s2, s3, s4,
+      x, x1, x2,
+      h, j, m,
+      n, t, z, s,
+      t1, t2, t3, t4, t5, t6, t7,
+      m1, m2, m3, m4,
+      l, l1, l2, l3, l4, l5, l6,
+      c3, d3
     };
   }
 
-  function fillPersonal(data) {
-    if (!data) return;
+  function fillBlock(block, data) {
+    if (!block || !data) return;
 
-    document.querySelectorAll('.js-calculation-block').forEach(el => {
-      el.classList.remove('d-none');
-    });
-
-    document.querySelectorAll('.js-calculation-comp-block, .js-calculation-kid-block').forEach(el => {
-      el.classList.add('d-none');
-    });
-
-    Object.keys(data).forEach(key => {
-      document.querySelectorAll('.js-calculation-block [data-personal-calculation-position="' + key + '"]').forEach(el => {
+    Object.keys(data).forEach(function (key) {
+      block.querySelectorAll('[data-personal-calculation-position="' + key + '"]').forEach(function (el) {
         el.textContent = data[key];
         el.classList.add('-active');
       });
     });
+  }
 
-    const name = document.querySelector('#name') ? document.querySelector('#name').value.trim() : '';
-    const dob = document.querySelector('#dob') ? document.querySelector('#dob').value.trim() : '';
+  function fillPersonal(data) {
+    const personalBlock = document.querySelector('.js-calculation-block');
+    const compatibilityBlock = document.querySelector('.js-calculation-comp-block');
 
-    document.querySelectorAll('.js-calculation-block .js-name-and-dob').forEach(el => {
+    if (personalBlock) personalBlock.classList.remove('d-none');
+    if (compatibilityBlock) compatibilityBlock.classList.add('d-none');
+
+    fillBlock(personalBlock, data);
+
+    const name = document.querySelector('#name')?.value.trim() || '';
+    const dob = document.querySelector('#dob')?.value.trim() || '';
+
+    personalBlock?.querySelectorAll('.js-name-and-dob').forEach(function (el) {
       el.textContent = name ? name + ' (' + dob + ')' : dob;
     });
 
-    const resultBlock = document.querySelector('#resultBlock');
-    if (resultBlock) {
-      resultBlock.scrollIntoView({ behavior: 'smooth' });
-    }
+    document.querySelector('#resultBlock')?.scrollIntoView({ behavior: 'smooth' });
   }
 
-  function hideChild() {
+  function fillCompatibility(data1, data2) {
+    const compatibilityBlock = document.querySelector('.js-calculation-comp-block');
+    const personalBlock = document.querySelector('.js-calculation-block');
+
+    if (personalBlock) personalBlock.classList.add('d-none');
+    if (compatibilityBlock) compatibilityBlock.classList.remove('d-none');
+
+    const comp = {};
+    ['a','b','c','d','e'].forEach(function (key) {
+      comp[key] = arc(data1[key] + data2[key]);
+    });
+
+    const full = calculateFromMain(comp.a, comp.b, comp.c, comp.d);
+    fillBlock(compatibilityBlock, full);
+
+    document.querySelector('#resultBlock')?.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function calculateFromMain(a, b, c, d) {
+    const fakeDate = '01.01.2000';
+    const data = calculate(fakeDate);
+
+    const e = arc(a + b + c + d);
+
+    const rebuilt = calculateByPoints(a, b, c, d, e);
+    return rebuilt;
+  }
+
+  function calculateByPoints(a, b, c, d, e) {
+    const p = { day: a, month: b, year: '0000' };
+
+    const a1 = middle(a, e);
+    const a2 = middle(a, a1);
+    const a3 = middle(a1, e);
+
+    const b1 = middle(b, e);
+    const b2 = middle(b, b1);
+    const b3 = middle(b1, e);
+
+    const c1 = middle(c, e);
+    const c2 = middle(c, c1);
+
+    const d1 = middle(d, e);
+    const d2 = middle(d, d1);
+
+    const e1 = middle(c1, d1);
+    const e2 = middle(c1, e1);
+    const e3Love = middle(d1, e1);
+
+    const f = middle(a, b);
+    const g = middle(b, c);
+    const y = middle(c, d);
+    const k = middle(d, a);
+
+    const o = middle(f, y);
+    const u = middle(g, k);
+
+    const generationPower = arc(f + g + y + k);
+
+    const p1 = middle(f, generationPower);
+    const p2 = middle(f, p1);
+    const p3 = middle(g, generationPower);
+    const p4 = middle(g, p3);
+
+    const s1 = middle(y, generationPower);
+    const s2 = middle(y, s1);
+    const s3 = middle(k, generationPower);
+    const s4 = middle(k, s3);
+
+    const x = e3Love;
+    const x1 = middle(e1, x);
+    const x2 = middle(e2, x);
+
+    const h = middle(b, d);
+    const j = middle(a, c);
+    const m = middle(h, j);
+
+    const n = o;
+    const t = u;
+    const z = middle(n, t);
+    const s = middle(m, z);
+
+    const l = middle(a, b);
+    const l1 = middle(a2, b2);
+    const l2 = middle(a1, b1);
+    const l3 = middle(a3, b3);
+    const l4 = middle(e, e);
+    const l5 = middle(c1, d1);
+    const l6 = middle(c, d);
+
+    const d3 = arc(a + a2 + a1 + a3 + e + c1 + c);
+    const c3 = arc(b + b2 + b1 + b3 + e + d1 + d);
+    const healthResult = arc(l + l1 + l2 + l3 + l4 + l5 + l6);
+
+    return {
+      a,b,c,d,e,a1,a2,a3,b1,b2,b3,c1,c2,d1,d2,
+      e1,e2,e3: healthResult,
+      f,g,y,k,o,u,p1,p2,p3,p4,s1,s2,s3,s4,
+      x,x1,x2,h,j,m,n,t,z,s,l,l1,l2,l3,l4,l5,l6,c3,d3
+    };
+  }
+
+  function removeChild() {
     document.querySelector('[data-tab-target="#form3"]')?.remove();
     document.querySelector('#form3')?.remove();
     document.querySelectorAll('.js-calculation-kid-block').forEach(el => el.remove());
   }
 
-  function enableForms() {
-    document.querySelectorAll('.form-tabs input[type="submit"]').forEach(btn => {
-      btn.disabled = false;
-    });
-  }
-
   function setupTabs() {
-    document.querySelectorAll('.tab-item').forEach(tab => {
+    document.querySelectorAll('.tab-item').forEach(function (tab) {
       tab.addEventListener('click', function () {
         document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
         document.querySelectorAll('.form-tabs .form').forEach(f => f.classList.remove('active'));
@@ -2740,27 +2745,41 @@ var njt_wa = {"gdprStatus":"","accounts":[{"accountId":3350,"accountName":"Anna"
     });
   }
 
-  function setupPersonal() {
-    const form = document.querySelector('#form1');
-    if (!form) return;
+  function setupForms() {
+    document.querySelectorAll('.form-tabs input[type="submit"]').forEach(btn => btn.disabled = false);
 
-    form.addEventListener('submit', function (event) {
-      event.preventDefault();
-      event.stopImmediatePropagation();
+    const form1 = document.querySelector('#form1');
+    if (form1) {
+      form1.addEventListener('submit', function (event) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
 
-      const dobInput = document.querySelector('#dob');
-      if (!dobInput) return;
+        const dob = document.querySelector('#dob')?.value || '';
+        fillPersonal(calculate(dob));
+      }, true);
+    }
 
-      const data = calculateMatrix(dobInput.value);
-      fillPersonal(data);
-    }, true);
+    const form2 = document.querySelector('#form2');
+    if (form2) {
+      form2.addEventListener('submit', function (event) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+
+        const dob1 = document.querySelector('#dob-compatibility-1')?.value || '';
+        const dob2 = document.querySelector('#dob-compatibility-2')?.value || '';
+
+        const data1 = calculate(dob1);
+        const data2 = calculate(dob2);
+
+        if (data1 && data2) fillCompatibility(data1, data2);
+      }, true);
+    }
   }
 
   document.addEventListener('DOMContentLoaded', function () {
-    hideChild();
-    enableForms();
+    removeChild();
     setupTabs();
-    setupPersonal();
+    setupForms();
   });
 })();
 </script>
