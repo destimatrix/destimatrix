@@ -9,125 +9,169 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #0f172a, #1e1b4b, #312e81);
-  color: white;
-  min-height: 100vh;
+  background: #f6f2ec;
+  color: #1f2937;
 }
 
 .wrapper {
-  max-width: 1100px;
+  max-width: 1250px;
   margin: 0 auto;
-  padding: 40px 20px;
-}
-
-.hero {
-  text-align: center;
-  margin-bottom: 40px;
-}
-
-.logo {
-  font-size: 18px;
-  letter-spacing: 3px;
-  color: #c4b5fd;
-  margin-bottom: 20px;
+  padding: 24px;
 }
 
 h1 {
-  font-size: 44px;
-  margin: 0 0 15px;
-}
-
-.subtitle {
-  color: #cbd5e1;
-  font-size: 18px;
-}
-
-.card {
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 24px;
-  padding: 28px;
-  backdrop-filter: blur(16px);
-  margin-bottom: 24px;
+  text-align: center;
+  font-size: 34px;
+  margin-bottom: 20px;
 }
 
 .form {
   display: flex;
-  gap: 12px;
   justify-content: center;
+  gap: 12px;
+  margin-bottom: 30px;
   flex-wrap: wrap;
 }
 
-input {
-  padding: 16px;
-  border-radius: 14px;
-  border: none;
+input, button {
+  padding: 14px 18px;
+  border-radius: 12px;
+  border: 1px solid #d1d5db;
   font-size: 18px;
 }
 
 button {
-  padding: 16px 28px;
-  border-radius: 14px;
-  border: none;
-  background: #f97316;
+  background: #7c3aed;
   color: white;
-  font-size: 18px;
+  border: none;
   cursor: pointer;
   font-weight: bold;
 }
 
-button:hover {
-  background: #fb923c;
-}
-
-.results {
-  display: none;
-}
-
-.grid {
+.layout {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 16px;
+  grid-template-columns: 360px 1fr;
+  gap: 30px;
+  align-items: start;
 }
 
-.result-box {
-  background: rgba(255,255,255,0.08);
+.panel {
+  background: white;
   border-radius: 18px;
   padding: 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
 }
 
-.result-box h3 {
+h2 {
   margin-top: 0;
-  color: #fcd34d;
-  font-size: 16px;
 }
 
-.numbers {
-  font-size: 26px;
-  font-weight: bold;
-  color: white;
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
 }
 
-.small {
-  color: #cbd5e1;
-  font-size: 14px;
-  margin-top: 8px;
-}
-
-.main-number {
+th, td {
+  padding: 10px;
   text-align: center;
-  font-size: 70px;
-  font-weight: bold;
-  color: #f97316;
+  border-bottom: 1px solid #e5e7eb;
 }
 
-@media (max-width: 600px) {
-  h1 {
-    font-size: 34px;
-  }
+th:first-child, td:first-child {
+  text-align: left;
+}
 
-  .main-number {
-    font-size: 54px;
+.chakra {
+  color: white;
+  font-weight: bold;
+  width: 28px;
+}
+
+.c1 { background:#8b5cf6; }
+.c2 { background:#6366f1; }
+.c3 { background:#06b6d4; }
+.c4 { background:#84cc16; }
+.c5 { background:#eab308; }
+.c6 { background:#f97316; }
+.c7 { background:#ef4444; }
+.c8 { background:#9ca3af; }
+
+.lines {
+  margin-top: 20px;
+  font-size: 15px;
+}
+
+.line-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.mini-circles span {
+  display: inline-flex;
+  width: 34px;
+  height: 34px;
+  border: 2px solid #9ca3af;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  margin-left: 6px;
+  background: white;
+}
+
+.chart-panel {
+  background: white;
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+svg {
+  width: 100%;
+  height: auto;
+}
+
+.circle-text {
+  font-size: 20px;
+  font-weight: bold;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+.small-text {
+  font-size: 10px;
+  fill: #374151;
+  text-anchor: middle;
+}
+
+.line-label {
+  font-size: 12px;
+  fill: #6b7280;
+}
+
+.mission-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.mission-box {
+  background: white;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.mission-box h3 {
+  margin: 0 0 8px;
+  font-size: 15px;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
   }
 }
 </style>
@@ -137,151 +181,143 @@ button:hover {
 
 <div class="wrapper">
 
-  <section class="hero">
-    <div class="logo">DESTIMATRIX</div>
-    <h1>Destiny Matrix Calculator</h1>
-    <p class="subtitle">Enter your date of birth and calculate your basic Destiny Matrix system.</p>
-  </section>
+<h1 id="title">DestiMatrix Chart</h1>
 
-  <section class="card">
-    <div class="form">
-      <input type="date" id="birthdate">
-      <button onclick="calculateMatrix()">Calculate My Matrix</button>
+<div class="form">
+  <input type="date" id="birthdate" value="1994-05-28">
+  <button onclick="calculateMatrix()">Calculate My Matrix</button>
+</div>
+
+<div class="layout">
+
+  <div class="panel">
+    <h2>Personal calculation</h2>
+    <h3>Health card</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Chakra name</th>
+          <th>Physics</th>
+          <th>Energy</th>
+          <th>Emotions</th>
+        </tr>
+      </thead>
+      <tbody id="healthTable"></tbody>
+    </table>
+
+    <div class="lines">
+      <div class="line-row">
+        <b>Male generation lines:</b>
+        <div class="mini-circles" id="maleLine"></div>
+      </div>
+      <div class="line-row">
+        <b>Female generation lines:</b>
+        <div class="mini-circles" id="femaleLine"></div>
+      </div>
     </div>
-  </section>
+  </div>
 
-  <section id="results" class="results">
+  <div class="chart-panel">
+    <svg viewBox="0 0 700 620">
 
-    <div class="card">
-      <h2 style="text-align:center;">Central Arcana</h2>
-      <div class="main-number" id="center"></div>
-    </div>
+      <polygon points="350,50 570,160 650,310 570,460 350,570 130,460 50,310 130,160"
+        fill="none" stroke="#111827" stroke-width="2"/>
 
-    <div class="grid">
+      <polygon points="350,50 650,310 350,570 50,310"
+        fill="none" stroke="#111827" stroke-width="2"/>
 
-      <div class="result-box">
-        <h3>Basic Numbers</h3>
-        <div class="numbers" id="basic"></div>
-        <div class="small">Day - Month - Year</div>
-      </div>
+      <polygon points="130,160 570,160 570,460 130,460"
+        fill="none" stroke="#111827" stroke-width="2"/>
 
-      <div class="result-box">
-        <h3>Karmic Tail</h3>
-        <div class="numbers" id="karmicTail"></div>
-      </div>
+      <line x1="350" y1="50" x2="350" y2="570" stroke="#111827" stroke-width="1.5"/>
+      <line x1="50" y1="310" x2="650" y2="310" stroke="#111827" stroke-width="1.5"/>
 
-      <div class="result-box">
-        <h3>Portrait Zone</h3>
-        <div class="numbers" id="portrait"></div>
-        <div class="small">Parent-child karma</div>
-      </div>
+      <line x1="130" y1="160" x2="570" y2="460" stroke="#7c3aed" stroke-width="2"/>
+      <line x1="570" y1="160" x2="130" y2="460" stroke="#ef4444" stroke-width="2"/>
 
-      <div class="result-box">
-        <h3>Talent Zone</h3>
-        <div class="numbers" id="talent"></div>
-      </div>
+      <text x="265" y="235" class="line-label" transform="rotate(34 265 235)">male generation line</text>
+      <text x="430" y="235" class="line-label" transform="rotate(-34 430 235)">female generation line</text>
 
-      <div class="result-box">
-        <h3>Heart Desires / Fears</h3>
-        <div class="numbers" id="heart"></div>
-      </div>
+      <line x1="350" y1="310" x2="500" y2="390" stroke="#9ca3af" stroke-dasharray="6 6"/>
+      <text x="440" y="345" font-size="22" fill="#65a30d">$</text>
+      <text x="330" y="410" font-size="24" fill="#ef4444">❤</text>
 
-      <div class="result-box">
-        <h3>Material Karma</h3>
-        <div class="numbers" id="material"></div>
-      </div>
+      <g id="circles"></g>
+    </svg>
+  </div>
 
-      <div class="result-box">
-        <h3>Spiritual Karma / Relationship Gate</h3>
-        <div class="numbers" id="spiritual"></div>
-      </div>
+</div>
 
-      <div class="result-box">
-        <h3>Wellbeing Zone</h3>
-        <div class="numbers" id="wellbeing"></div>
-        <div class="small">Balance - Money - Love</div>
-      </div>
+<div class="mission-grid">
+  <div class="mission-box">
+    <h3>Soul searching</h3>
+    <p>Sky: <b id="sky"></b></p>
+    <p>Earth: <b id="earth"></b></p>
+    <p>First mission: <b id="firstMission"></b></p>
+  </div>
 
-      <div class="result-box">
-        <h3>Generation Square</h3>
-        <div class="numbers" id="generation"></div>
-        <div class="small">A - B - C - D</div>
-      </div>
+  <div class="mission-box">
+    <h3>Socialization</h3>
+    <p>M: <b id="missionM"></b></p>
+    <p>F: <b id="missionF"></b></p>
+    <p>Second mission: <b id="secondMission"></b></p>
+  </div>
 
-      <div class="result-box">
-        <h3>Generation Power</h3>
-        <div class="numbers" id="generationPower"></div>
-      </div>
-
-      <div class="result-box">
-        <h3>Generation Lines</h3>
-        <div class="numbers" id="generationLines"></div>
-        <div class="small">A2/A3 - B2/B3 - C2/C3 - D2/D3</div>
-      </div>
-
-      <div class="result-box">
-        <h3>Missions</h3>
-        <div class="numbers" id="missions"></div>
-        <div class="small">First - Second - Third</div>
-      </div>
-
-    </div>
-
-  </section>
+  <div class="mission-box">
+    <h3>Spiritual knowledge</h3>
+    <p>Third mission: <b id="thirdMission"></b></p>
+  </div>
+</div>
 
 </div>
 
 <script>
 function reduceArcana(number) {
   while (number > 22) {
-    number = String(number)
-      .split('')
-      .reduce((sum, digit) => sum + Number(digit), 0);
+    number = String(number).split('').reduce((sum, digit) => sum + Number(digit), 0);
   }
   return number;
 }
 
+function createCircle(x, y, r, value, fill, stroke = '#111827', textColor = 'white') {
+  return `
+    <circle cx="${x}" cy="${y}" r="${r}" fill="${fill}" stroke="${stroke}" stroke-width="2"/>
+    <text x="${x}" y="${y}" class="circle-text" fill="${textColor}">${value}</text>
+  `;
+}
+
 function calculateMatrix() {
   const birthdate = document.getElementById('birthdate').value;
-
   if (!birthdate) {
     alert('Please enter your date of birth.');
     return;
   }
 
-  const parts = birthdate.split('-');
-  const yearFull = parts[0];
-  const monthRaw = Number(parts[1]);
-  const dayRaw = Number(parts[2]);
+  const [yearFull, monthString, dayString] = birthdate.split('-');
+  const dayRaw = Number(dayString);
+  const monthRaw = Number(monthString);
 
   const day = reduceArcana(dayRaw);
   const month = reduceArcana(monthRaw);
-
-  const year = reduceArcana(
-    String(yearFull)
-      .split('')
-      .reduce((sum, digit) => sum + Number(digit), 0)
-  );
+  const year = reduceArcana(String(yearFull).split('').reduce((s,d) => s + Number(d), 0));
 
   const karmicTail = reduceArcana(day + month + year);
   const center = reduceArcana(day + month + year + karmicTail);
 
-  const portrait1 = day;
   const portrait2 = reduceArcana(day + center);
   const portrait3 = reduceArcana(day + portrait2);
 
-  const talent1 = month;
   const talent2 = reduceArcana(month + center);
   const talent3 = reduceArcana(month + talent2);
 
   const heart1 = reduceArcana(portrait2 + center);
   const heart2 = reduceArcana(talent2 + center);
 
-  const material1 = year;
   const material2 = reduceArcana(year + center);
   const material3 = reduceArcana(year + material2);
 
-  const spiritual1 = karmicTail;
   const spiritual2 = reduceArcana(karmicTail + center);
   const spiritual3 = reduceArcana(karmicTail + spiritual2);
 
@@ -294,45 +330,115 @@ function calculateMatrix() {
   const C = reduceArcana(year + karmicTail);
   const D = reduceArcana(karmicTail + day);
 
-  const generationPower = reduceArcana(A + B + C + D);
-
-  const A3 = reduceArcana(A + generationPower);
-  const B3 = reduceArcana(B + generationPower);
-  const C3 = reduceArcana(C + generationPower);
-  const D3 = reduceArcana(D + generationPower);
-
-  const A2 = reduceArcana(A + A3);
-  const B2 = reduceArcana(B + B3);
-  const C2 = reduceArcana(C + C3);
-  const D2 = reduceArcana(D + D3);
+  const maleSum = reduceArcana(A + C);
+  const femaleSum = reduceArcana(B + D);
 
   const sky = reduceArcana(month + karmicTail);
   const earth = reduceArcana(day + year);
   const firstMission = reduceArcana(sky + earth);
-  const secondMission = generationPower;
+
+  const secondMission = reduceArcana(maleSum + femaleSum);
   const thirdMission = reduceArcana(firstMission + secondMission);
 
-  document.getElementById('results').style.display = 'block';
+  document.getElementById('title').innerText =
+    `Diagram: DestiMatrix (${dayString}.${monthString}.${yearFull})`;
 
-  document.getElementById('center').innerText = center;
-  document.getElementById('basic').innerText = `${day} - ${month} - ${year}`;
-  document.getElementById('karmicTail').innerText = karmicTail;
-  document.getElementById('portrait').innerText = `${portrait1} - ${portrait2} - ${portrait3}`;
-  document.getElementById('talent').innerText = `${talent1} - ${talent2} - ${talent3}`;
-  document.getElementById('heart').innerText = `${heart1} - ${heart2}`;
-  document.getElementById('material').innerText = `${material1} - ${material2} - ${material3}`;
-  document.getElementById('spiritual').innerText = `${spiritual1} - ${spiritual2} - ${spiritual3}`;
-  document.getElementById('wellbeing').innerText = `${balance} - ${money} - ${love}`;
-  document.getElementById('generation').innerText = `${A} - ${B} - ${C} - ${D}`;
-  document.getElementById('generationPower').innerText = generationPower;
-  document.getElementById('generationLines').innerText = `${A2}/${A3} - ${B2}/${B3} - ${C2}/${C3} - ${D2}/${D3}`;
-  document.getElementById('missions').innerText = `${firstMission} - ${secondMission} - ${thirdMission}`;
+  const circles = `
+    ${createCircle(350, 50, 42, month, '#7c3aed')}
+    ${createCircle(650, 310, 42, year, '#ef4444')}
+    ${createCircle(350, 570, 42, karmicTail, '#ef4444')}
+    ${createCircle(50, 310, 42, day, '#7c3aed')}
 
-  window.scrollTo({
-    top: document.getElementById('results').offsetTop,
-    behavior: 'smooth'
+    ${createCircle(350, 310, 36, center, '#facc15', '#facc15', '#111827')}
+
+    ${createCircle(350, 115, 22, talent3, '#6366f1')}
+    ${createCircle(350, 155, 18, talent2, '#06b6d4')}
+    ${createCircle(350, 225, 18, heart2, '#84cc16')}
+
+    ${createCircle(120, 310, 24, portrait3, '#6366f1')}
+    ${createCircle(175, 310, 20, portrait2, '#06b6d4')}
+    ${createCircle(265, 310, 18, heart1, '#84cc16')}
+
+    ${createCircle(585, 310, 22, material2, '#f59e0b')}
+    ${createCircle(530, 310, 20, material3, 'white', '#111827', '#111827')}
+    ${createCircle(470, 310, 18, money, 'white', '#111827', '#111827')}
+
+    ${createCircle(350, 510, 22, spiritual3, 'white', '#111827', '#111827')}
+    ${createCircle(350, 455, 20, spiritual2, '#f59e0b')}
+    ${createCircle(350, 395, 18, balance, 'white', '#111827', '#111827')}
+    ${createCircle(410, 395, 18, love, 'white', '#111827', '#111827')}
+
+    ${createCircle(130, 160, 34, A, 'white', '#111827', '#111827')}
+    ${createCircle(570, 160, 34, B, 'white', '#111827', '#111827')}
+    ${createCircle(570, 460, 34, C, 'white', '#111827', '#111827')}
+    ${createCircle(130, 460, 34, D, 'white', '#111827', '#111827')}
+
+    ${createCircle(210, 205, 22, maleSum, 'white', '#111827', '#111827')}
+    ${createCircle(500, 205, 22, femaleSum, 'white', '#111827', '#111827')}
+
+    ${createCircle(510, 410, 20, maleSum, 'white', '#111827', '#111827')}
+    ${createCircle(525, 455, 20, secondMission, 'white', '#111827', '#111827')}
+  `;
+
+  document.getElementById('circles').innerHTML = circles;
+
+  const healthRows = [
+    ['c1', '1', 'Sahasrara<br><small>Mission</small>', day, month, reduceArcana(day + month)],
+    ['c2', '2', 'Ajna<br><small>Destiny, egregores</small>', portrait3, talent3, reduceArcana(portrait3 + talent3)],
+    ['c3', '3', 'Vishuddha<br><small>Destiny, egregores</small>', portrait2, talent2, reduceArcana(portrait2 + talent2)],
+    ['c4', '4', 'Anahata<br><small>Relationships, picture of the world</small>', heart1, heart2, reduceArcana(heart1 + heart2)],
+    ['c5', '5', 'Manipura<br><small>Status, possessions</small>', center, center, reduceArcana(center + center)],
+    ['c6', '6', 'Svadhisthana<br><small>Love of children, Joy</small>', material2, spiritual2, reduceArcana(material2 + spiritual2)],
+    ['c7', '7', 'Muladhara<br><small>Body, materia</small>', year, karmicTail, reduceArcana(year + karmicTail)]
+  ];
+
+  const physicsSum = reduceArcana(healthRows.reduce((s,r) => s + r[3], 0));
+  const energySum = reduceArcana(healthRows.reduce((s,r) => s + r[4], 0));
+  const emotionsSum = reduceArcana(healthRows.reduce((s,r) => s + r[5], 0));
+
+  let tableHTML = '';
+  healthRows.forEach(row => {
+    tableHTML += `
+      <tr>
+        <td class="chakra ${row[0]}">${row[1]}</td>
+        <td>${row[2]}</td>
+        <td>${row[3]}</td>
+        <td>${row[4]}</td>
+        <td>${row[5]}</td>
+      </tr>
+    `;
   });
+
+  tableHTML += `
+    <tr>
+      <td class="chakra c8"></td>
+      <td><b>Result</b><br><small>Common energy-zone</small></td>
+      <td><b>${physicsSum}</b></td>
+      <td><b>${energySum}</b></td>
+      <td><b>${emotionsSum}</b></td>
+    </tr>
+  `;
+
+  document.getElementById('healthTable').innerHTML = tableHTML;
+
+  document.getElementById('maleLine').innerHTML =
+    `<span>${A}</span><span>${C}</span><span>${maleSum}</span>`;
+
+  document.getElementById('femaleLine').innerHTML =
+    `<span>${B}</span><span>${D}</span><span>${femaleSum}</span>`;
+
+  document.getElementById('sky').innerText = sky;
+  document.getElementById('earth').innerText = earth;
+  document.getElementById('firstMission').innerText = firstMission;
+
+  document.getElementById('missionM').innerText = maleSum;
+  document.getElementById('missionF').innerText = femaleSum;
+  document.getElementById('secondMission').innerText = secondMission;
+
+  document.getElementById('thirdMission').innerText = thirdMission;
 }
+
+calculateMatrix();
 </script>
 
 </body>
