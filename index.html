@@ -2398,6 +2398,254 @@ var njt_wa = {"gdprStatus":"","accounts":[{"accountId":3350,"accountName":"Anna"
 
 		</script>
 		
+<script>
+(function () {
+  function reduceArcana(number) {
+    number = Number(number);
+    while (number > 22) {
+      number = String(number).split('').reduce((sum, digit) => sum + Number(digit), 0);
+    }
+    return number;
+  }
 
+  function parseDate(value) {
+    const match = value.trim().match(/^(\d{2})\.(\d{2})\.(\d{4})$/);
+    if (!match) return null;
+
+    const dayRaw = Number(match[1]);
+    const monthRaw = Number(match[2]);
+    const yearRaw = match[3];
+
+    return { dayRaw, monthRaw, yearRaw };
+  }
+
+  function calculate(dateValue) {
+    const parsed = parseDate(dateValue);
+    if (!parsed) {
+      alert('Please enter date in DD.MM.YYYY format.');
+      return null;
+    }
+
+    const a = reduceArcana(parsed.dayRaw);
+    const b = reduceArcana(parsed.monthRaw);
+    const c = reduceArcana(String(parsed.yearRaw).split('').reduce((s, d) => s + Number(d), 0));
+    const d = reduceArcana(a + b + c);
+    const e = reduceArcana(a + b + c + d);
+
+    const a1 = reduceArcana(a + e);
+    const a2 = reduceArcana(a + a1);
+    const b1 = reduceArcana(b + e);
+    const b2 = reduceArcana(b + b1);
+
+    const a3 = reduceArcana(a1 + e);
+    const b3 = reduceArcana(b1 + e);
+
+    const c1 = reduceArcana(c + e);
+    const c2 = reduceArcana(c + c1);
+
+    const d1 = reduceArcana(d + e);
+    const d2 = reduceArcana(d + d1);
+
+    const e1 = reduceArcana(c1 + d1);
+    const e2 = reduceArcana(c1 + e1);
+    const e4 = reduceArcana(d1 + e1);
+
+    const f = reduceArcana(a + b);
+    const g = reduceArcana(b + c);
+    const y = reduceArcana(c + d);
+    const k = reduceArcana(d + a);
+
+    const o = reduceArcana(f + y);
+    const u = reduceArcana(g + k);
+
+    const p1 = reduceArcana(f + e);
+    const p2 = reduceArcana(f + p1);
+    const p3 = reduceArcana(g + e);
+    const p4 = reduceArcana(g + p3);
+
+    const s1 = reduceArcana(y + e);
+    const s2 = reduceArcana(y + s1);
+    const s3 = reduceArcana(k + e);
+    const s4 = reduceArcana(k + s3);
+
+    const x = reduceArcana(b + d);
+    const t = reduceArcana(a + c);
+    const z = reduceArcana(x + t);
+
+    const s = reduceArcana(z + reduceArcana(o + u));
+
+    const l = reduceArcana(a + b);
+    const l1 = reduceArcana(a2 + b2);
+    const l2 = reduceArcana(a1 + b1);
+    const l3 = reduceArcana(a3 + b3);
+    const l4 = reduceArcana(e + e);
+    const l5 = reduceArcana(c1 + d1);
+    const l6 = reduceArcana(c + d);
+
+    const d3 = reduceArcana(a + a2 + a1 + a3 + e + c1 + c);
+    const c3 = reduceArcana(b + b2 + b1 + b3 + e + d1 + d);
+    const e3 = reduceArcana(l + l1 + l2 + l3 + l4 + l5 + l6);
+
+    return {
+      a, b, c, d, e,
+      a1, a2, a3,
+      b1, b2, b3,
+      c1, c2,
+      d1, d2,
+      e1, e2, e3,
+      f, g, y, k, o, u,
+      p1, p2, p3, p4,
+      s1, s2, s3, s4,
+      x, t, z, s,
+      l, l1, l2, l3, l4, l5, l6,
+      d3, c3,
+      x1: t,
+      x2: z
+    };
+  }
+
+  function fillMatrix(result) {
+    if (!result) return;
+
+    Object.keys(result).forEach(function (key) {
+      document.querySelectorAll('[data-personal-calculation-position="' + key + '"]').forEach(function (el) {
+        el.textContent = result[key];
+      });
+    });
+
+    document.querySelectorAll('.js-calculation-block').forEach(function (el) {
+      el.classList.remove('d-none');
+    });
+
+    document.querySelectorAll('.js-calculation-comp-block').forEach(function (el) {
+      el.classList.add('d-none');
+    });
+
+    const name = document.querySelector('#name') ? document.querySelector('#name').value.trim() : '';
+    const dob = document.querySelector('#dob') ? document.querySelector('#dob').value.trim() : '';
+
+    document.querySelectorAll('.js-name-and-dob').forEach(function (el) {
+      el.textContent = name ? name + ' (' + dob + ')' : dob;
+    });
+
+    const resultBlock = document.querySelector('#resultBlock');
+    if (resultBlock) {
+      resultBlock.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  function enableButtons() {
+    document.querySelectorAll('.form-tabs input[type="submit"]').forEach(function (button) {
+      button.disabled = false;
+    });
+  }
+
+  function hideChildTab() {
+    const childTab = document.querySelector('[data-tab-target="#form3"]');
+    const childForm = document.querySelector('#form3');
+
+    if (childTab) childTab.remove();
+    if (childForm) childForm.remove();
+  }
+
+  function setupTabs() {
+    document.querySelectorAll('.tab-item').forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.form-tabs .form').forEach(f => f.classList.remove('active'));
+
+        tab.classList.add('active');
+
+        const target = document.querySelector(tab.getAttribute('data-tab-target'));
+        if (target) target.classList.add('active');
+      });
+    });
+  }
+
+  function setupPersonalForm() {
+    const form = document.querySelector('#form1');
+    if (!form) return;
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+
+      const dob = document.querySelector('#dob').value;
+      const result = calculate(dob);
+
+      fillMatrix(result);
+    }, true);
+  }
+
+  function setupCompatibilityForm() {
+    const form = document.querySelector('#form2');
+    if (!form) return;
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+
+      const dob1 = document.querySelector('#dob-compatibility-1').value;
+      const dob2 = document.querySelector('#dob-compatibility-2').value;
+
+      const result1 = calculate(dob1);
+      const result2 = calculate(dob2);
+
+      if (!result1 || !result2) return;
+
+      const compatibility = {
+        a: reduceArcana(result1.a + result2.a),
+        b: reduceArcana(result1.b + result2.b),
+        c: reduceArcana(result1.c + result2.c),
+        d: reduceArcana(result1.d + result2.d),
+        e: reduceArcana(result1.e + result2.e)
+      };
+
+      compatibility.a1 = reduceArcana(compatibility.a + compatibility.e);
+      compatibility.a2 = reduceArcana(compatibility.a + compatibility.a1);
+      compatibility.b1 = reduceArcana(compatibility.b + compatibility.e);
+      compatibility.b2 = reduceArcana(compatibility.b + compatibility.b1);
+      compatibility.c1 = reduceArcana(compatibility.c + compatibility.e);
+      compatibility.c2 = reduceArcana(compatibility.c + compatibility.c1);
+      compatibility.d1 = reduceArcana(compatibility.d + compatibility.e);
+      compatibility.d2 = reduceArcana(compatibility.d + compatibility.d1);
+
+      compatibility.f = reduceArcana(compatibility.a + compatibility.b);
+      compatibility.g = reduceArcana(compatibility.b + compatibility.c);
+      compatibility.y = reduceArcana(compatibility.c + compatibility.d);
+      compatibility.k = reduceArcana(compatibility.d + compatibility.a);
+      compatibility.o = reduceArcana(compatibility.f + compatibility.y);
+      compatibility.u = reduceArcana(compatibility.g + compatibility.k);
+
+      document.querySelectorAll('.js-calculation-block').forEach(function (el) {
+        el.classList.add('d-none');
+      });
+
+      document.querySelectorAll('.js-calculation-comp-block').forEach(function (el) {
+        el.classList.remove('d-none');
+      });
+
+      Object.keys(compatibility).forEach(function (key) {
+        document.querySelectorAll('.js-calculation-comp-block [data-personal-calculation-position="' + key + '"]').forEach(function (el) {
+          el.textContent = compatibility[key];
+        });
+      });
+
+      const compBlock = document.querySelector('.js-calculation-comp-block');
+      if (compBlock) {
+        compBlock.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, true);
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    hideChildTab();
+    setupTabs();
+    enableButtons();
+    setupPersonalForm();
+    setupCompatibilityForm();
+  });
+})();
+</script>
 	</body>
 </html>
