@@ -199,37 +199,54 @@
       fill: var(--ink);
     }
 
-    .small-num {
-      font-size: 12px;
-      font-weight: 800;
-      text-anchor: middle;
-      dominant-baseline: middle;
-      fill: var(--ink);
-    }
+   .num {
+  font-size: 25px;
+  font-weight: 800;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  fill: var(--ink);
+}
 
-    .age {
-      font-size: 8.8px;
-      font-weight: 700;
-      text-anchor: middle;
-      dominant-baseline: middle;
-      fill: #9a8980;
-    }
+.small-num {
+  font-size: 15px;
+  font-weight: 700;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  fill: var(--ink);
+}
 
-    .year-arcana {
-      font-size: 10.5px;
-      font-weight: 850;
-      text-anchor: middle;
-      dominant-baseline: middle;
-      fill: var(--ink);
-    }
+.age {
+  font-size: 8px;
+  font-weight: 700;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  fill: #222222;
+}
 
-    .symbol {
-      font-size: 18px;
-      font-weight: 900;
-      text-anchor: middle;
-      dominant-baseline: middle;
-      fill: var(--ink);
-    }
+.year-arcana {
+  font-size: 9px;
+  font-weight: 700;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  fill: #222222;
+}
+
+.symbol {
+  font-size: 20px;
+  font-weight: 900;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  fill: #7fbf4d;
+}
+
+.line-label {
+  font-size: 9px;
+  font-weight: 600;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  fill: #6f6070;
+  font-style: italic;
+}
 
     .health-card {
       margin-top: 22px;
@@ -504,95 +521,166 @@
       return arcana.slice(0, 40);
     }
 
-    function drawMatrix(m) {
-      svg.innerHTML = "";
 
-      const cx = 380;
-      const cy = 380;
-      const outerR = 282;
-      const innerR = 214;
+     function drawMatrix(m) {
+  svg.innerHTML = "";
 
-      const top = polar(cx, cy, innerR, 0);
-      const topRight = polar(cx, cy, innerR, 45);
-      const right = polar(cx, cy, innerR, 90);
-      const bottomRight = polar(cx, cy, innerR, 135);
-      const bottom = polar(cx, cy, innerR, 180);
-      const bottomLeft = polar(cx, cy, innerR, 225);
-      const left = polar(cx, cy, innerR, 270);
-      const topLeft = polar(cx, cy, innerR, 315);
+  const cx = 380;
+  const cy = 380;
 
-      const octagon = [top, topRight, right, bottomRight, bottom, bottomLeft, left, topLeft];
+  const R = 260;
+  const ageOffset = 18;
+  const arcanaOffset = 40;
 
-      polygon(octagon, "line-strong");
-      polygon([top, right, bottom, left], "line");
-      polygon([topRight, bottomRight, bottomLeft, topLeft], "line");
+  const points = {
+    top: { x: cx, y: cy - R },
+    topRight: { x: cx + 184, y: cy - 184 },
+    right: { x: cx + R, y: cy },
+    bottomRight: { x: cx + 184, y: cy + 184 },
+    bottom: { x: cx, y: cy + R },
+    bottomLeft: { x: cx - 184, y: cy + 184 },
+    left: { x: cx - R, y: cy },
+    topLeft: { x: cx - 184, y: cy - 184 }
+  };
 
-      line(left.x, left.y, right.x, right.y, "line earth");
-      line(top.x, top.y, bottom.x, bottom.y, "line sky");
-      line(topLeft.x, topLeft.y, bottomRight.x, bottomRight.y, "line male");
-      line(topRight.x, topRight.y, bottomLeft.x, bottomLeft.y, "line female");
+  const outer = [
+    points.left,
+    points.topLeft,
+    points.top,
+    points.topRight,
+    points.right,
+    points.bottomRight,
+    points.bottom,
+    points.bottomLeft
+  ];
 
-      line(cx, cy, top.x, top.y, "line");
-      line(cx, cy, right.x, right.y, "line");
-      line(cx, cy, bottom.x, bottom.y, "line");
-      line(cx, cy, left.x, left.y, "line");
+  function segmentPoint(a, b, t) {
+    return {
+      x: a.x + (b.x - a.x) * t,
+      y: a.y + (b.y - a.y) * t
+    };
+  }
 
-      const yearly = buildYearlyRing(m);
+  function pushFromCenter(p, amount) {
+    const dx = p.x - cx;
+    const dy = p.y - cy;
+    const length = Math.sqrt(dx * dx + dy * dy);
+    return {
+      x: p.x + (dx / length) * amount,
+      y: p.y + (dy / length) * amount
+    };
+  }
 
-      for (let i = 0; i < 40; i++) {
-        const angle = i * 9;
-        const agePoint = polar(cx, cy, 246, angle);
-        const arcPoint = polar(cx, cy, 312, angle);
+  function pullToCenter(p, amount) {
+    const dx = p.x - cx;
+    const dy = p.y - cy;
+    const length = Math.sqrt(dx * dx + dy * dy);
+    return {
+      x: p.x - (dx / length) * amount,
+      y: p.y - (dy / length) * amount
+    };
+  }
 
-        textNode(agePoint.x, agePoint.y, i, "age");
-        textNode(arcPoint.x, arcPoint.y, yearly[i], "year-arcana");
-      }
+  polygon(outer, "line-strong");
 
-      circleNode(left.x, left.y, m.D, colors.purple, 29);
-      circleNode(top.x, top.y, m.M, colors.purple, 29);
-      circleNode(right.x, right.y, m.Y, colors.red, 29);
-      circleNode(bottom.x, bottom.y, m.tail, colors.red, 29);
-      circleNode(cx, cy, m.center, colors.yellow, 31);
+  polygon([points.left, points.top, points.right, points.bottom], "line");
+  polygon([points.topLeft, points.topRight, points.bottomRight, points.bottomLeft], "line");
 
-      circleNode((left.x + cx) / 2, (left.y + cy) / 2, m.portrait2, colors.lightBlue, 21);
-      circleNode((left.x + cx * 1.65) / 2.65, (left.y + cy * 1.65) / 2.65, m.portrait3, colors.blue, 18);
+  line(points.left.x, points.left.y, points.right.x, points.right.y, "line earth");
+  line(points.top.x, points.top.y, points.bottom.x, points.bottom.y, "line sky");
 
-      circleNode((top.x + cx) / 2, (top.y + cy) / 2, m.talent2, colors.lightBlue, 21);
-      circleNode((top.x + cx * 1.65) / 2.65, (top.y + cy * 1.65) / 2.65, m.talent3, colors.blue, 18);
+  line(points.topLeft.x, points.topLeft.y, points.bottomRight.x, points.bottomRight.y, "line male");
+  line(points.topRight.x, points.topRight.y, points.bottomLeft.x, points.bottomLeft.y, "line female");
 
-      circleNode((right.x + cx) / 2, (right.y + cy) / 2, m.material2, colors.orange, 21);
-      circleNode((right.x + cx * 1.65) / 2.65, (right.y + cy * 1.65) / 2.65, m.material3, colors.white, 18);
+  line(cx, cy, points.left.x, points.left.y, "line");
+  line(cx, cy, points.top.x, points.top.y, "line");
+  line(cx, cy, points.right.x, points.right.y, "line");
+  line(cx, cy, points.bottom.x, points.bottom.y, "line");
 
-      circleNode((bottom.x + cx) / 2, (bottom.y + cy) / 2, m.karmic2, colors.orange, 21);
-      circleNode((bottom.x + cx * 1.65) / 2.65, (bottom.y + cy * 1.65) / 2.65, m.karmic3, colors.white, 18);
+  const yearly = buildYearlyRing(m);
 
-      circleNode(cx - 54, cy - 54, m.heartFear1, colors.pink, 17, "small-num");
-      circleNode(cx + 54, cy - 54, m.heartFear2, colors.pink, 17, "small-num");
+  const sides = [
+    [points.left, points.topLeft, 0],
+    [points.topLeft, points.top, 10],
+    [points.top, points.topRight, 20],
+    [points.topRight, points.right, 30],
+    [points.right, points.bottomRight, 40],
+    [points.bottomRight, points.bottom, 50],
+    [points.bottom, points.bottomLeft, 60],
+    [points.bottomLeft, points.left, 70]
+  ];
 
-      circleNode(cx + 68, cy + 68, m.balance, colors.green, 18, "small-num");
-      circleNode(cx + 116, cy + 34, m.money, colors.green, 18, "small-num");
-      circleNode(cx + 34, cy + 116, m.love, colors.pink, 18, "small-num");
+  sides.forEach(([a, b, startAge], sideIndex) => {
+    for (let i = 0; i <= 5; i++) {
+      const t = i / 5;
+      const base = segmentPoint(a, b, t);
+      const ageP = pullToCenter(base, ageOffset);
+      const arcP = pushFromCenter(base, arcanaOffset);
 
-      textNode(cx + 116, cy + 2, "$", "symbol");
-      textNode(cx + 2, cy + 116, "♥", "symbol");
+      const age = startAge + i * 2;
+      const arcanaIndex = Math.min(sideIndex * 5 + i, yearly.length - 1);
 
-      circleNode(topLeft.x, topLeft.y, m.A1, colors.pink, 24);
-      circleNode(topRight.x, topRight.y, m.B1, colors.pink, 24);
-      circleNode(bottomRight.x, bottomRight.y, m.C1, colors.red, 24);
-      circleNode(bottomLeft.x, bottomLeft.y, m.D1, colors.red, 24);
-
-      circleNode((topLeft.x + cx) / 2, (topLeft.y + cy) / 2, m.A2, colors.white, 17, "small-num");
-      circleNode((topLeft.x + cx * 1.65) / 2.65, (topLeft.y + cy * 1.65) / 2.65, m.A3, colors.lightBlue, 16, "small-num");
-
-      circleNode((topRight.x + cx) / 2, (topRight.y + cy) / 2, m.B2, colors.white, 17, "small-num");
-      circleNode((topRight.x + cx * 1.65) / 2.65, (topRight.y + cy * 1.65) / 2.65, m.B3, colors.lightBlue, 16, "small-num");
-
-      circleNode((bottomRight.x + cx) / 2, (bottomRight.y + cy) / 2, m.C2, colors.white, 17, "small-num");
-      circleNode((bottomRight.x + cx * 1.65) / 2.65, (bottomRight.y + cy * 1.65) / 2.65, m.C3, colors.orange, 16, "small-num");
-
-      circleNode((bottomLeft.x + cx) / 2, (bottomLeft.y + cy) / 2, m.D2, colors.white, 17, "small-num");
-      circleNode((bottomLeft.x + cx * 1.65) / 2.65, (bottomLeft.y + cy * 1.65) / 2.65, m.D3, colors.orange, 16, "small-num");
+      textNode(ageP.x, ageP.y, age, "age");
+      textNode(arcP.x, arcP.y, yearly[arcanaIndex], "year-arcana");
     }
+  });
+
+  const majorNodes = [
+    [points.left, m.D, colors.purple],
+    [points.topLeft, m.A1, colors.white],
+    [points.top, m.M, colors.purple],
+    [points.topRight, m.B1, colors.white],
+    [points.right, m.Y, colors.red],
+    [points.bottomRight, m.C1, colors.white],
+    [points.bottom, m.tail, colors.red],
+    [points.bottomLeft, m.D1, colors.white]
+  ];
+
+  majorNodes.forEach(([p, value, fill]) => {
+    circleNode(p.x, p.y, value, fill, 32);
+  });
+
+  circleNode(cx, cy, m.center, colors.yellow, 34);
+
+  circleNode(cx, cy - 92, m.talent2, colors.blue, 19, "small-num");
+  circleNode(cx, cy - 54, m.talent3, colors.lightBlue, 17, "small-num");
+  circleNode(cx, cy - 18, m.firstMission, colors.green, 16, "small-num");
+
+  circleNode(cx - 92, cy, m.portrait2, colors.blue, 19, "small-num");
+  circleNode(cx - 54, cy, m.portrait3, colors.lightBlue, 17, "small-num");
+  circleNode(cx - 18, cy, m.firstEarth, colors.green, 16, "small-num");
+
+  circleNode(cx + 92, cy, m.material2, colors.orange, 19, "small-num");
+  circleNode(cx + 54, cy, m.material3, colors.white, 17, "small-num");
+
+  circleNode(cx, cy + 92, m.karmic2, colors.orange, 19, "small-num");
+  circleNode(cx, cy + 54, m.karmic3, colors.white, 17, "small-num");
+
+  circleNode(cx - 96, cy - 96, m.A2, colors.white, 18, "small-num");
+  circleNode(cx - 132, cy - 132, m.A3, colors.white, 18, "small-num");
+
+  circleNode(cx + 96, cy - 96, m.B2, colors.white, 18, "small-num");
+  circleNode(cx + 132, cy - 132, m.B3, colors.white, 18, "small-num");
+
+  circleNode(cx + 96, cy + 96, m.C2, colors.white, 18, "small-num");
+  circleNode(cx + 132, cy + 132, m.C3, colors.white, 18, "small-num");
+
+  circleNode(cx - 96, cy + 96, m.D2, colors.white, 18, "small-num");
+  circleNode(cx - 132, cy + 132, m.D3, colors.white, 18, "small-num");
+
+  circleNode(cx + 56, cy - 8, m.heartFear1, colors.white, 16, "small-num");
+  circleNode(cx + 88, cy - 8, m.heartFear2, colors.white, 16, "small-num");
+
+  circleNode(cx + 78, cy + 70, m.balance, colors.white, 17, "small-num");
+  circleNode(cx + 118, cy + 38, m.money, colors.white, 17, "small-num");
+  circleNode(cx + 38, cy + 118, m.love, colors.white, 17, "small-num");
+
+  textNode(cx + 112, cy + 78, "$", "symbol");
+  textNode(cx + 38, cy + 82, "♥", "symbol");
+
+  textNode(cx - 70, cy - 74, "male generation line", "line-label");
+  textNode(cx + 82, cy - 70, "female generation line", "line-label");
+}
 
     function renderSummary(m) {
       summary.innerHTML = `
