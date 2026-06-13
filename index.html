@@ -1,107 +1,338 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Матрица Судьбы</title>
+<title>DestiMatrix Calculator</title>
 
 <style>
-body{
-    margin:0;
-    font-family:Arial,sans-serif;
-    background:#0f172a;
-    color:white;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #0f172a, #1e1b4b, #312e81);
+  color: white;
+  min-height: 100vh;
 }
 
-.container{
-    text-align:center;
-    max-width:600px;
-    padding:20px;
+.wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 20px;
 }
 
-h1{
-    font-size:48px;
-    margin-bottom:10px;
+.hero {
+  text-align: center;
+  margin-bottom: 40px;
 }
 
-p{
-    color:#cbd5e1;
+.logo {
+  font-size: 18px;
+  letter-spacing: 3px;
+  color: #c4b5fd;
+  margin-bottom: 20px;
 }
 
-input{
-    padding:15px;
-    border:none;
-    border-radius:10px;
-    margin-top:20px;
-    font-size:18px;
+h1 {
+  font-size: 44px;
+  margin: 0 0 15px;
 }
 
-button{
-    margin-top:20px;
-    padding:15px 30px;
-    border:none;
-    border-radius:10px;
-    background:#f97316;
-    color:white;
-    font-size:18px;
-    cursor:pointer;
+.subtitle {
+  color: #cbd5e1;
+  font-size: 18px;
 }
 
-#result{
-    margin-top:30px;
-    font-size:24px;
+.card {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 24px;
+  padding: 28px;
+  backdrop-filter: blur(16px);
+  margin-bottom: 24px;
+}
+
+.form {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+input {
+  padding: 16px;
+  border-radius: 14px;
+  border: none;
+  font-size: 18px;
+}
+
+button {
+  padding: 16px 28px;
+  border-radius: 14px;
+  border: none;
+  background: #f97316;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background: #fb923c;
+}
+
+.results {
+  display: none;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.result-box {
+  background: rgba(255,255,255,0.08);
+  border-radius: 18px;
+  padding: 18px;
+}
+
+.result-box h3 {
+  margin-top: 0;
+  color: #fcd34d;
+  font-size: 16px;
+}
+
+.numbers {
+  font-size: 26px;
+  font-weight: bold;
+  color: white;
+}
+
+.small {
+  color: #cbd5e1;
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+.main-number {
+  text-align: center;
+  font-size: 70px;
+  font-weight: bold;
+  color: #f97316;
+}
+
+@media (max-width: 600px) {
+  h1 {
+    font-size: 34px;
+  }
+
+  .main-number {
+    font-size: 54px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="wrapper">
 
-<h1>Матрица Судьбы</h1>
+  <section class="hero">
+    <div class="logo">DESTIMATRIX</div>
+    <h1>Destiny Matrix Calculator</h1>
+    <p class="subtitle">Enter your date of birth and calculate your basic Destiny Matrix system.</p>
+  </section>
 
-<p>Введите дату рождения</p>
+  <section class="card">
+    <div class="form">
+      <input type="date" id="birthdate">
+      <button onclick="calculateMatrix()">Calculate My Matrix</button>
+    </div>
+  </section>
 
-<input type="date" id="birthdate">
+  <section id="results" class="results">
 
-<br>
+    <div class="card">
+      <h2 style="text-align:center;">Central Arcana</h2>
+      <div class="main-number" id="center"></div>
+    </div>
 
-<button onclick="calculate()">
-Рассчитать
-</button>
+    <div class="grid">
 
-<div id="result"></div>
+      <div class="result-box">
+        <h3>Basic Numbers</h3>
+        <div class="numbers" id="basic"></div>
+        <div class="small">Day - Month - Year</div>
+      </div>
+
+      <div class="result-box">
+        <h3>Karmic Tail</h3>
+        <div class="numbers" id="karmicTail"></div>
+      </div>
+
+      <div class="result-box">
+        <h3>Portrait Zone</h3>
+        <div class="numbers" id="portrait"></div>
+        <div class="small">Parent-child karma</div>
+      </div>
+
+      <div class="result-box">
+        <h3>Talent Zone</h3>
+        <div class="numbers" id="talent"></div>
+      </div>
+
+      <div class="result-box">
+        <h3>Heart Desires / Fears</h3>
+        <div class="numbers" id="heart"></div>
+      </div>
+
+      <div class="result-box">
+        <h3>Material Karma</h3>
+        <div class="numbers" id="material"></div>
+      </div>
+
+      <div class="result-box">
+        <h3>Spiritual Karma / Relationship Gate</h3>
+        <div class="numbers" id="spiritual"></div>
+      </div>
+
+      <div class="result-box">
+        <h3>Wellbeing Zone</h3>
+        <div class="numbers" id="wellbeing"></div>
+        <div class="small">Balance - Money - Love</div>
+      </div>
+
+      <div class="result-box">
+        <h3>Generation Square</h3>
+        <div class="numbers" id="generation"></div>
+        <div class="small">A - B - C - D</div>
+      </div>
+
+      <div class="result-box">
+        <h3>Generation Power</h3>
+        <div class="numbers" id="generationPower"></div>
+      </div>
+
+      <div class="result-box">
+        <h3>Generation Lines</h3>
+        <div class="numbers" id="generationLines"></div>
+        <div class="small">A2/A3 - B2/B3 - C2/C3 - D2/D3</div>
+      </div>
+
+      <div class="result-box">
+        <h3>Missions</h3>
+        <div class="numbers" id="missions"></div>
+        <div class="small">First - Second - Third</div>
+      </div>
+
+    </div>
+
+  </section>
 
 </div>
 
 <script>
-
-function calculate(){
-
-const date = document.getElementById('birthdate').value;
-
-if(!date){
-alert('Введите дату рождения');
-return;
+function reduceArcana(number) {
+  while (number > 22) {
+    number = String(number)
+      .split('')
+      .reduce((sum, digit) => sum + Number(digit), 0);
+  }
+  return number;
 }
 
-const numbers = date.replaceAll('-','');
+function calculateMatrix() {
+  const birthdate = document.getElementById('birthdate').value;
 
-let sum = 0;
+  if (!birthdate) {
+    alert('Please enter your date of birth.');
+    return;
+  }
 
-for(let digit of numbers){
-sum += Number(digit);
+  const parts = birthdate.split('-');
+  const yearFull = parts[0];
+  const monthRaw = Number(parts[1]);
+  const dayRaw = Number(parts[2]);
+
+  const day = reduceArcana(dayRaw);
+  const month = reduceArcana(monthRaw);
+
+  const year = reduceArcana(
+    String(yearFull)
+      .split('')
+      .reduce((sum, digit) => sum + Number(digit), 0)
+  );
+
+  const karmicTail = reduceArcana(day + month + year);
+  const center = reduceArcana(day + month + year + karmicTail);
+
+  const portrait1 = day;
+  const portrait2 = reduceArcana(day + center);
+  const portrait3 = reduceArcana(day + portrait2);
+
+  const talent1 = month;
+  const talent2 = reduceArcana(month + center);
+  const talent3 = reduceArcana(month + talent2);
+
+  const heart1 = reduceArcana(portrait2 + center);
+  const heart2 = reduceArcana(talent2 + center);
+
+  const material1 = year;
+  const material2 = reduceArcana(year + center);
+  const material3 = reduceArcana(year + material2);
+
+  const spiritual1 = karmicTail;
+  const spiritual2 = reduceArcana(karmicTail + center);
+  const spiritual3 = reduceArcana(karmicTail + spiritual2);
+
+  const balance = reduceArcana(material2 + spiritual2);
+  const money = reduceArcana(material2 + balance);
+  const love = reduceArcana(spiritual2 + balance);
+
+  const A = reduceArcana(day + month);
+  const B = reduceArcana(month + year);
+  const C = reduceArcana(year + karmicTail);
+  const D = reduceArcana(karmicTail + day);
+
+  const generationPower = reduceArcana(A + B + C + D);
+
+  const A3 = reduceArcana(A + generationPower);
+  const B3 = reduceArcana(B + generationPower);
+  const C3 = reduceArcana(C + generationPower);
+  const D3 = reduceArcana(D + generationPower);
+
+  const A2 = reduceArcana(A + A3);
+  const B2 = reduceArcana(B + B3);
+  const C2 = reduceArcana(C + C3);
+  const D2 = reduceArcana(D + D3);
+
+  const sky = reduceArcana(month + karmicTail);
+  const earth = reduceArcana(day + year);
+  const firstMission = reduceArcana(sky + earth);
+  const secondMission = generationPower;
+  const thirdMission = reduceArcana(firstMission + secondMission);
+
+  document.getElementById('results').style.display = 'block';
+
+  document.getElementById('center').innerText = center;
+  document.getElementById('basic').innerText = `${day} - ${month} - ${year}`;
+  document.getElementById('karmicTail').innerText = karmicTail;
+  document.getElementById('portrait').innerText = `${portrait1} - ${portrait2} - ${portrait3}`;
+  document.getElementById('talent').innerText = `${talent1} - ${talent2} - ${talent3}`;
+  document.getElementById('heart').innerText = `${heart1} - ${heart2}`;
+  document.getElementById('material').innerText = `${material1} - ${material2} - ${material3}`;
+  document.getElementById('spiritual').innerText = `${spiritual1} - ${spiritual2} - ${spiritual3}`;
+  document.getElementById('wellbeing').innerText = `${balance} - ${money} - ${love}`;
+  document.getElementById('generation').innerText = `${A} - ${B} - ${C} - ${D}`;
+  document.getElementById('generationPower').innerText = generationPower;
+  document.getElementById('generationLines').innerText = `${A2}/${A3} - ${B2}/${B3} - ${C2}/${C3} - ${D2}/${D3}`;
+  document.getElementById('missions').innerText = `${firstMission} - ${secondMission} - ${thirdMission}`;
+
+  window.scrollTo({
+    top: document.getElementById('results').offsetTop,
+    behavior: 'smooth'
+  });
 }
-
-document.getElementById('result').innerHTML =
-'Ваше число судьбы: <b>' + sum + '</b>';
-
-}
-
 </script>
 
 </body>
