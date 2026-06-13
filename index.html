@@ -666,6 +666,10 @@
       renderSummary(matrix);
       renderHealthCard(matrix);
     }
+    document.getElementById("calculateBtn").addEventListener("click", calculateAndRender);
+
+document.getElementById("birthDate").addEventListener("change", calculateAndRender);
+    
 svg.innerHTML = "";
 
 summary.innerHTML = `
