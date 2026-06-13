@@ -2574,6 +2574,7 @@ var njt_wa = {"gdprStatus":"","accounts":[{"accountId":3350,"accountName":"Anna"
 })();
 </script>
 
+
 <script>
 (function () {
   function r(n) {
@@ -2584,16 +2585,22 @@ var njt_wa = {"gdprStatus":"","accounts":[{"accountId":3350,"accountName":"Anna"
     return n;
   }
 
-  function parseDate(v) {
-    const m = v.trim().match(/^(\d{2})[./-](\d{2})[./-](\d{4})$/);
-    if (!m) return null;
-    return { day: +m[1], month: +m[2], year: m[3] };
+  function parseDate(value) {
+    const match = value.trim().match(/^(\d{2})[./-](\d{2})[./-](\d{4})$/);
+    if (!match) return null;
+
+    return {
+      day: Number(match[1]),
+      month: Number(match[2]),
+      year: match[3]
+    };
   }
 
-  function calc(v) {
-    const p = parseDate(v);
+  function calculateMatrix(value) {
+    const p = parseDate(value);
+
     if (!p) {
-      alert('Use DD.MM.YYYY format');
+      alert('Please enter date in DD.MM.YYYY format');
       return null;
     }
 
@@ -2629,17 +2636,15 @@ var njt_wa = {"gdprStatus":"","accounts":[{"accountId":3350,"accountName":"Anna"
     const o = r(f + y);
     const u = r(g + k);
 
-    const genPower = r(f + g + y + k);
+    const p1 = r(f + e);
+    const p2 = r(f + p1);
+    const p3 = r(g + e);
+    const p4 = r(g + p3);
 
-    const f3 = r(f + genPower);
-    const g3 = r(g + genPower);
-    const y3 = r(y + genPower);
-    const k3 = r(k + genPower);
-
-    const f2 = r(f + f3);
-    const g2 = r(g + g3);
-    const y2 = r(y + y3);
-    const k2 = r(k + k3);
+    const s1 = r(y + e);
+    const s2 = r(y + s1);
+    const s3 = r(k + e);
+    const s4 = r(k + s3);
 
     const h = r(b + d);
     const j = r(a + c);
@@ -2648,7 +2653,6 @@ var njt_wa = {"gdprStatus":"","accounts":[{"accountId":3350,"accountName":"Anna"
     const n = o;
     const t = u;
     const z = r(n + t);
-
     const s = r(m + z);
 
     const l = r(a + b);
@@ -2665,19 +2669,30 @@ var njt_wa = {"gdprStatus":"","accounts":[{"accountId":3350,"accountName":"Anna"
 
     return {
       a,b,c,d,e,
-      a1,a2,a3,b1,b2,b3,c1,c2,d1,d2,e1,e2,e4,
+      a1,a2,a3,
+      b1,b2,b3,
+      c1,c2,
+      d1,d2,
+      e1,e2,e3,e4,
       f,g,y,k,o,u,
-      f2,f3,g2,g3,y2,y3,k2,k3,
+      p1,p2,p3,p4,
+      s1,s2,s3,s4,
       h,j,m,n,t,z,s,
-      l,l1,l2,l3,l4,l5,l6,d3,c3,e3
+      l,l1,l2,l3,l4,l5,l6,
+      d3,c3
     };
   }
 
-  function fill(data) {
+  function fillPersonal(data) {
     if (!data) return;
 
-    document.querySelectorAll('.js-calculation-block').forEach(el => el.classList.remove('d-none'));
-    document.querySelectorAll('.js-calculation-comp-block, .js-calculation-kid-block').forEach(el => el.classList.add('d-none'));
+    document.querySelectorAll('.js-calculation-block').forEach(el => {
+      el.classList.remove('d-none');
+    });
+
+    document.querySelectorAll('.js-calculation-comp-block, .js-calculation-kid-block').forEach(el => {
+      el.classList.add('d-none');
+    });
 
     Object.keys(data).forEach(key => {
       document.querySelectorAll('.js-calculation-block [data-personal-calculation-position="' + key + '"]').forEach(el => {
@@ -2686,27 +2701,67 @@ var njt_wa = {"gdprStatus":"","accounts":[{"accountId":3350,"accountName":"Anna"
       });
     });
 
-    document.querySelector('#resultBlock')?.scrollIntoView({ behavior: 'smooth' });
-  }
+    const name = document.querySelector('#name') ? document.querySelector('#name').value.trim() : '';
+    const dob = document.querySelector('#dob') ? document.querySelector('#dob').value.trim() : '';
 
-  function fixPage() {
-    document.querySelector('[data-tab-target="#form3"]')?.remove();
-    document.querySelector('#form3')?.remove();
-    document.querySelectorAll('.js-calculation-kid-block').forEach(el => el.remove());
+    document.querySelectorAll('.js-calculation-block .js-name-and-dob').forEach(el => {
+      el.textContent = name ? name + ' (' + dob + ')' : dob;
+    });
 
-    document.querySelectorAll('.form-tabs input[type="submit"]').forEach(btn => btn.disabled = false);
-
-    const form = document.querySelector('#form1');
-    if (form) {
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        fill(calc(document.querySelector('#dob').value));
-      }, true);
+    const resultBlock = document.querySelector('#resultBlock');
+    if (resultBlock) {
+      resultBlock.scrollIntoView({ behavior: 'smooth' });
     }
   }
 
-  document.addEventListener('DOMContentLoaded', fixPage);
+  function hideChild() {
+    document.querySelector('[data-tab-target="#form3"]')?.remove();
+    document.querySelector('#form3')?.remove();
+    document.querySelectorAll('.js-calculation-kid-block').forEach(el => el.remove());
+  }
+
+  function enableForms() {
+    document.querySelectorAll('.form-tabs input[type="submit"]').forEach(btn => {
+      btn.disabled = false;
+    });
+  }
+
+  function setupTabs() {
+    document.querySelectorAll('.tab-item').forEach(tab => {
+      tab.addEventListener('click', function () {
+        document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.form-tabs .form').forEach(f => f.classList.remove('active'));
+
+        tab.classList.add('active');
+
+        const target = document.querySelector(tab.getAttribute('data-tab-target'));
+        if (target) target.classList.add('active');
+      });
+    });
+  }
+
+  function setupPersonal() {
+    const form = document.querySelector('#form1');
+    if (!form) return;
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+
+      const dobInput = document.querySelector('#dob');
+      if (!dobInput) return;
+
+      const data = calculateMatrix(dobInput.value);
+      fillPersonal(data);
+    }, true);
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    hideChild();
+    enableForms();
+    setupTabs();
+    setupPersonal();
+  });
 })();
 </script>
 		
