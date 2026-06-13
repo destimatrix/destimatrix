@@ -306,7 +306,7 @@
     <section class="calculator">
       <aside class="panel">
         <label for="birthDate">Date of birth</label>
-        <input id="birthDate" type="date" value="1992-12-23" />
+    <input id="birthDate" type="date" />
         <button id="calculateBtn">Calculate Matrix</button>
 
         <div class="summary" id="summary"></div>
@@ -666,11 +666,18 @@
       renderSummary(matrix);
       renderHealthCard(matrix);
     }
+svg.innerHTML = "";
 
-    document.getElementById("calculateBtn").addEventListener("click", calculateAndRender);
-    document.getElementById("birthDate").addEventListener("change", calculateAndRender);
+summary.innerHTML = `
+  <div class="summary-row">
+    <span>Status</span>
+    <span>Enter your date</span>
+  </div>
+`;
 
-    calculateAndRender();
+healthTable.innerHTML = "";
+
+    
   </script>
 </body>
 </html>
