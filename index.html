@@ -3,105 +3,280 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DestiMatrix Chart</title>
+  <title>Matrix of Destiny — by destimatrix</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700;900&display=swap" rel="stylesheet">
-
   <style>
-    :root {
-      --ink: #222831;
-      --purple: #8a46a3;
-      --blue: #4d6dff;
-      --cyan: #45cfe1;
-      --green: #9be15d;
-      --yellow: #ffed47;
-      --orange: #ffb02e;
-      --red: #ef4141;
-      --money: #9bd454;
+    :root{
+      --ink:#1f2530;
+      --purple:#8a46a3;
+      --blue:#4d6dff;
+      --cyan:#45cfe1;
+      --green:#9be15d;
+      --yellow:#ffe44d;
+      --orange:#ffb02e;
+      --red:#ef4141;
+      --money:#9bd454;
     }
-    * { box-sizing: border-box; }
-    body { margin: 0; background: #fff; color: var(--ink); font-family: "Source Sans Pro", Arial, sans-serif; }
-    .page { max-width: 1180px; margin: 0 auto; padding: 28px 16px 60px; }
-    h1 { margin: 0 0 22px; text-align: center; font-size: 36px; line-height: 1.1; font-weight: 900; letter-spacing: -0.03em; }
-    .form-card { border: 1px solid #e5e7eb; border-radius: 10px; padding: 20px 26px; margin: 0 auto 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: end; box-shadow: 0 8px 24px rgba(17,24,39,.06); }
-    label { display: block; margin-bottom: 8px; font-weight: 700; font-size: 16px; }
-    input { width: 100%; height: 50px; border: 1px solid #d7dbe2; border-radius: 6px; padding: 0 16px; font-size: 20px; font-weight: 600; color: var(--ink); font-family: inherit; }
-    button { width: 100%; height: 50px; border: 0; border-radius: 6px; background: linear-gradient(180deg,#ff9b57,#f27f3f); color: #fff; font-size: 18px; font-weight: 900; font-family: inherit; cursor: pointer; }
-    .chart-wrap { width: 100%; overflow: auto; padding: 6px 0 20px; }
-    .matrix { display: block; width: min(100%, 980px); min-width: 760px; height: auto; margin: 0 auto; overflow: visible; }
-    .line-main { stroke: var(--ink); stroke-width: 3; fill: none; stroke-linecap: round; stroke-linejoin: round; }
-    .line-thin { stroke: var(--ink); stroke-width: 1.25; fill: none; }
-    .line-male { stroke: var(--purple); stroke-width: 2.8; fill: none; marker-end: url(#arrowPurple); }
-    .line-female { stroke: var(--red); stroke-width: 2.8; fill: none; marker-end: url(#arrowRed); }
-    .line-channel { stroke: var(--ink); stroke-width: 1.25; stroke-dasharray: 7 7; fill: none; }
-    .circle-white { fill: #fff; stroke: var(--ink); stroke-width: 3; }
-    .circle-purple { fill: var(--purple); }
-    .circle-blue { fill: var(--blue); }
-    .circle-cyan { fill: var(--cyan); }
-    .circle-green { fill: var(--green); }
-    .circle-yellow { fill: var(--yellow); }
-    .circle-orange { fill: var(--orange); }
-    .circle-red { fill: var(--red); }
-    .num { text-anchor: middle; dominant-baseline: central; font-weight: 700; fill: var(--ink); font-family: "Source Sans Pro", Arial, sans-serif; }
-    .num-white { fill: #fff; }
-    .num-big { font-size: 54px; font-weight: 700; }
-    .num-mid { font-size: 39px; font-weight: 700; }
-    .num-small { font-size: 27px; font-weight: 700; }
-    .outer-arcana { text-anchor: middle; dominant-baseline: central; font-size: 21px; font-weight: 600; fill: #001a34; }
-    .age-major { text-anchor: middle; font-size: 14px; fill: #111827; font-weight: 900; }
-    .age-range { text-anchor: middle; dominant-baseline: central; font-size: 9px; fill: #4b5563; font-weight: 600; }
-    .tick-dot { fill: var(--ink); stroke: var(--ink); stroke-width: 1; }
-    .tick-open { fill: #fff; stroke: var(--ink); stroke-width: 2; }
-    .line-label { font-size: 20px; fill: #111827; font-weight: 600; }
-    .symbol { font-size: 37px; font-weight: 900; text-anchor: middle; dominant-baseline: central; }
-    @media (max-width: 720px) { .page { padding: 18px 10px 40px; } h1 { font-size: 30px; } .form-card { grid-template-columns: 1fr; gap: 14px; padding: 16px; } .matrix { min-width: 720px; } }
+    *{box-sizing:border-box;}
+    body{margin:0;background:#ffffff;color:var(--ink);font-family:"Source Sans Pro",Arial,sans-serif;-webkit-font-smoothing:antialiased;}
+    .page{max-width:1180px;margin:0 auto;padding:30px 16px 70px;}
+    .brand{text-align:center;font-size:13px;letter-spacing:.32em;text-transform:uppercase;color:#9aa3b2;font-weight:700;margin-bottom:6px;}
+    h1{margin:0 0 24px;text-align:center;font-size:38px;line-height:1.05;font-weight:900;letter-spacing:-0.03em;}
+    .form-card{max-width:560px;border:1px solid #e7e9ee;border-radius:14px;padding:18px 20px;margin:0 auto 30px;display:grid;grid-template-columns:1fr auto;gap:16px;align-items:end;box-shadow:0 10px 30px rgba(17,24,39,.07);}
+    label{display:block;margin-bottom:8px;font-weight:700;font-size:15px;}
+    input{width:100%;height:52px;border:1px solid #d7dbe2;border-radius:9px;padding:0 16px;font-size:20px;font-weight:600;color:var(--ink);font-family:inherit;}
+    input:focus{outline:none;border-color:var(--orange);box-shadow:0 0 0 3px rgba(255,176,46,.2);}
+    button{height:52px;padding:0 26px;border:0;border-radius:9px;background:linear-gradient(180deg,#ff9b57,#f27f3f);color:#fff;font-size:17px;font-weight:900;font-family:inherit;cursor:pointer;white-space:nowrap;}
+    button:hover{filter:brightness(1.04);}
+    .chart-wrap{width:100%;overflow:auto;padding:6px 0 20px;}
+    .matrix{display:block;width:min(100%,1000px);min-width:780px;height:auto;margin:0 auto;overflow:visible;}
+    .line-main{stroke:var(--ink);stroke-width:3.2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+    .line-thin{stroke:var(--ink);stroke-width:1.3;fill:none;}
+    .line-male{stroke:var(--purple);stroke-width:3;fill:none;marker-end:url(#arrowPurple);}
+    .line-female{stroke:var(--red);stroke-width:3;fill:none;marker-end:url(#arrowRed);}
+    .line-channel{stroke:var(--ink);stroke-width:1.3;stroke-dasharray:7 7;fill:none;}
+    .circle-white{fill:#fff;stroke:var(--ink);stroke-width:3;}
+    .circle-purple{fill:var(--purple);}
+    .circle-blue{fill:var(--blue);}
+    .circle-cyan{fill:var(--cyan);}
+    .circle-green{fill:var(--green);}
+    .circle-yellow{fill:var(--yellow);}
+    .circle-orange{fill:var(--orange);}
+    .circle-red{fill:var(--red);}
+    .num{text-anchor:middle;dominant-baseline:central;font-weight:700;fill:var(--ink);font-family:"Source Sans Pro",Arial,sans-serif;}
+    .num-white{fill:#fff;}
+    .num-dark{fill:var(--ink);}
+    .num-big{font-size:52px;font-weight:700;}
+    .num-mid{font-size:38px;font-weight:700;}
+    .num-small{font-size:26px;font-weight:700;}
+    .outer-arcana{text-anchor:middle;dominant-baseline:central;font-size:21px;font-weight:600;fill:#0d1b2a;}
+    .age-major{text-anchor:middle;font-size:13px;fill:#111827;font-weight:900;}
+    .age-range{text-anchor:middle;dominant-baseline:central;font-size:9px;fill:#5b6573;font-weight:600;}
+    .tick-dot{fill:var(--ink);stroke:var(--ink);stroke-width:1;}
+    .tick-open{fill:#fff;stroke:var(--ink);stroke-width:2;}
+    .line-label{font-size:19px;fill:#1f2530;font-weight:600;}
+    .symbol{font-size:38px;font-weight:900;text-anchor:middle;dominant-baseline:central;}
+    @media (max-width:720px){
+      .page{padding:18px 10px 40px;}
+      h1{font-size:30px;}
+      .form-card{grid-template-columns:1fr;gap:14px;padding:16px;}
+      .matrix{min-width:740px;}
+    }
   </style>
 </head>
 <body>
   <main class="page">
+    <p class="brand">by destimatrix</p>
     <h1>Matrix of Destiny</h1>
     <form class="form-card" id="chartForm">
-      <div><label for="birthdate">Date of birth</label><input id="birthdate" type="text" value="28.05.1994" placeholder="DD.MM.YYYY" autocomplete="off"></div>
+      <div>
+        <label for="birthdate">Date of birth</label>
+        <input id="birthdate" type="text" value="28.05.1994" placeholder="DD.MM.YYYY" autocomplete="off" inputmode="numeric">
+      </div>
       <button type="submit">Calculate</button>
     </form>
+
     <div class="chart-wrap">
       <svg class="matrix" viewBox="0 0 1000 1000" aria-label="Destiny Matrix personal chart">
         <defs>
           <marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#8a46a3"></path></marker>
           <marker id="arrowRed" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#ef4141"></path></marker>
         </defs>
+
+        <!-- octagon + inner squares -->
         <polygon class="line-main" points="500,64 779,180 936,500 779,820 500,936 221,820 64,500 221,180"></polygon>
         <polygon class="line-main" points="500,104 896,500 500,896 104,500"></polygon>
         <rect class="line-main" x="221" y="221" width="558" height="558"></rect>
+
+        <!-- thin cross -->
         <line class="line-thin" x1="500" y1="104" x2="500" y2="896"></line>
         <line class="line-thin" x1="104" y1="500" x2="896" y2="500"></line>
+
+        <!-- generation lines -->
         <line class="line-male" x1="221" y1="221" x2="779" y2="779"></line>
         <line class="line-female" x1="779" y1="221" x2="221" y2="779"></line>
         <line class="line-channel" x1="500" y1="779" x2="779" y2="500"></line>
-        <text class="line-label" x="365" y="405" transform="rotate(45 365 405)">male generation line</text>
-        <text class="line-label" x="625" y="410" transform="rotate(-45 625 410)">female generation line</text>
-        <text class="symbol" x="640" y="565" fill="#9bd454">$</text>
-        <text class="symbol" x="545" y="665" fill="#ef4141">❤</text>
-        <g id="perimeter"></g><g id="fixedAges"></g><g id="dynamicYearArcana"></g><g id="circleLayer"></g>
+
+        <!-- labels + symbols -->
+        <text class="line-label" x="356" y="388" transform="rotate(45 356 388)">male generation line</text>
+        <text class="line-label" x="640" y="392" transform="rotate(-45 640 392)">female generation line</text>
+        <text class="symbol" x="650" y="575" fill="#9bd454">$</text>
+        <text class="symbol" x="548" y="668" fill="#ef4141">&#10084;</text>
+
+        <g id="perimeter"></g>
+        <g id="fixedAges"></g>
+        <g id="dynamicYearArcana"></g>
+        <g id="circleLayer"></g>
       </svg>
     </div>
   </main>
+
 <script>
 const POINTS={top:[500,64],topRight:[779,180],right:[936,500],bottomRight:[779,820],bottom:[500,936],bottomLeft:[221,820],left:[64,500],topLeft:[221,180]};
-const CIRCLE_POSITIONS=[['b',500,104,56,'purple','big'],['b2',500,178,38,'blue','mid'],['b1',500,248,28,'cyan','small'],['b3',500,372,27,'green','small'],['a',104,500,56,'purple','big'],['a2',178,500,38,'blue','mid'],['a1',250,500,28,'cyan','small'],['a3',372,500,27,'green','small'],['c',896,500,56,'red','big'],['c2',820,500,38,'white','mid'],['c1',750,500,28,'orange','small'],['d',500,896,56,'red','big'],['d2',500,820,38,'white','mid'],['d1',500,750,28,'orange','small'],['e',500,500,56,'yellow','big'],['e1',570,500,34,'white','small'],['e2',620,500,28,'white','small'],['f',221,180,54,'white','big'],['f2',278,250,36,'white','mid'],['f3',330,306,28,'white','small'],['g',779,180,54,'white','big'],['g2',722,250,36,'white','mid'],['g3',670,306,28,'white','small'],['y',779,820,54,'white','big'],['y2',722,750,36,'white','mid'],['y3',670,694,28,'white','small'],['k',221,820,54,'white','big'],['k2',278,750,36,'white','mid'],['k3',330,694,28,'white','small'],['x1',555,708,28,'white','small'],['x',620,620,28,'white','small'],['x2',690,550,28,'white','small']];
-const AGE_MAJOR=[[36,504,'0\nyears\nold'],[165,158,'10\nyears\nold'],[500,38,'20\nyears\nold'],[835,158,'30\nyears\nold'],[964,504,'40\nyears\nold'],[835,858,'50\nyears\nold'],[500,970,'60\nyears\nold'],[165,858,'70\nyears\nold']];
-function reduceArcana(number){let n=Number(number);while(n>22){n=String(n).split('').reduce((sum,digit)=>sum+Number(digit),0)}return n}
-function parseDate(value){const match=String(value).trim().match(/^(\d{2})[./-](\d{2})[./-](\d{4})$/);if(!match)return null;return{day:Number(match[1]),month:Number(match[2]),year:match[3]}}
-function calculate(dateValue){const parsed=parseDate(dateValue);if(!parsed){alert('Please enter date in DD.MM.YYYY format.');return null}const a=reduceArcana(parsed.day);const b=reduceArcana(parsed.month);const c=reduceArcana(String(parsed.year).split('').reduce((sum,digit)=>sum+Number(digit),0));const d=reduceArcana(a+b+c);const e=reduceArcana(a+b+c+d);const a1=reduceArcana(a+e);const a2=reduceArcana(a+a1);const a3=reduceArcana(a1+e);const b1=reduceArcana(b+e);const b2=reduceArcana(b+b1);const b3=reduceArcana(b1+e);const c1=reduceArcana(c+e);const c2=reduceArcana(c+c1);const d1=reduceArcana(d+e);const d2=reduceArcana(d+d1);const e1=reduceArcana(c1+d1);const e2=reduceArcana(c1+e1);const e4=reduceArcana(d1+e1);const f=reduceArcana(a+b);const g=reduceArcana(b+c);const y=reduceArcana(c+d);const k=reduceArcana(d+a);const generationPower=reduceArcana(f+g+y+k);const f3=reduceArcana(f+generationPower);const f2=reduceArcana(f+f3);const g3=reduceArcana(g+generationPower);const g2=reduceArcana(g+g3);const y3=reduceArcana(y+generationPower);const y2=reduceArcana(y+y3);const k3=reduceArcana(k+generationPower);const k2=reduceArcana(k+k3);const x=reduceArcana(c1+d1);const x2=reduceArcana(c1+x);const x1=reduceArcana(d1+x);return{a,b,c,d,e,a1,a2,a3,b1,b2,b3,c1,c2,d1,d2,e1,e2,e4,f,g,y,k,f2,f3,g2,g3,y2,y3,k2,k3,x,x1,x2}}
-function arcanaBetween(start,end){const mid=reduceArcana(start+end);const leftMid=reduceArcana(start+mid);const rightMid=reduceArcana(mid+end);const leftLeft=reduceArcana(start+leftMid);const leftRight=reduceArcana(leftMid+mid);const rightLeft=reduceArcana(mid+rightMid);const rightRight=reduceArcana(rightMid+end);return[leftLeft,leftMid,leftRight,mid,rightLeft,rightMid,rightRight]}
+
+/* circle layout: [key, x, y, radius, color, sizeClass, textColor] */
+const CIRCLE_POSITIONS=[
+  /* vertical top arm: crown -> center */
+  ['b',500,104,56,'purple','big','white'],
+  ['b2',500,180,38,'blue','mid','white'],
+  ['b1',500,250,28,'cyan','small','white'],
+  ['b3',500,372,27,'green','small','dark'],
+  /* vertical bottom arm */
+  ['d',500,896,56,'red','big','white'],
+  ['d2',500,820,38,'white','mid','dark'],
+  ['d1',500,750,28,'orange','small','white'],
+  /* horizontal left arm */
+  ['a',104,500,56,'purple','big','white'],
+  ['a2',180,500,38,'blue','mid','white'],
+  ['a1',250,500,28,'cyan','small','white'],
+  ['a3',372,500,27,'green','small','dark'],
+  /* horizontal right arm */
+  ['c',896,500,56,'red','big','white'],
+  ['c2',820,500,38,'white','mid','dark'],
+  ['c1',750,500,28,'orange','small','white'],
+  /* center */
+  ['e',500,500,56,'yellow','big','dark'],
+  ['e1',570,500,30,'white','small','dark'],
+  ['e2',628,500,26,'white','small','dark'],
+  /* diagonal corners (white) */
+  ['f',236,196,52,'white','big','dark'],
+  ['f2',292,262,35,'white','mid','dark'],
+  ['f3',342,316,27,'white','small','dark'],
+  ['g',764,196,52,'white','big','dark'],
+  ['g2',708,262,35,'white','mid','dark'],
+  ['g3',658,316,27,'white','small','dark'],
+  ['y',764,804,52,'white','big','dark'],
+  ['y2',708,738,35,'white','mid','dark'],
+  ['y3',658,684,27,'white','small','dark'],
+  ['k',236,804,52,'white','big','dark'],
+  ['k2',292,738,35,'white','mid','dark'],
+  ['k3',342,684,27,'white','small','dark'],
+  /* love/money channel circles (center-bottom-right) */
+  ['x1',555,705,27,'white','small','dark'],
+  ['x',620,620,27,'white','small','dark'],
+  ['x2',690,548,27,'white','small','dark']
+];
+
+const AGE_MAJOR=[
+  [28,504,'0\nyears\nold'],[150,140,'10\nyears\nold'],[500,30,'20\nyears\nold'],[850,140,'30\nyears\nold'],
+  [972,504,'40\nyears\nold'],[850,876,'50\nyears\nold'],[500,978,'60\nyears\nold'],[150,876,'70\nyears\nold']
+];
+
+function reduceArcana(number){let n=Number(number);while(n>22){n=String(n).split('').reduce((s,d)=>s+Number(d),0)}return n}
+function parseDate(value){const m=String(value).trim().match(/^(\d{1,2})[./-](\d{1,2})[./-](\d{4})$/);if(!m)return null;return{day:Number(m[1]),month:Number(m[2]),year:m[3]}}
+function calculate(dateValue){
+  const p=parseDate(dateValue);if(!p){alert('Please enter date as DD.MM.YYYY');return null}
+  const a=reduceArcana(p.day);
+  const b=reduceArcana(p.month);
+  const c=reduceArcana(String(p.year).split('').reduce((s,d)=>s+Number(d),0));
+  const d=reduceArcana(a+b+c);
+  const e=reduceArcana(a+b+c+d);
+  const a1=reduceArcana(a+e),a2=reduceArcana(a+a1),a3=reduceArcana(a1+e);
+  const b1=reduceArcana(b+e),b2=reduceArcana(b+b1),b3=reduceArcana(b1+e);
+  const c1=reduceArcana(c+e),c2=reduceArcana(c+c1);
+  const d1=reduceArcana(d+e),d2=reduceArcana(d+d1);
+  const e1=reduceArcana(c1+d1),e2=reduceArcana(c1+e1);
+  const f=reduceArcana(a+b),g=reduceArcana(b+c),y=reduceArcana(c+d),k=reduceArcana(d+a);
+  const generationPower=reduceArcana(f+g+y+k);
+  const f3=reduceArcana(f+generationPower),f2=reduceArcana(f+f3);
+  const g3=reduceArcana(g+generationPower),g2=reduceArcana(g+g3);
+  const y3=reduceArcana(y+generationPower),y2=reduceArcana(y+y3);
+  const k3=reduceArcana(k+generationPower),k2=reduceArcana(k+k3);
+  const x=reduceArcana(c1+d1),x2=reduceArcana(c1+x),x1=reduceArcana(d1+x);
+  return{a,b,c,d,e,a1,a2,a3,b1,b2,b3,c1,c2,d1,d2,e1,e2,f,g,y,k,f2,f3,g2,g3,y2,y3,k2,k3,x,x1,x2}
+}
+function arcanaBetween(start,end){
+  const mid=reduceArcana(start+end);
+  const leftMid=reduceArcana(start+mid);
+  const rightMid=reduceArcana(mid+end);
+  const leftLeft=reduceArcana(start+leftMid);
+  const leftRight=reduceArcana(leftMid+mid);
+  const rightLeft=reduceArcana(mid+rightMid);
+  const rightRight=reduceArcana(rightMid+end);
+  return[leftLeft,leftMid,leftRight,mid,rightLeft,rightMid,rightRight]
+}
 function pointAt(p1,p2,t){return[p1[0]+(p2[0]-p1[0])*t,p1[1]+(p2[1]-p1[1])*t]}
-function normal(p1,p2,distance){const dx=p2[0]-p1[0];const dy=p2[1]-p1[1];const len=Math.sqrt(dx*dx+dy*dy)||1;return[-dy/len*distance,dx/len*distance]}
-function drawStaticAgesAndTicks(){const perimeter=document.getElementById('perimeter');const ages=document.getElementById('fixedAges');const corners=[POINTS.left,POINTS.topLeft,POINTS.top,POINTS.topRight,POINTS.right,POINTS.bottomRight,POINTS.bottom,POINTS.bottomLeft];const majorAgeLabels=[0,10,20,30,40,50,60,70];let tickHtml='';let ageHtml='';AGE_MAJOR.forEach(([x,y,label])=>{const lines=label.split('\n');ageHtml+=`<text class="age-major" x="${x}" y="${y}">`;lines.forEach((line,i)=>{ageHtml+=`<tspan x="${x}" dy="${i===0?0:12}">${line}</tspan>`});ageHtml+='</text>'});for(let side=0;side<corners.length;side++){const p1=corners[side];const p2=corners[(side+1)%corners.length];const inward=normal(p1,p2,side>=0&&side<=3?20:-20);const openTicks=[2,6];for(let i=1;i<=8;i++){const t=i/9;const [x,y]=pointAt(p1,p2,t);const cls=openTicks.includes(i)?'tick-open':'tick-dot';const r=openTicks.includes(i)?4.8:3.6;tickHtml+=`<circle class="${cls}" cx="${x}" cy="${y}" r="${r}"></circle>`;const ageStart=majorAgeLabels[side]+(i-1)*1.25;const ageEnd=ageStart+1.25;const label=`${String(ageStart).replace('.25',',25').replace('.5',',5').replace('.75',',75')}-${String(ageEnd).replace('.25',',25').replace('.5',',5').replace('.75',',75')}`;const lx=x+inward[0];const ly=y+inward[1];if(i!==2&&i!==6){ageHtml+=`<text class="age-range" x="${lx}" y="${ly}">${label}</text>`}else{const bigAge=majorAgeLabels[side]+(i===2?5:15);ageHtml+=`<text class="age-major" x="${lx}" y="${ly-6}">${bigAge}<tspan x="${lx}" dy="10">years</tspan><tspan x="${lx}" dy="10">old</tspan></text>`}}}perimeter.innerHTML=tickHtml;ages.innerHTML=ageHtml}
-function drawYearArcana(data){const group=document.getElementById('dynamicYearArcana');const order=[['a',POINTS.left],['f',POINTS.topLeft],['b',POINTS.top],['g',POINTS.topRight],['c',POINTS.right],['y',POINTS.bottomRight],['d',POINTS.bottom],['k',POINTS.bottomLeft]];let html='';for(let side=0;side<order.length;side++){const[startKey,p1]=order[side];const[endKey,p2]=order[(side+1)%order.length];const values=arcanaBetween(data[startKey],data[endKey]);const out=normal(p1,p2,side>=0&&side<=3?-33:33);values.forEach((value,index)=>{const[x,y]=pointAt(p1,p2,(index+1)/8);html+=`<text class="outer-arcana" x="${x+out[0]}" y="${y+out[1]}">${value}</text>`})}group.innerHTML=html}
-function drawCircles(data){const layer=document.getElementById('circleLayer');let html='';CIRCLE_POSITIONS.forEach(([key,x,y,r,color,size])=>{const circleClass=color==='white'?'circle-white':`circle-${color}`;const textClass=size==='big'?'num-big':size==='mid'?'num-mid':'num-small';const whiteText=['purple','blue','red','orange'].includes(color)?'num-white':'';html+=`<circle class="${circleClass}" cx="${x}" cy="${y}" r="${r}"></circle><text class="num ${textClass} ${whiteText}" x="${x}" y="${y}">${data[key]??''}</text>`});layer.innerHTML=html}
-function render(){const result=calculate(document.getElementById('birthdate').value);if(!result)return;drawCircles(result);drawYearArcana(result)}
-document.getElementById('chartForm').addEventListener('submit',event=>{event.preventDefault();render()});drawStaticAgesAndTicks();render();
+function normal(p1,p2,distance){const dx=p2[0]-p1[0],dy=p2[1]-p1[1],len=Math.sqrt(dx*dx+dy*dy)||1;return[-dy/len*distance,dx/len*distance]}
+
+function drawStaticAgesAndTicks(){
+  const perimeter=document.getElementById('perimeter');
+  const ages=document.getElementById('fixedAges');
+  const corners=[POINTS.left,POINTS.topLeft,POINTS.top,POINTS.topRight,POINTS.right,POINTS.bottomRight,POINTS.bottom,POINTS.bottomLeft];
+  const majorAgeLabels=[0,10,20,30,40,50,60,70];
+  let tickHtml='';let ageHtml='';
+  AGE_MAJOR.forEach(([x,y,label])=>{
+    const lines=label.split('\n');
+    ageHtml+=`<text class="age-major" x="${x}" y="${y}">`;
+    lines.forEach((line,i)=>{ageHtml+=`<tspan x="${x}" dy="${i===0?0:12}">${line}</tspan>`});
+    ageHtml+='</text>';
+  });
+  const midTick=4; /* single milestone in the middle of each side */
+  for(let side=0;side<corners.length;side++){
+    const p1=corners[side];const p2=corners[(side+1)%corners.length];
+    const inward=normal(p1,p2,side>=0&&side<=3?20:-20);
+    for(let i=1;i<=8;i++){
+      const t=(i===midTick)?0.5:i/9;
+      const [x,y]=pointAt(p1,p2,t);
+      const isMilestone=(i===midTick);
+      const cls=isMilestone?'tick-open':'tick-dot';
+      const r=isMilestone?5:3.4;
+      tickHtml+=`<circle class="${cls}" cx="${x}" cy="${y}" r="${r}"></circle>`;
+      const lx=x+inward[0];const ly=y+inward[1];
+      if(isMilestone){
+        const bigAge=majorAgeLabels[side]+5;
+        ageHtml+=`<text class="age-major" x="${lx}" y="${ly-6}">${bigAge}<tspan x="${lx}" dy="10">years</tspan><tspan x="${lx}" dy="10">old</tspan></text>`;
+      }else{
+        const ageStart=majorAgeLabels[side]+(i-1)*1.25;
+        const ageEnd=ageStart+1.25;
+        const fmt=v=>String(v).replace('.25',',25').replace('.5',',5').replace('.75',',75');
+        ageHtml+=`<text class="age-range" x="${lx}" y="${ly}">${fmt(ageStart)}-${fmt(ageEnd)}</text>`;
+      }
+    }
+  }
+  perimeter.innerHTML=tickHtml;ages.innerHTML=ageHtml;
+}
+
+function drawYearArcana(data){
+  const group=document.getElementById('dynamicYearArcana');
+  const order=[['a',POINTS.left],['f',POINTS.topLeft],['b',POINTS.top],['g',POINTS.topRight],['c',POINTS.right],['y',POINTS.bottomRight],['d',POINTS.bottom],['k',POINTS.bottomLeft]];
+  let html='';
+  for(let side=0;side<order.length;side++){
+    const[startKey,p1]=order[side];
+    const[endKey,p2]=order[(side+1)%order.length];
+    const values=arcanaBetween(data[startKey],data[endKey]);
+    const out=normal(p1,p2,side>=0&&side<=3?-33:33);
+    values.forEach((value,index)=>{
+      const[x,y]=pointAt(p1,p2,(index+1)/8);
+      html+=`<text class="outer-arcana" x="${x+out[0]}" y="${y+out[1]}">${value}</text>`;
+    });
+  }
+  group.innerHTML=html;
+}
+
+function drawCircles(data){
+  const layer=document.getElementById('circleLayer');
+  let html='';
+  CIRCLE_POSITIONS.forEach(([key,x,y,r,color,size,textColor])=>{
+    const circleClass=color==='white'?'circle-white':`circle-${color}`;
+    const textClass=size==='big'?'num-big':size==='mid'?'num-mid':'num-small';
+    const tColor=textColor==='white'?'num-white':'num-dark';
+    html+=`<circle class="${circleClass}" cx="${x}" cy="${y}" r="${r}"></circle><text class="num ${textClass} ${tColor}" x="${x}" y="${y}">${data[key]??''}</text>`;
+  });
+  layer.innerHTML=html;
+}
+
+function render(){
+  const result=calculate(document.getElementById('birthdate').value);
+  if(!result)return;
+  drawCircles(result);
+  drawYearArcana(result);
+}
+
+document.getElementById('chartForm').addEventListener('submit',e=>{e.preventDefault();render()});
+drawStaticAgesAndTicks();
+render();
 </script>
 </body>
 </html>
