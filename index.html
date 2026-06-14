@@ -6,308 +6,281 @@
   <title>DestiMatrix Calculator</title>
 
   <style>
-    :root {
-      --bg: #fbf7f2;
-      --card: #ffffff;
-      --ink: #2d2522;
-      --muted: #8a7a72;
-      --line: #d8cbc2;
-
-      --red: #e85d75;
-      --pink: #f6a6c9;
-      --blue: #58aee8;
-      --light-blue: #a9dbf7;
-      --green: #6fbe8a;
-      --orange: #f2a24b;
-      --purple: #9b7be8;
-      --yellow: #f3d35b;
-      --white: #ffffff;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      font-family: Inter, Arial, sans-serif;
-      background: radial-gradient(circle at top, #fffaf5, var(--bg));
-      color: var(--ink);
+      font-family: Arial, sans-serif;
+      background: #ffffff;
+      color: #222;
     }
 
     .page {
-      width: min(1180px, 100%);
+      max-width: 1180px;
       margin: 0 auto;
       padding: 28px 16px 60px;
     }
 
-    .hero {
+    h1 {
       text-align: center;
-      margin-bottom: 24px;
-    }
-
-    .hero h1 {
-      margin: 0 0 8px;
-      font-size: clamp(32px, 6vw, 62px);
-      letter-spacing: -0.06em;
-      line-height: 0.95;
-    }
-
-    .hero p {
-      margin: 0 auto;
-      max-width: 620px;
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 1.6;
-    }
-
-    .calculator {
-      display: grid;
-      grid-template-columns: 340px 1fr;
-      gap: 22px;
-      align-items: start;
-    }
-
-    .panel,
-    .matrix-card,
-    .health-card {
-      background: rgba(255, 255, 255, 0.88);
-      border: 1px solid rgba(216, 203, 194, 0.8);
-      border-radius: 28px;
-      box-shadow: 0 20px 60px rgba(64, 44, 34, 0.08);
-    }
-
-    .panel {
-      padding: 22px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 8px;
-      font-size: 13px;
+      font-size: 32px;
+      margin: 0 0 28px;
       font-weight: 700;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
+    }
+
+    .form {
+      max-width: 420px;
+      margin: 0 auto 30px;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
     }
 
     input {
-      width: 100%;
-      height: 52px;
-      border-radius: 16px;
-      border: 1px solid var(--line);
-      padding: 0 14px;
-      font-size: 17px;
-      color: var(--ink);
-      background: #fff;
-      outline: none;
-    }
-
-    input:focus {
-      border-color: var(--orange);
-      box-shadow: 0 0 0 4px rgba(242, 162, 75, 0.18);
+      height: 42px;
+      padding: 0 12px;
+      font-size: 16px;
+      border: 1px solid #cfcfcf;
+      border-radius: 4px;
     }
 
     button {
-      width: 100%;
-      height: 52px;
-      margin-top: 14px;
-      border: 0;
-      border-radius: 16px;
-      background: var(--ink);
-      color: white;
+      height: 42px;
+      padding: 0 18px;
       font-size: 15px;
-      font-weight: 800;
+      font-weight: 700;
+      background: #222831;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
       cursor: pointer;
     }
 
-    .summary {
-      margin-top: 18px;
+    .result {
+      display: none;
+    }
+
+    .main-grid {
       display: grid;
-      gap: 10px;
+      grid-template-columns: 330px 1fr;
+      gap: 30px;
+      align-items: start;
     }
 
-    .summary-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 10px 0;
-      border-bottom: 1px solid #eee4dd;
-      font-size: 14px;
+    .left-column h2 {
+      font-size: 22px;
+      margin: 0 0 8px;
     }
 
-    .summary-row span:last-child {
-      font-weight: 800;
+    .left-column h3 {
+      font-size: 16px;
+      margin: 0 0 16px;
     }
 
-    .matrix-card {
-      padding: 18px;
-      overflow: hidden;
-    }
-
-    .svg-wrap {
+    .health-table {
       width: 100%;
-      overflow: visible;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin-bottom: 24px;
+    }
+
+    .health-table th,
+    .health-table td {
+      padding: 10px;
+      border-bottom: 1px solid #e6e6e6;
+      text-align: center;
+    }
+
+    .health-table th:first-child,
+    .health-table td:first-child {
+      text-align: left;
+      font-weight: 700;
+    }
+
+    .chakra-color {
+      width: 28px;
+      color: #fff;
+      font-weight: 700;
+      text-align: center !important;
+    }
+
+    .violet { background: #8e44ad; }
+    .indigo { background: #4b6cff; }
+    .blue { background: #45cfe1; }
+    .green { background: #9be564; color: #222; }
+    .yellow { background: #ffed47; color: #222; }
+    .orange { background: #f6a23a; }
+    .red { background: #ef4141; }
+
+    .info-block {
+      margin-bottom: 22px;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .info-title {
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .small-circles {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+
+    .mini-circle {
+      width: 28px;
+      height: 28px;
+      border: 1.5px solid #999;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .matrix-wrap {
+      width: 100%;
+      overflow-x: auto;
     }
 
     svg {
       display: block;
       width: 100%;
+      min-width: 650px;
       height: auto;
-      max-height: 760px;
     }
 
     .line {
-      fill: none;
-      stroke: var(--line);
+      stroke: #222831;
       stroke-width: 2;
-    }
-
-    .line-strong {
       fill: none;
-      stroke: #b8a99f;
-      stroke-width: 2.6;
     }
 
-    .sky {
-      stroke: var(--blue);
+    .thin-line {
+      stroke: #222831;
+      stroke-width: 1.3;
+      fill: none;
+      opacity: .8;
     }
 
-    .earth {
-      stroke: var(--green);
+    .male-line {
+      stroke: #9b6bd3;
+      stroke-width: 2;
+      fill: none;
     }
 
-    .male {
-      stroke: var(--red);
+    .female-line {
+      stroke: #ef5a8a;
+      stroke-width: 2;
+      fill: none;
     }
 
-    .female {
-      stroke: var(--pink);
+    .dashed-line {
+      stroke: #999;
+      stroke-width: 1.4;
+      stroke-dasharray: 5 5;
+      fill: none;
     }
 
     .circle {
-      stroke: #ffffff;
-      stroke-width: 4;
-      filter: drop-shadow(0 8px 14px rgba(42, 31, 26, 0.13));
+      stroke: #fff;
+      stroke-width: 5;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,.12));
+    }
+
+    .circle-border {
+      stroke: #222831;
+      stroke-width: 1.5;
+      fill: #fff;
     }
 
     .num {
-      font-size: 21px;
-      font-weight: 850;
+      font-size: 24px;
+      font-weight: 700;
       text-anchor: middle;
       dominant-baseline: middle;
-      fill: var(--ink);
+      fill: #222;
     }
 
-   .num {
-  font-size: 25px;
-  font-weight: 800;
-  text-anchor: middle;
-  dominant-baseline: middle;
-  fill: var(--ink);
-}
-
-.small-num {
-  font-size: 15px;
-  font-weight: 700;
-  text-anchor: middle;
-  dominant-baseline: middle;
-  fill: var(--ink);
-}
-
-.age {
-  font-size: 8px;
-  font-weight: 700;
-  text-anchor: middle;
-  dominant-baseline: middle;
-  fill: #222222;
-}
-
-.year-arcana {
-  font-size: 9px;
-  font-weight: 700;
-  text-anchor: middle;
-  dominant-baseline: middle;
-  fill: #222222;
-}
-
-.symbol {
-  font-size: 20px;
-  font-weight: 900;
-  text-anchor: middle;
-  dominant-baseline: middle;
-  fill: #7fbf4d;
-}
-
-.line-label {
-  font-size: 9px;
-  font-weight: 600;
-  text-anchor: middle;
-  dominant-baseline: middle;
-  fill: #6f6070;
-  font-style: italic;
-}
-
-    .health-card {
-      margin-top: 22px;
-      padding: 22px;
+    .big-num {
+      font-size: 34px;
+      font-weight: 700;
+      text-anchor: middle;
+      dominant-baseline: middle;
+      fill: #222;
     }
 
-    .health-card h2 {
-      margin: 0 0 14px;
-      font-size: 24px;
-      letter-spacing: -0.03em;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      overflow: hidden;
-      border-radius: 18px;
+    .small-num {
       font-size: 14px;
+      font-weight: 700;
+      text-anchor: middle;
+      dominant-baseline: middle;
+      fill: #222;
     }
 
-    th,
-    td {
-      padding: 12px;
-      border-bottom: 1px solid #eee4dd;
-      text-align: center;
+    .tiny {
+      font-size: 7px;
+      font-weight: 600;
+      text-anchor: middle;
+      dominant-baseline: middle;
+      fill: #222;
     }
 
-    th {
-      color: var(--muted);
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
+    .age-main {
+      font-size: 8px;
+      font-weight: 700;
+      text-anchor: middle;
+      fill: #222;
     }
 
-    td:first-child,
-    th:first-child {
-      text-align: left;
-      font-weight: 800;
+    .age-small {
+      font-size: 5.5px;
+      font-weight: 500;
+      text-anchor: middle;
+      fill: #222;
+    }
+
+    .label {
+      font-size: 9px;
+      font-style: italic;
+      fill: #222;
+    }
+
+    .money {
+      font-size: 20px;
+      fill: #75bf43;
+      font-weight: 700;
+    }
+
+    .heart {
+      font-size: 20px;
+      fill: #ef4141;
+      font-weight: 700;
     }
 
     @media (max-width: 900px) {
-      .calculator {
+      .main-grid {
         grid-template-columns: 1fr;
       }
 
-      .panel {
-        order: -1;
+      .left-column {
+        order: 2;
       }
 
-      .matrix-card {
-        padding: 8px;
-        border-radius: 20px;
+      .right-column {
+        order: 1;
       }
 
-      svg {
-        min-width: 620px;
+      .form {
+        flex-direction: column;
       }
 
-      .svg-wrap {
-        overflow-x: auto;
-        padding-bottom: 8px;
+      input, button {
+        width: 100%;
       }
     }
   </style>
@@ -315,51 +288,69 @@
 
 <body>
   <main class="page">
-    <section class="hero">
-      <h1>DestiMatrix Calculator</h1>
-      <p>Enter your date of birth and calculate your personal Matrix of Destiny based on the 22 Major Arcana system.</p>
-    </section>
+    <h1 id="title">DestiMatrix Calculator</h1>
 
-    <section class="calculator">
-      <aside class="panel">
-        <label for="birthDate">Date of birth</label>
-    <input id="birthDate" type="date" />
-        <button id="calculateBtn">Calculate Matrix</button>
+    <div class="form">
+      <input id="birthDate" type="date" />
+      <button id="calculateBtn">Calculate</button>
+    </div>
 
-        <div class="summary" id="summary"></div>
-      </aside>
+    <section class="result" id="result">
+      <div class="main-grid">
+        <aside class="left-column">
+          <h2>Personal calculation</h2>
+          <h3>Health card</h3>
+          <div id="healthCard"></div>
 
-      <section>
-        <div class="matrix-card">
-          <div class="svg-wrap">
-            <svg id="matrixSvg" viewBox="0 0 760 760" role="img" aria-label="Matrix of Destiny chart"></svg>
+          <div class="info-block">
+            <div class="info-title">Male generation lines:</div>
+            <div class="small-circles" id="maleLines"></div>
           </div>
-        </div>
 
-        <div class="health-card">
-          <h2>Health Card</h2>
-          <div id="healthTable"></div>
-        </div>
-      </section>
+          <div class="info-block">
+            <div class="info-title">Female generation lines:</div>
+            <div class="small-circles" id="femaleLines"></div>
+          </div>
+
+          <div class="info-block">
+            <div class="info-title">Programs</div>
+            <div id="programs"></div>
+          </div>
+
+          <div class="info-block">
+            <div class="info-title">Purposes</div>
+            <div id="purposes"></div>
+          </div>
+        </aside>
+
+        <section class="right-column">
+          <div class="matrix-wrap">
+            <svg id="matrixSvg" viewBox="0 0 760 620"></svg>
+          </div>
+        </section>
+      </div>
     </section>
   </main>
 
   <script>
     const svg = document.getElementById("matrixSvg");
-    const summary = document.getElementById("summary");
-    const healthTable = document.getElementById("healthTable");
+    const result = document.getElementById("result");
+    const healthCard = document.getElementById("healthCard");
+    const maleLines = document.getElementById("maleLines");
+    const femaleLines = document.getElementById("femaleLines");
+    const programs = document.getElementById("programs");
+    const purposes = document.getElementById("purposes");
 
     const NS = "http://www.w3.org/2000/svg";
 
     const colors = {
-      red: "#e85d75",
-      pink: "#f6a6c9",
-      blue: "#58aee8",
-      lightBlue: "#a9dbf7",
-      green: "#6fbe8a",
-      orange: "#f2a24b",
-      purple: "#9b7be8",
-      yellow: "#f3d35b",
+      violet: "#9270e8",
+      red: "#ef4f6f",
+      yellow: "#f5df3f",
+      blue: "#45aee8",
+      lightBlue: "#a7dff6",
+      green: "#97d85c",
+      orange: "#f6a23a",
       white: "#ffffff"
     };
 
@@ -375,20 +366,27 @@
       return reduce22(values.reduce((sum, value) => sum + Number(value), 0));
     }
 
-    function getDateParts(dateValue) {
-      const [year, month, day] = dateValue.split("-").map(Number);
-      return { day, month, year };
-    }
-
     function calculateMatrix(dateValue) {
-      const { day, month, year } = getDateParts(dateValue);
+      const [year, month, day] = dateValue.split("-").map(Number);
 
       const D = reduce22(day);
       const M = reduce22(month);
       const Y = reduce22(String(year).split("").reduce((s, d) => s + Number(d), 0));
-
       const tail = add22(D, M, Y);
       const center = add22(D, M, Y, tail);
+
+      const A1 = add22(D, M);
+      const B1 = add22(M, Y);
+      const C1 = add22(Y, tail);
+      const D1 = add22(tail, D);
+
+      const male1 = add22(A1, center);
+      const male2 = add22(C1, center);
+      const male3 = add22(male1, male2);
+
+      const female1 = add22(B1, center);
+      const female2 = add22(D1, center);
+      const female3 = add22(female1, female2);
 
       const portrait2 = add22(D, center);
       const portrait3 = add22(D, portrait2);
@@ -402,58 +400,34 @@
       const karmic2 = add22(tail, center);
       const karmic3 = add22(tail, karmic2);
 
-      const heartFear1 = add22(portrait2, center);
-      const heartFear2 = add22(talent2, center);
+      const money = add22(material2, material3);
+      const love = add22(karmic2, karmic3);
+      const relationship = add22(love, center);
+      const finance = add22(money, center);
 
-      const balance = add22(karmic2, material2);
-      const money = add22(material2, balance);
-      const love = add22(karmic2, balance);
+      const sky = add22(M, tail);
+      const earth = add22(D, Y);
+      const personalPurpose = add22(sky, earth);
 
-      const A1 = add22(D, M);
-      const B1 = add22(M, Y);
-      const C1 = add22(Y, tail);
-      const D1 = add22(tail, D);
+      const socialM = add22(D, M, center);
+      const socialF = add22(Y, tail, center);
+      const socialPurpose = add22(socialM, socialF);
 
-      const generationPower = add22(A1, B1, C1, D1);
-
-      const A3 = add22(A1, generationPower);
-      const B3 = add22(B1, generationPower);
-      const C3 = add22(C1, generationPower);
-      const D3 = add22(D1, generationPower);
-
-      const A2 = add22(A1, A3);
-      const B2 = add22(B1, B3);
-      const C2 = add22(C1, C3);
-      const D2 = add22(D1, D3);
-
-      const firstSky = add22(M, tail);
-      const firstEarth = add22(D, Y);
-      const firstMission = add22(firstSky, firstEarth);
-      const secondMission = generationPower;
-      const thirdMission = add22(firstMission, secondMission);
+      const spiritualPurpose = add22(personalPurpose, socialPurpose);
 
       return {
         D, M, Y, tail, center,
+        A1, B1, C1, D1,
+        male1, male2, male3,
+        female1, female2, female3,
         portrait2, portrait3,
         talent2, talent3,
         material2, material3,
         karmic2, karmic3,
-        heartFear1, heartFear2,
-        balance, money, love,
-        A1, A2, A3,
-        B1, B2, B3,
-        C1, C2, C3,
-        D1, D2, D3,
-        generationPower,
-        firstSky, firstEarth, firstMission, secondMission, thirdMission
-      };
-    }
-
-    function polar(cx, cy, radius, angleDeg) {
-      const angle = (angleDeg - 90) * Math.PI / 180;
-      return {
-        x: cx + radius * Math.cos(angle),
-        y: cy + radius * Math.sin(angle)
+        money, love, relationship, finance,
+        sky, earth, personalPurpose,
+        socialM, socialF, socialPurpose,
+        spiritualPurpose
       };
     }
 
@@ -474,268 +448,228 @@
       }));
     }
 
-    function circleNode(x, y, value, fill, r = 24, textClass = "num") {
-      svg.appendChild(el("circle", { cx: x, cy: y, r, fill, class: "circle" }));
-      const t = el("text", { x, y, class: textClass });
-      t.textContent = value;
-      svg.appendChild(t);
-    }
-
-    function textNode(x, y, value, cls) {
+    function text(x, y, value, cls = "small-num") {
       const t = el("text", { x, y, class: cls });
       t.textContent = value;
       svg.appendChild(t);
     }
 
-    function yearlyArcanaBetween(startValue, endValue, count) {
-      const result = new Array(count).fill(null);
+    function circle(x, y, value, fill, r = 20, cls = "num") {
+      svg.appendChild(el("circle", { cx: x, cy: y, r, fill, class: "circle" }));
+      text(x, y + 1, value, cls);
+    }
 
-      function fill(leftIndex, rightIndex, leftValue, rightValue) {
-        if (rightIndex - leftIndex <= 1) return;
-        const midIndex = Math.floor((leftIndex + rightIndex) / 2);
-        const midValue = add22(leftValue, rightValue);
-        result[midIndex] = midValue;
-        fill(leftIndex, midIndex, leftValue, midValue);
-        fill(midIndex, rightIndex, midValue, rightValue);
+    function borderCircle(x, y, value, r = 18) {
+      svg.appendChild(el("circle", { cx: x, cy: y, r, class: "circle-border" }));
+      text(x, y + 1, value, "small-num");
+    }
+
+    function sidePoints(a, b, count) {
+      const arr = [];
+      for (let i = 0; i <= count; i++) {
+        arr.push({
+          x: a.x + (b.x - a.x) * (i / count),
+          y: a.y + (b.y - a.y) * (i / count)
+        });
+      }
+      return arr;
+    }
+
+    function moveFromCenter(p, cx, cy, amount) {
+      const dx = p.x - cx;
+      const dy = p.y - cy;
+      const len = Math.sqrt(dx * dx + dy * dy);
+      return {
+        x: p.x + (dx / len) * amount,
+        y: p.y + (dy / len) * amount
+      };
+    }
+
+    function moveToCenter(p, cx, cy, amount) {
+      return moveFromCenter(p, cx, cy, -amount);
+    }
+
+    function yearlyValues(m) {
+      const anchors = [m.D, m.A1, m.M, m.B1, m.Y, m.C1, m.tail, m.D1];
+      const result = [];
+
+      for (let i = 0; i < anchors.length; i++) {
+        const start = anchors[i];
+        const end = anchors[(i + 1) % anchors.length];
+        result.push(start);
+        result.push(add22(start, end));
+        result.push(add22(start, add22(start, end)));
+        result.push(add22(add22(start, end), end));
+        result.push(end);
       }
 
-      result[0] = startValue;
-      result[count - 1] = endValue;
-      fill(0, count - 1, startValue, endValue);
       return result;
     }
 
-    function buildYearlyRing(m) {
-      const anchors = [
-        m.D, m.A1, m.M, m.B1, m.Y, m.C1, m.tail, m.D1
+    function drawMatrix(m) {
+      svg.innerHTML = "";
+
+      const cx = 430;
+      const cy = 300;
+
+      const p = {
+        left: { x: 145, y: 300 },
+        topLeft: { x: 225, y: 125 },
+        top: { x: 430, y: 55 },
+        topRight: { x: 635, y: 125 },
+        right: { x: 715, y: 300 },
+        bottomRight: { x: 635, y: 475 },
+        bottom: { x: 430, y: 545 },
+        bottomLeft: { x: 225, y: 475 }
+      };
+
+      polygon([p.left, p.topLeft, p.top, p.topRight, p.right, p.bottomRight, p.bottom, p.bottomLeft], "line");
+
+      polygon([p.top, p.right, p.bottom, p.left], "thin-line");
+      polygon([p.topLeft, p.topRight, p.bottomRight, p.bottomLeft], "thin-line");
+
+      line(p.left.x, p.left.y, p.right.x, p.right.y, "thin-line");
+      line(p.top.x, p.top.y, p.bottom.x, p.bottom.y, "thin-line");
+
+      line(p.topLeft.x, p.topLeft.y, p.bottomRight.x, p.bottomRight.y, "male-line");
+      line(p.topRight.x, p.topRight.y, p.bottomLeft.x, p.bottomLeft.y, "female-line");
+
+      line(p.topLeft.x, p.topLeft.y, p.bottomLeft.x, p.bottomLeft.y, "thin-line");
+      line(p.topRight.x, p.topRight.y, p.bottomRight.x, p.bottomRight.y, "thin-line");
+
+      line(290, 300, 570, 300, "thin-line");
+      line(430, 160, 430, 440, "thin-line");
+
+      line(500, 370, 615, 255, "dashed-line");
+
+      text(320, 245, "male generation line", "label");
+      text(485, 245, "female generation line", "label");
+
+      const sides = [
+        [p.left, p.topLeft, 0],
+        [p.topLeft, p.top, 10],
+        [p.top, p.topRight, 20],
+        [p.topRight, p.right, 30],
+        [p.right, p.bottomRight, 40],
+        [p.bottomRight, p.bottom, 50],
+        [p.bottom, p.bottomLeft, 60],
+        [p.bottomLeft, p.left, 70]
       ];
 
-      const arcana = [];
-      for (let i = 0; i < anchors.length; i++) {
-        const next = anchors[(i + 1) % anchors.length];
-        const segment = yearlyArcanaBetween(anchors[i], next, 6);
-        if (i > 0) segment.shift();
-        arcana.push(...segment);
-      }
+      const years = yearlyValues(m);
+      let yearIndex = 0;
 
-      return arcana.slice(0, 40);
+      sides.forEach(([a, b, ageStart]) => {
+        const pts = sidePoints(a, b, 5);
+
+        pts.forEach((base, i) => {
+          const outside = moveFromCenter(base, cx, cy, 36);
+          const inside = moveToCenter(base, cx, cy, 20);
+
+          text(outside.x, outside.y, years[yearIndex] || "", "tiny");
+
+          if (i === 0) {
+            text(inside.x, inside.y - 2, `${ageStart}`, "age-main");
+            text(inside.x, inside.y + 7, "years old", "age-small");
+          } else {
+            text(inside.x, inside.y, ageStart + i * 2, "age-small");
+          }
+
+          yearIndex++;
+        });
+      });
+
+      circle(p.left.x, p.left.y, m.D, colors.violet, 37, "big-num");
+      circle(p.top.x, p.top.y, m.M, colors.violet, 37, "big-num");
+      circle(p.right.x, p.right.y, m.Y, colors.red, 37, "big-num");
+      circle(p.bottom.x, p.bottom.y, m.tail, colors.red, 37, "big-num");
+
+      circle(p.topLeft.x, p.topLeft.y, m.A1, colors.white, 35, "big-num");
+      circle(p.topRight.x, p.topRight.y, m.B1, colors.white, 35, "big-num");
+      circle(p.bottomRight.x, p.bottomRight.y, m.C1, colors.white, 35, "big-num");
+      circle(p.bottomLeft.x, p.bottomLeft.y, m.D1, colors.white, 35, "big-num");
+
+      circle(cx, cy, m.center, colors.yellow, 37, "big-num");
+
+      circle(430, 150, m.talent2, colors.blue, 19, "small-num");
+      circle(430, 190, m.talent3, colors.lightBlue, 19, "small-num");
+      circle(430, 230, m.personalPurpose, colors.green, 18, "small-num");
+
+      circle(325, 300, m.portrait2, colors.blue, 21, "small-num");
+      circle(365, 300, m.portrait3, colors.lightBlue, 19, "small-num");
+      circle(400, 300, m.earth, colors.green, 18, "small-num");
+
+      circle(505, 300, m.material2, colors.white, 20, "small-num");
+      circle(545, 300, m.material3, colors.orange, 22, "small-num");
+
+      circle(430, 350, m.karmic2, colors.white, 20, "small-num");
+      circle(430, 405, m.karmic3, colors.orange, 22, "small-num");
+
+      borderCircle(290, 195, m.male1, 20);
+      borderCircle(345, 245, m.male2, 20);
+
+      borderCircle(565, 195, m.female1, 20);
+      borderCircle(515, 245, m.female2, 20);
+
+      borderCircle(290, 405, m.D1, 20);
+      borderCircle(345, 355, m.love, 20);
+
+      borderCircle(570, 405, m.C1, 20);
+      borderCircle(515, 355, m.finance, 20);
+
+      borderCircle(515, 420, m.relationship, 20);
+      borderCircle(565, 365, m.money, 20);
+
+      text(485, 390, "♥", "heart");
+      text(585, 370, "$", "money");
     }
 
-
-     function drawMatrix(m) {
-  svg.innerHTML = "";
-
-  const cx = 380;
-  const cy = 380;
-
-  const R = 260;
-  const ageOffset = 18;
-  const arcanaOffset = 40;
-
-  const points = {
-    top: { x: cx, y: cy - R },
-    topRight: { x: cx + 184, y: cy - 184 },
-    right: { x: cx + R, y: cy },
-    bottomRight: { x: cx + 184, y: cy + 184 },
-    bottom: { x: cx, y: cy + R },
-    bottomLeft: { x: cx - 184, y: cy + 184 },
-    left: { x: cx - R, y: cy },
-    topLeft: { x: cx - 184, y: cy - 184 }
-  };
-
-  const outer = [
-    points.left,
-    points.topLeft,
-    points.top,
-    points.topRight,
-    points.right,
-    points.bottomRight,
-    points.bottom,
-    points.bottomLeft
-  ];
-
-  function segmentPoint(a, b, t) {
-    return {
-      x: a.x + (b.x - a.x) * t,
-      y: a.y + (b.y - a.y) * t
-    };
-  }
-
-  function pushFromCenter(p, amount) {
-    const dx = p.x - cx;
-    const dy = p.y - cy;
-    const length = Math.sqrt(dx * dx + dy * dy);
-    return {
-      x: p.x + (dx / length) * amount,
-      y: p.y + (dy / length) * amount
-    };
-  }
-
-  function pullToCenter(p, amount) {
-    const dx = p.x - cx;
-    const dy = p.y - cy;
-    const length = Math.sqrt(dx * dx + dy * dy);
-    return {
-      x: p.x - (dx / length) * amount,
-      y: p.y - (dy / length) * amount
-    };
-  }
-
-  polygon(outer, "line-strong");
-
-  polygon([points.left, points.top, points.right, points.bottom], "line");
-  polygon([points.topLeft, points.topRight, points.bottomRight, points.bottomLeft], "line");
-
-  line(points.left.x, points.left.y, points.right.x, points.right.y, "line earth");
-  line(points.top.x, points.top.y, points.bottom.x, points.bottom.y, "line sky");
-
-  line(points.topLeft.x, points.topLeft.y, points.bottomRight.x, points.bottomRight.y, "line male");
-  line(points.topRight.x, points.topRight.y, points.bottomLeft.x, points.bottomLeft.y, "line female");
-
-  line(cx, cy, points.left.x, points.left.y, "line");
-  line(cx, cy, points.top.x, points.top.y, "line");
-  line(cx, cy, points.right.x, points.right.y, "line");
-  line(cx, cy, points.bottom.x, points.bottom.y, "line");
-
-  const yearly = buildYearlyRing(m);
-
-  const sides = [
-    [points.left, points.topLeft, 0],
-    [points.topLeft, points.top, 10],
-    [points.top, points.topRight, 20],
-    [points.topRight, points.right, 30],
-    [points.right, points.bottomRight, 40],
-    [points.bottomRight, points.bottom, 50],
-    [points.bottom, points.bottomLeft, 60],
-    [points.bottomLeft, points.left, 70]
-  ];
-
-  sides.forEach(([a, b, startAge], sideIndex) => {
-    for (let i = 0; i <= 5; i++) {
-      const t = i / 5;
-      const base = segmentPoint(a, b, t);
-      const ageP = pullToCenter(base, ageOffset);
-      const arcP = pushFromCenter(base, arcanaOffset);
-
-      const age = startAge + i * 2;
-      const arcanaIndex = Math.min(sideIndex * 5 + i, yearly.length - 1);
-
-      textNode(ageP.x, ageP.y, age, "age");
-      textNode(arcP.x, arcP.y, yearly[arcanaIndex], "year-arcana");
-    }
-  });
-
-  const majorNodes = [
-    [points.left, m.D, colors.purple],
-    [points.topLeft, m.A1, colors.white],
-    [points.top, m.M, colors.purple],
-    [points.topRight, m.B1, colors.white],
-    [points.right, m.Y, colors.red],
-    [points.bottomRight, m.C1, colors.white],
-    [points.bottom, m.tail, colors.red],
-    [points.bottomLeft, m.D1, colors.white]
-  ];
-
-  majorNodes.forEach(([p, value, fill]) => {
-    circleNode(p.x, p.y, value, fill, 32);
-  });
-
-  circleNode(cx, cy, m.center, colors.yellow, 34);
-
-  circleNode(cx, cy - 92, m.talent2, colors.blue, 19, "small-num");
-  circleNode(cx, cy - 54, m.talent3, colors.lightBlue, 17, "small-num");
-  circleNode(cx, cy - 18, m.firstMission, colors.green, 16, "small-num");
-
-  circleNode(cx - 92, cy, m.portrait2, colors.blue, 19, "small-num");
-  circleNode(cx - 54, cy, m.portrait3, colors.lightBlue, 17, "small-num");
-  circleNode(cx - 18, cy, m.firstEarth, colors.green, 16, "small-num");
-
-  circleNode(cx + 92, cy, m.material2, colors.orange, 19, "small-num");
-  circleNode(cx + 54, cy, m.material3, colors.white, 17, "small-num");
-
-  circleNode(cx, cy + 92, m.karmic2, colors.orange, 19, "small-num");
-  circleNode(cx, cy + 54, m.karmic3, colors.white, 17, "small-num");
-
-  circleNode(cx - 96, cy - 96, m.A2, colors.white, 18, "small-num");
-  circleNode(cx - 132, cy - 132, m.A3, colors.white, 18, "small-num");
-
-  circleNode(cx + 96, cy - 96, m.B2, colors.white, 18, "small-num");
-  circleNode(cx + 132, cy - 132, m.B3, colors.white, 18, "small-num");
-
-  circleNode(cx + 96, cy + 96, m.C2, colors.white, 18, "small-num");
-  circleNode(cx + 132, cy + 132, m.C3, colors.white, 18, "small-num");
-
-  circleNode(cx - 96, cy + 96, m.D2, colors.white, 18, "small-num");
-  circleNode(cx - 132, cy + 132, m.D3, colors.white, 18, "small-num");
-
-  circleNode(cx + 56, cy - 8, m.heartFear1, colors.white, 16, "small-num");
-  circleNode(cx + 88, cy - 8, m.heartFear2, colors.white, 16, "small-num");
-
-  circleNode(cx + 78, cy + 70, m.balance, colors.white, 17, "small-num");
-  circleNode(cx + 118, cy + 38, m.money, colors.white, 17, "small-num");
-  circleNode(cx + 38, cy + 118, m.love, colors.white, 17, "small-num");
-
-  textNode(cx + 112, cy + 78, "$", "symbol");
-  textNode(cx + 38, cy + 82, "♥", "symbol");
-
-  textNode(cx - 70, cy - 74, "male generation line", "line-label");
-  textNode(cx + 82, cy - 70, "female generation line", "line-label");
-}
-
-    function renderSummary(m) {
-      summary.innerHTML = `
-        <div class="summary-row"><span>Day Arcana</span><span>${m.D}</span></div>
-        <div class="summary-row"><span>Month Arcana</span><span>${m.M}</span></div>
-        <div class="summary-row"><span>Year Arcana</span><span>${m.Y}</span></div>
-        <div class="summary-row"><span>Karmic Tail</span><span>${m.tail}</span></div>
-        <div class="summary-row"><span>Central Arcana</span><span>${m.center}</span></div>
-        <div class="summary-row"><span>First Mission</span><span>${m.firstMission}</span></div>
-        <div class="summary-row"><span>Second Mission</span><span>${m.secondMission}</span></div>
-        <div class="summary-row"><span>Third Mission</span><span>${m.thirdMission}</span></div>
-      `;
-    }
-
-    function renderHealthCard(m) {
+    function renderHealth(m) {
       const rows = [
-        ["Sahasrara", m.M, m.talent2],
-        ["Ajna", m.talent3, m.heartFear2],
-        ["Vishuddha", m.Y, m.material2],
-        ["Anahata", m.money, m.balance],
-        ["Manipura", m.center, m.generationPower],
-        ["Svadhisthana", m.love, m.karmic2],
-        ["Muladhara", m.tail, m.karmic3]
+        ["1", "Sahasrara", "Mission", m.sky, m.M],
+        ["2", "Ajna", "Destiny, egregores", m.portrait3, m.talent2],
+        ["3", "Vissudha", "Destiny, egregores", m.talent2, m.talent3],
+        ["4", "Anahata", "Relationships, picture of the world", m.material2, m.personalPurpose],
+        ["5", "Manipura", "Status, possessions", m.center, m.center],
+        ["6", "Svadhisthana", "Love of children, Joy", m.love, m.karmic2],
+        ["7", "Muladhara", "Body, materia", m.tail, m.karmic3]
       ];
 
-      const htmlRows = rows.map(([chakra, physics, energy]) => {
-        const emotions = add22(physics, energy);
+      const chakraClasses = ["violet", "indigo", "blue", "green", "yellow", "orange", "red"];
+
+      const body = rows.map((r, i) => {
+        const emotion = add22(r[3], r[4]);
         return `
           <tr>
-            <td>${chakra}</td>
-            <td>${physics}</td>
-            <td>${energy}</td>
-            <td>${emotions}</td>
+            <td class="chakra-color ${chakraClasses[i]}">${r[0]}</td>
+            <td><b>${r[1]}</b><br><span>${r[2]}</span></td>
+            <td>${r[3]}</td>
+            <td>${r[4]}</td>
+            <td>${emotion}</td>
           </tr>
         `;
       }).join("");
 
-      const resultPhysics = add22(...rows.map(r => r[1]));
-      const resultEnergy = add22(...rows.map(r => r[2]));
-      const resultEmotion = add22(...rows.map(r => add22(r[1], r[2])));
+      const resultPhysics = add22(...rows.map(r => r[3]));
+      const resultEnergy = add22(...rows.map(r => r[4]));
+      const resultEmotion = add22(resultPhysics, resultEnergy);
 
-      healthTable.innerHTML = `
-        <table>
+      healthCard.innerHTML = `
+        <table class="health-table">
           <thead>
             <tr>
-              <th>Chakra</th>
+              <th></th>
+              <th>Chakra name</th>
               <th>Physics</th>
               <th>Energy</th>
               <th>Emotions</th>
             </tr>
           </thead>
           <tbody>
-            ${htmlRows}
+            ${body}
             <tr>
-              <td>Result</td>
+              <td></td>
+              <td><b>Result</b><br><span>Common energy-zone</span></td>
               <td>${resultPhysics}</td>
               <td>${resultEnergy}</td>
               <td>${resultEmotion}</td>
@@ -745,31 +679,54 @@
       `;
     }
 
+    function mini(values) {
+      return values.map(v => `<span class="mini-circle">${v}</span>`).join("");
+    }
+
+    function renderBlocks(m) {
+      maleLines.innerHTML = mini([m.male1, m.male2, m.male3]);
+      femaleLines.innerHTML = mini([m.female1, m.female2, m.female3]);
+
+      programs.innerHTML = `
+        <p><b>Relationship Program:</b></p>
+        <div class="small-circles">${mini([m.love, m.relationship, m.center])}</div>
+
+        <p><b>Money Program:</b></p>
+        <div class="small-circles">${mini([m.material2, m.finance, m.money])}</div>
+
+        <p><b>Karmic Tail:</b></p>
+        <div class="small-circles">${mini([m.tail, m.karmic2, m.karmic3])}</div>
+
+        <p><b>Talents:</b></p>
+        <div class="small-circles">${mini([m.M, m.talent2, m.talent3])}</div>
+      `;
+
+      purposes.innerHTML = `
+        <p><b>Personal purpose:</b></p>
+        <div class="small-circles">${mini([m.sky, m.earth, m.personalPurpose])}</div>
+
+        <p><b>Social purpose:</b></p>
+        <div class="small-circles">${mini([m.socialM, m.socialF, m.socialPurpose])}</div>
+
+        <p><b>Spiritual purpose:</b></p>
+        <div class="small-circles">${mini([m.spiritualPurpose])}</div>
+      `;
+    }
+
     function calculateAndRender() {
       const dateValue = document.getElementById("birthDate").value;
       if (!dateValue) return;
 
-      const matrix = calculateMatrix(dateValue);
-      drawMatrix(matrix);
-      renderSummary(matrix);
-      renderHealthCard(matrix);
+      const m = calculateMatrix(dateValue);
+
+      result.style.display = "block";
+      drawMatrix(m);
+      renderHealth(m);
+      renderBlocks(m);
     }
+
     document.getElementById("calculateBtn").addEventListener("click", calculateAndRender);
-
-document.getElementById("birthDate").addEventListener("change", calculateAndRender);
-    
-svg.innerHTML = "";
-
-summary.innerHTML = `
-  <div class="summary-row">
-    <span>Status</span>
-    <span>Enter your date</span>
-  </div>
-`;
-
-healthTable.innerHTML = "";
-
-    
+    document.getElementById("birthDate").addEventListener("change", calculateAndRender);
   </script>
 </body>
 </html>
