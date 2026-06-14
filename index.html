@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DestiMatrix Personal Chart</title>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --ink: #202832;
@@ -26,7 +30,7 @@
       margin: 0;
       background: #fff;
       color: var(--ink);
-      font-family: Tahoma, Verdana, Arial, sans-serif;
+      font-family: 'Montserrat', Arial, sans-serif;
     }
 
     .page {
@@ -51,7 +55,7 @@
     label {
       display: block;
       margin-bottom: 7px;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 700;
     }
 
@@ -61,8 +65,9 @@
       border: 1px solid #d4dae4;
       border-radius: 6px;
       padding: 0 15px;
-      font-size: 20px;
+      font-size: 18px;
       font-family: inherit;
+      font-weight: 500;
       color: var(--ink);
     }
 
@@ -73,7 +78,7 @@
       border-radius: 6px;
       background: linear-gradient(180deg, #ff9954, #f38340);
       color: white;
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 700;
       font-family: inherit;
       cursor: pointer;
@@ -133,8 +138,8 @@
     .node-text {
       text-anchor: middle;
       dominant-baseline: central;
-      font-family: Tahoma, Verdana, Arial, sans-serif;
-      font-weight: 500;
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-weight: 600;
       fill: var(--ink);
     }
 
@@ -143,38 +148,44 @@
     }
 
     .text-big {
-      font-size: 60px;
+      font-size: 58px;
+      font-weight: 600;
     }
 
     .text-medium {
-      font-size: 42px;
+      font-size: 40px;
+      font-weight: 600;
     }
 
     .text-small {
-      font-size: 29px;
+      font-size: 27px;
+      font-weight: 600;
     }
 
     .outer-number {
       text-anchor: middle;
       dominant-baseline: central;
-      font-size: 21px;
-      font-weight: 400;
+      font-size: 20px;
+      font-weight: 500;
       fill: #001a38;
+      font-family: 'Montserrat', Arial, sans-serif;
     }
 
     .age-major {
       text-anchor: middle;
-      font-size: 13px;
-      font-weight: 700;
+      font-size: 12px;
+      font-weight: 800;
       fill: #111827;
+      font-family: 'Montserrat', Arial, sans-serif;
     }
 
     .age-small {
       text-anchor: middle;
       dominant-baseline: central;
-      font-size: 8.5px;
+      font-size: 7.6px;
       font-weight: 500;
       fill: #4b5563;
+      font-family: 'Montserrat', Arial, sans-serif;
     }
 
     .tick-filled {
@@ -191,15 +202,17 @@
 
     .line-label {
       fill: #111827;
-      font-size: 18px;
-      font-weight: 400;
+      font-size: 16px;
+      font-weight: 500;
+      font-family: 'Montserrat', Arial, sans-serif;
     }
 
     .symbol {
       text-anchor: middle;
       dominant-baseline: central;
-      font-size: 35px;
-      font-weight: 700;
+      font-size: 34px;
+      font-weight: 800;
+      font-family: 'Montserrat', Arial, sans-serif;
     }
 
     @media (max-width: 720px) {
