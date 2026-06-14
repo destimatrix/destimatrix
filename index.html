@@ -1,27 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DestiMatrix - Ultimate Destiny Matrix Calculator</title>
+    <title>Матрица Судьбы</title>
     <style>
         :root {
-            --bg-main: #fcfbfa;
+            --bg-color: #f8f9fa;
             --card-bg: #ffffff;
-            --text-dark: #1a1d20;
-            --text-gray: #6c757d;
-            --accent: #ff007f;
-            --border: #e9ecef;
-            --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-
-            /* Canonical Nodes Color Map */
-            --purple-main: #9b5de5;
-            --blue-main: #00bbf9;
-            --cyan-main: #00f5d4;
-            --green-main: #00f5d4;
-            --orange-main: #f15bb5;
-            --red-main: #ff5400;
-            --yellow-center: #fee440;
+            --text-color: #212529;
+            --border-color: #dee2e6;
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            
+            /* Оригинальные цвета вершин */
+            --node-yellow: #ffca28;
+            --node-purple: #9c27b0;
+            --node-blue: #2196f3;
+            --node-red: #ef5350;
+            --node-cyan: #00bcd4;
+            --node-orange: #ff9800;
         }
 
         * {
@@ -31,9 +28,9 @@
         }
 
         body {
-            font-family: var(--font);
-            background-color: var(--bg-main);
-            color: var(--text-dark);
+            font-family: var(--font-family);
+            background-color: var(--bg-color);
+            color: var(--text-color);
             padding: 20px;
             display: flex;
             justify-content: center;
@@ -45,93 +42,67 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 24px;
-        }
-
-        header {
-            text-align: center;
-            margin: 10px 0;
-        }
-
-        header h1 {
-            font-size: 2.2rem;
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            text-transform: uppercase;
-        }
-
-        header p {
-            color: var(--text-gray);
-            font-size: 0.95rem;
+            gap: 20px;
         }
 
         .calculator-card {
             background: var(--card-bg);
-            padding: 24px;
-            border-radius: 20px;
-            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
             width: 100%;
-            max-width: 440px;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.02);
+            max-width: 400px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
             text-align: center;
         }
 
         .input-group {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
             text-align: left;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
         .input-group label {
             font-weight: 600;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-gray);
+            font-size: 0.85rem;
+            color: #6c757d;
         }
 
         .input-group input {
-            padding: 14px;
-            border: 1.5px solid var(--border);
-            border-radius: 12px;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
             font-size: 1rem;
             outline: none;
-            background-color: #f8f9fa;
-            font-family: inherit;
-        }
-
-        .input-group input:focus {
-            border-color: var(--text-dark);
-            background-color: #fff;
+            background-color: #fdfdfd;
         }
 
         .btn-calc {
-            background-color: var(--text-dark);
+            background-color: #212529;
             color: white;
             border: none;
-            padding: 14px;
+            padding: 12px;
             font-size: 1rem;
             font-weight: 600;
-            border-radius: 12px;
+            border-radius: 8px;
             cursor: pointer;
             width: 100%;
-            transition: opacity 0.2s;
         }
 
         .btn-calc:hover {
-            opacity: 0.9;
+            background-color: #000000;
         }
 
         .workspace {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 32px;
+            gap: 24px;
             width: 100%;
         }
 
-        @media (min-width: 1024px) {
+        @media (min-width: 992px) {
             .workspace {
                 grid-template-columns: 1.2fr 0.8fr;
                 align-items: start;
@@ -140,218 +111,200 @@
 
         .diagram-container {
             background: var(--card-bg);
-            padding: 20px;
-            border-radius: 24px;
-            border: 1px solid var(--border);
+            padding: 10px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.02);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
         }
 
         svg {
             width: 100%;
-            max-width: 700px;
+            max-width: 650px;
             height: auto;
             overflow: visible;
         }
 
         .health-card {
             background: var(--card-bg);
-            padding: 24px;
-            border-radius: 24px;
-            border: 1px solid var(--border);
-            box-shadow: 0 4px 24px rgba(0,0,0,0.02);
+            padding: 20px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
         }
 
         .health-card h2 {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 700;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         th, td {
-            padding: 12px 10px;
-            border-bottom: 1px solid var(--border);
+            padding: 10px 6px;
+            border-bottom: 1px solid var(--border-color);
+            text-align: left;
         }
 
         th {
+            color: #6c757d;
             font-weight: 600;
-            color: var(--text-gray);
-            text-transform: uppercase;
             font-size: 0.75rem;
-            letter-spacing: 0.05em;
+            text-transform: uppercase;
         }
 
-        .chakra-cell {
+        .chakra-mark {
             display: flex;
             align-items: center;
             gap: 8px;
             font-weight: 600;
         }
 
-        .chakra-dot {
-            width: 10px;
-            height: 10px;
+        .chakra-badge {
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
         }
 
-        tr.total-row {
+        tr.total-summary {
             font-weight: 700;
             background-color: #f8f9fa;
         }
 
-        /* SVG Typography & Specific Vector Element overrides */
+        /* Стили текста в SVG */
         text {
-            font-family: var(--font);
             font-weight: 700;
             user-select: none;
         }
-        .age-text {
+        .lbl-age {
             font-size: 11px;
-            fill: #6c757d;
-            font-weight: 600;
+            fill: #868e96;
+            font-weight: 500;
         }
-        .node-text {
-            font-size: 14px;
-            fill: #1a1d20;
-            font-weight: 700;
+        .lbl-node {
+            font-size: 13px;
+            fill: #ffffff;
         }
-        .center-text {
-            font-size: 18px;
-            fill: #1a1d20;
-            font-weight: 800;
+        .lbl-node-dark {
+            font-size: 13px;
+            fill: #212529;
+        }
+        .lbl-channel {
+            font-size: 11px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <header>
-        <h1>DestiMatrix</h1>
-        <p>Canonical 22 Arcana Destiny System</p>
-    </header>
-
     <div class="calculator-card">
         <div class="input-group">
-            <label for="birthdate">Date of Birth</label>
+            <label for="birthdate">Дата рождения</label>
             <input type="date" id="birthdate" value="1994-05-28">
         </div>
-        <button class="btn-calc" onclick="calculateClassicMatrix()">Calculate Matrix</button>
+        <button class="btn-calc" onclick="calculateMatrix()">Рассчитать</button>
     </div>
 
     <div class="workspace">
         <div class="diagram-container">
-            <svg id="matrixBoard" viewBox="0 0 800 800">
-                <g id="gridGeometryLayer">
-                    <circle cx="400" cy="400" r="280" stroke="#ced4da" stroke-width="1.2" fill="none" />
-                    <circle cx="400" cy="400" r="170" stroke="#e9ecef" stroke-width="1" stroke-dasharray="4,4" fill="none" />
+            <svg id="matrixSvg" viewBox="0 0 800 800">
+                <g id="gridLines">
+                    <circle cx="400" cy="400" r="260" stroke="#adb5bd" stroke-width="1.2" fill="none" />
+                    <circle cx="400" cy="400" r="160" stroke="#dee2e6" stroke-width="1" stroke-dasharray="4,4" fill="none" />
 
-                    <path d="M 400 120 L 680 400 L 400 680 L 120 400 Z" stroke="#1a1d20" stroke-width="1.8" fill="none" />
-                    
-                    <path d="M 202.02 202.02 L 597.98 202.02 L 597.98 597.98 L 202.02 597.98 Z" stroke="#6c757d" stroke-width="1.2" fill="none" />
+                    <path d="M 400 140 L 660 400 L 400 660 L 140 400 Z" stroke="#495057" stroke-width="1.5" fill="none" />
+                    <path d="M 216.16 216.16 L 583.84 216.16 L 583.84 556.84 L 216.16 556.84 Z" transform="rotate(45 400 400)" stroke="#868e96" stroke-width="1.2" fill="none" />
 
-                    <line x1="120" y1="400" x2="680" y2="400" stroke="#1a1d20" stroke-width="1" />
-                    <line x1="400" y1="120" x2="400" y2="680" stroke="#1a1d20" stroke-width="1" />
+                    <line x1="140" y1="400" x2="660" y2="400" stroke="#495057" stroke-width="1" />
+                    <line x1="400" y1="140" x2="400" y2="660" stroke="#495057" stroke-width="1" />
 
-                    <line x1="202.02" y1="202.02" x2="597.98" y2="597.98" stroke="#adb5bd" stroke-width="1" stroke-dasharray="3,3" />
-                    <line x1="597.98" y1="202.02" x2="202.02" y2="597.98" stroke="#adb5bd" stroke-width="1" stroke-dasharray="3,3" />
-
-                    <path d="M 400 400 L 400 610 L 610 400" stroke="#1a1d20" stroke-width="1.2" fill="none" />
-                    <line x1="400" y1="400" x2="540" y2="540" stroke="#6c757d" stroke-width="1" stroke-dasharray="2,2" />
+                    <line x1="216.16" y1="216.16" x2="583.84" y2="583.84" stroke="#adb5bd" stroke-width="1" stroke-dasharray="3,3" />
+                    <line x1="583.84" y1="216.16" x2="216.16" y2="583.84" stroke="#adb5bd" stroke-width="1" stroke-dasharray="3,3" />
                 </g>
 
-                <g id="vectorNodesLayer">
-                    <circle cx="400" cy="400" r="28" fill="#fee440" stroke="#1a1d20" stroke-width="2" />
-                    <text x="400" y="406" id="r_E" class="center-text" text-anchor="middle"></text>
-
-                    <circle cx="120" cy="400" r="20" fill="#9b5de5" stroke="#1a1d20" stroke-width="2" />
-                    <text x="120" y="405" id="r_A" class="node-text" fill="white" text-anchor="middle"></text>
-                    <text x="85" y="404" class="age-text" text-anchor="end">0 y.o.</text>
-
-                    <circle cx="400" cy="120" r="20" fill="#9b5de5" stroke="#1a1d20" stroke-width="2" />
-                    <text x="400" y="125" id="r_B" class="node-text" fill="white" text-anchor="middle"></text>
-                    <text x="400" y="90" class="age-text" text-anchor="middle">20 y.o.</text>
-
-                    <circle cx="680" cy="400" r="20" fill="#ff5400" stroke="#1a1d20" stroke-width="2" />
-                    <text x="680" y="405" id="r_C" class="node-text" fill="white" text-anchor="middle"></text>
-                    <text x="715" y="404" class="age-text" text-anchor="start">40 y.o.</text>
-
-                    <circle cx="400" cy="680" r="20" fill="#ff5400" stroke="#1a1d20" stroke-width="2" />
-                    <text x="400" y="685" id="r_D" class="node-text" fill="white" text-anchor="middle"></text>
-                    <text x="400" y="715" class="age-text" text-anchor="middle">60 y.o.</text>
-
-                    <circle cx="202.02" cy="202.02" r="16" fill="#ffffff" stroke="#6c757d" stroke-width="1.5" />
-                    <text x="202.02" y="206" id="r_anc_tl" font-size="12" text-anchor="middle"></text>
-                    <text x="180" y="185" class="age-text" text-anchor="end">10 y.o.</text>
-
-                    <circle cx="597.98" cy="202.02" r="16" fill="#ffffff" stroke="#6c757d" stroke-width="1.5" />
-                    <text x="597.98" y="206" id="r_anc_tr" font-size="12" text-anchor="middle"></text>
-                    <text x="620" y="185" class="age-text" text-anchor="start">30 y.o.</text>
-
-                    <circle cx="597.98" cy="597.98" r="16" fill="#ffffff" stroke="#6c757d" stroke-width="1.5" />
-                    <text x="597.98" y="602" id="r_anc_br" font-size="12" text-anchor="middle"></text>
-                    <text x="620" y="620" class="age-text" text-anchor="start">50 y.o.</text>
-
-                    <circle cx="202.02" cy="597.98" r="16" fill="#ffffff" stroke="#6c757d" stroke-width="1.5" />
-                    <text x="202.02" y="602" id="r_anc_bl" font-size="12" text-anchor="middle"></text>
-                    <text x="180" y="620" class="age-text" text-anchor="end">70 y.o.</text>
-
-                    <circle cx="400" cy="190" r="13" fill="#ffffff" stroke="#00bbf9" stroke-width="1.5" />
-                    <text x="400" y="194" id="r_ch_ajna" font-size="11" text-anchor="middle"></text>
-
-                    <circle cx="400" cy="260" r="13" fill="#ffffff" stroke="#00f5d4" stroke-width="1.5" />
-                    <text x="400" y="264" id="r_ch_vissudha" font-size="11" text-anchor="middle"></text>
-
-                    <circle cx="400" cy="330" r="13" fill="#ffffff" stroke="#00f5d4" stroke-width="1.5" />
-                    <text x="400" y="334" id="r_ch_anahata" font-size="11" text-anchor="middle"></text>
-
-                    <circle cx="400" cy="540" r="13" fill="#ffffff" stroke="#f15bb5" stroke-width="1.5" />
-                    <text x="400" y="544" id="r_ch_svadhisthana" font-size="11" text-anchor="middle"></text>
-
-                    <circle cx="400" cy="610" r="13" fill="#ffffff" stroke="#ff5400" stroke-width="1.5" />
-                    <text x="400" y="614" id="r_ch_muladhara_in" font-size="11" text-anchor="middle"></text>
-
-                    <circle cx="540" cy="400" r="13" fill="#ffffff" stroke="#00f5d4" stroke-width="1.5" />
-                    <text x="540" y="404" id="r_ch_money_ent" font-size="11" text-anchor="middle"></text>
-
-                    <circle cx="610" cy="400" r="13" fill="#ffffff" stroke="#ff5400" stroke-width="1.5" />
-                    <text x="610" y="404" id="r_ch_money_mid" font-size="11" text-anchor="middle"></text>
-
-                    <circle cx="495" cy="495" r="14" fill="#ffffff" stroke="#1a1d20" stroke-width="1.5" />
-                    <text x="495" y="499" id="r_ch_well_bal" font-size="11" text-anchor="middle"></text>
-
-                    <circle cx="530" cy="455" r="12" fill="#e8f5e9" stroke="#00f5d4" stroke-width="1" />
-                    <text x="530" y="459" id="r_ch_prof" font-size="10" text-anchor="middle"></text>
-                    <text x="548" y="450" fill="#2e7d32" font-size="11" font-weight="bold">$</text>
-
-                    <circle cx="455" cy="530" r="12" fill="#fce4ec" stroke="#f15bb5" stroke-width="1" />
-                    <text x="455" y="534" id="r_ch_partner" font-size="10" text-anchor="middle"></text>
-                    <text x="435" y="545" fill="#c2185b" font-size="11" font-weight="bold">❤️</text>
+                <g id="ageLabels">
+                    <text x="105" y="404" class="lbl-age" text-anchor="end">0 лет</text>
+                    <text x="200" y="200" class="lbl-age" text-anchor="end">10 лет</text>
+                    <text x="400" y="115" class="lbl-age" text-anchor="middle">20 лет</text>
+                    <text x="600" y="200" class="lbl-age" text-anchor="start">30 лет</text>
+                    <text x="695" y="404" class="lbl-age" text-anchor="start">40 лет</text>
+                    <text x="600" y="605" class="lbl-age" text-anchor="start">50 лет</text>
+                    <text x="400" y="695" class="lbl-age" text-anchor="middle">60 лет</text>
+                    <text x="200" y="605" class="lbl-age" text-anchor="end">70 лет</text>
                 </g>
 
-                <g id="outerYearMicroLayer"></g>
+                <g id="nodesGroup">
+                    <circle cx="400" cy="400" r="24" fill="var(--node-yellow)" stroke="#212529" stroke-width="1.5" />
+                    <text x="400" y="405" id="n_E" font-size="16" fill="#212529" text-anchor="middle"></text>
+
+                    <circle cx="140" cy="400" r="18" fill="var(--node-yellow)" stroke="#212529" stroke-width="1.5" />
+                    <text x="140" y="404" id="n_A" class="lbl-node-dark" text-anchor="middle"></text>
+
+                    <circle cx="400" cy="140" r="18" fill="var(--node-purple)" stroke="#212529" stroke-width="1.5" />
+                    <text x="400" y="144" id="n_B" class="lbl-node" text-anchor="middle"></text>
+
+                    <circle cx="660" cy="400" r="18" fill="var(--node-blue)" stroke="#212529" stroke-width="1.5" />
+                    <text x="660" y="404" id="n_C" class="lbl-node" text-anchor="middle"></text>
+
+                    <circle cx="400" cy="660" r="18" fill="var(--node-red)" stroke="#212529" stroke-width="1.5" />
+                    <text x="400" y="664" id="n_D" class="lbl-node" text-anchor="middle"></text>
+
+                    <circle cx="216.16" cy="216.16" r="15" fill="#ffffff" stroke="#868e96" stroke-width="1.5" />
+                    <text x="216.16" y="220" id="n_anc10" font-size="12" fill="#212529" text-anchor="middle"></text>
+                    <circle cx="583.84" cy="216.16" r="15" fill="#ffffff" stroke="#868e96" stroke-width="1.5" />
+                    <text x="583.84" y="220" id="n_anc30" font-size="12" fill="#212529" text-anchor="middle"></text>
+                    <circle cx="583.84" cy="556.84" r="15" fill="#ffffff" stroke="#868e96" stroke-width="1.5" />
+                    <text x="583.84" y="560" id="n_anc50" font-size="12" fill="#212529" text-anchor="middle"></text>
+                    <circle cx="216.16" cy="556.84" r="15" fill="#ffffff" stroke="#868e96" stroke-width="1.5" />
+                    <text x="216.16" y="560" id="n_anc70" font-size="12" fill="#212529" text-anchor="middle"></text>
+
+                    <circle cx="400" cy="205" r="12" fill="#ffffff" stroke="var(--node-blue)" stroke-width="1.5" />
+                    <text x="400" y="209" id="n_ch_ajna" font-size="11" fill="#212529" text-anchor="middle"></text>
+                    <circle cx="400" cy="270" r="12" fill="#ffffff" stroke="var(--node-cyan)" stroke-width="1.5" />
+                    <text x="400" y="274" id="n_ch_vissudha" font-size="11" fill="#212529" text-anchor="middle"></text>
+                    <circle cx="400" cy="335" r="12" fill="#ffffff" stroke="#4caf50" stroke-width="1.5" />
+                    <text x="400" y="339" id="n_ch_anahata" font-size="11" fill="#212529" text-anchor="middle"></text>
+                    <circle cx="400" cy="530" r="12" fill="#ffffff" stroke="var(--node-orange)" stroke-width="1.5" />
+                    <text x="400" y="534" id="n_ch_svadhisthana" font-size="11" fill="#212529" text-anchor="middle"></text>
+                    <circle cx="400" cy="595" r="12" fill="#ffffff" stroke="var(--node-red)" stroke-width="1.5" />
+                    <text x="400" y="599" id="n_ch_muladhara_in" font-size="11" fill="#212529" text-anchor="middle"></text>
+
+                    <circle cx="465" cy="400" r="12" fill="#ffebee" stroke="var(--node-orange)" stroke-width="1.5" />
+                    <text x="465" y="404" id="n_rel" font-size="11" fill="#212529" text-anchor="middle"></text>
+                    <text x="465" y="423" class="lbl-channel" fill="#e91e63" text-anchor="middle">❤️</text>
+
+                    <circle cx="530" cy="400" r="12" fill="#ffffff" stroke="#212529" stroke-width="1.5" />
+                    <text x="530" y="404" id="n_bal" font-size="11" fill="#212529" text-anchor="middle"></text>
+
+                    <circle cx="595" cy="400" r="12" fill="#e8f5e9" stroke="#4caf50" stroke-width="1.5" />
+                    <text x="595" y="404" id="n_money" font-size="11" fill="#212529" text-anchor="middle"></text>
+                    <text x="595" y="423" class="lbl-channel" fill="#2e7d32" text-anchor="middle">$</text>
+                </g>
+
+                <g id="microYearsGroup"></g>
             </svg>
         </div>
 
         <div class="health-card">
-            <h2>Health Card Spec</h2>
+            <h2>Карта Здоровья</h2>
             <table>
                 <thead>
                     <tr>
-                        <th>Chakra Spectrum Name</th>
-                        <th>Physics (P)</th>
-                        <th>Energy (E)</th>
-                        <th>Emotions (Em)</th>
+                        <th>Чакры</th>
+                        <th>Физика (Ф)</th>
+                        <th>Энергия (Э)</th>
+                        <th>Эмоции (Эм)</th>
                     </tr>
                 </thead>
-                <tbody id="healthSheetContainer">
+                <tbody id="healthTableBody">
                     </tbody>
             </table>
         </div>
@@ -359,184 +312,164 @@
 </div>
 
 <script>
-    // Pure 22 Matrix Base Reducer Helper Function
-    function strictReduceTo22Limit(numValue) {
-        if (numValue <= 0) return 22;
-        while (numValue > 22) {
-            numValue = String(numValue).split('').reduce((acc, currentDigit) => acc + parseInt(currentDigit, 10), 0);
+    // Матричное правило сложения (до 22)
+    function reduceArcana(value) {
+        if (value <= 0) return 22;
+        while (value > 22) {
+            value = String(value).split('').reduce((sum, d) => sum + parseInt(d, 10), 0);
         }
-        return numValue;
+        return value;
     }
 
-    function calculateClassicMatrix() {
-        const structuralDateValue = document.getElementById('birthdate').value;
-        if (!structuralDateValue) return;
+    function calculateMatrix() {
+        const dateInput = document.getElementById('birthdate').value;
+        if (!dateInput) return;
 
-        const dateParts = new Date(structuralDateValue);
-        const parsedDay = dateParts.getDate();
-        const parsedMonth = dateParts.getMonth() + 1;
-        const parsedYear = dateParts.getFullYear();
+        const d = new Date(dateInput);
+        const day = d.getDate();
+        const month = d.getMonth() + 1;
+        const year = d.getFullYear();
 
-        // Major Axis Formulations Calculations
-        const A = strictReduceTo22Limit(parsedDay);
-        const B = strictReduceTo22Limit(parsedMonth);
-        const C = strictReduceTo22Limit(parsedYear);
-        const D = strictReduceTo22Limit(A + B + C);
-        const E = strictReduceTo22Limit(A + B + C + D);
+        // Главные вершины
+        const A = reduceArcana(day);
+        const B = reduceArcana(month);
+        const C = reduceArcana(year);
+        const D = reduceArcana(A + B + C);
+        const E = reduceArcana(A + B + C + D);
 
-        // Map Base Nodes Values
-        document.getElementById('r_A').textContent = A;
-        document.getElementById('r_B').textContent = B;
-        document.getElementById('r_C').textContent = C;
-        document.getElementById('r_D').textContent = D;
-        document.getElementById('r_E').textContent = E;
+        document.getElementById('n_A').textContent = A;
+        document.getElementById('n_B').textContent = B;
+        document.getElementById('n_C').textContent = C;
+        document.getElementById('n_D').textContent = D;
+        document.getElementById('n_E').textContent = E;
 
-        // Ancestral Family Structural Calculations
-        const ancTL = strictReduceTo22Limit(A + B);
-        const ancTR = strictReduceTo22Limit(B + C);
-        const ancBR = strictReduceTo22Limit(C + D);
-        const ancBL = strictReduceTo22Limit(D + A);
+        // Родовые вершины
+        const anc10 = reduceArcana(A + B);
+        const anc30 = reduceArcana(B + C);
+        const anc50 = reduceArcana(C + D);
+        const anc70 = reduceArcana(D + A);
 
-        document.getElementById('r_anc_tl').textContent = ancTL;
-        document.getElementById('r_anc_tr').textContent = ancTR;
-        document.getElementById('r_anc_br').textContent = ancBR;
-        document.getElementById('r_anc_bl').textContent = ancBL;
+        document.getElementById('n_anc10').textContent = anc10;
+        document.getElementById('n_anc30').textContent = anc30;
+        document.getElementById('n_anc50').textContent = anc50;
+        document.getElementById('n_anc70').textContent = anc70;
 
-        // Core Chakra Channel Alignment Map Formulas
-        const ajna = strictReduceTo22Limit(B + E);
-        const vissudha = strictReduceTo22Limit(B + ajna);
-        const anahata = strictReduceTo22Limit(E + vissudha);
-        const svadhisthana = strictReduceTo22Limit(D + E);
-        const muladhara_in = strictReduceTo22Limit(D + svadhisthana);
+        // Вертикальный чакральный столб
+        const ajna = reduceArcana(B + E);
+        const vissudha = reduceArcana(B + ajna);
+        const anahata = reduceArcana(E + vissudha);
+        const svadhisthana = reduceArcana(D + E);
+        const muladhara_in = reduceArcana(D + svadhisthana);
 
-        document.getElementById('r_ch_ajna').textContent = ajna;
-        document.getElementById('r_ch_vissudha').textContent = vissudha;
-        document.getElementById('r_ch_anahata').textContent = anahata;
-        document.getElementById('r_ch_svadhisthana').textContent = svadhisthana;
-        document.getElementById('r_ch_muladhara_in').textContent = muladhara_in;
+        document.getElementById('n_ch_ajna').textContent = ajna;
+        document.getElementById('n_ch_vissudha').textContent = vissudha;
+        document.getElementById('n_ch_anahata').textContent = anahata;
+        document.getElementById('n_ch_svadhisthana').textContent = svadhisthana;
+        document.getElementById('n_ch_muladhara_in').textContent = muladhara_in;
 
-        // Wealth Generation Flow & Love Paths
-        const money_ent = strictReduceTo22Limit(C + E);
-        const money_mid = strictReduceTo22Limit(C + money_ent);
-        const well_bal = strictReduceTo22Limit(money_ent + svadhisthana);
-        const prof = strictReduceTo22Limit(money_ent + well_bal);
-        const partner = strictReduceTo22Limit(svadhisthana + well_bal);
+        // Горизонтальный канал благополучия (смещен вправо от центра)
+        const rel = reduceArcana(E + C);
+        const money = reduceArcana(E + rel);
+        const bal = reduceArcana(rel + money);
 
-        document.getElementById('r_ch_money_ent').textContent = money_ent;
-        document.getElementById('r_ch_money_mid').textContent = money_mid;
-        document.getElementById('r_ch_well_bal').textContent = well_bal;
-        document.getElementById('r_ch_prof').textContent = prof;
-        document.getElementById('r_ch_partner').textContent = partner;
+        document.getElementById('n_rel').textContent = rel;
+        document.getElementById('n_money').textContent = money;
+        document.getElementById('n_bal').textContent = bal;
 
-        // Render Reactive Health Card Components
-        buildHealthDataCardSpec(A, B, C, D, E, ajna, vissudha, anahata, svadhisthana, muladhara_in);
-
-        // Generate Exterior Shell Perimeter Floating Micro Year Elements
-        injectMicroYearCircleNodes(A, ancTL, B, ancTR, C, ancBR, D, ancBL);
+        // Отрисовка карты здоровья и внешних пятилеток
+        renderHealthCard(A, B, C, D, E, ajna, vissudha, anahata, svadhisthana, muladhara_in);
+        renderMicroYears(A, anc10, B, anc30, C, anc50, D, anc70);
     }
 
-    function buildHealthDataCardSpec(A, B, C, D, E, ajna, vissudha, anahata, svadhisthana, muladhara_in) {
-        const matrixSchema = [
-            { title: "Sahasrara", fill: "var(--purple-main)", p: B, e: B, em: strictReduceTo22Limit(B + B) },
-            { title: "Ajna", fill: "var(--blue-main)", p: strictReduceTo22Limit(A + B), e: ajna, em: strictReduceTo22Limit(strictReduceTo22Limit(A + B) + ajna) },
-            { title: "Vissudha", fill: "var(--cyan-main)", p: strictReduceTo22Limit(A + C), e: vissudha, em: strictReduceTo22Limit(strictReduceTo22Limit(A + C) + vissudha) },
-            { title: "Anahata", fill: "var(--green-main)", p: strictReduceTo22Limit(A + D), e: anahata, em: strictReduceTo22Limit(strictReduceTo22Limit(A + D) + anahata) },
-            { title: "Manipura", fill: "var(--yellow-center)", p: E, e: strictReduceTo22Limit(A + E), em: strictReduceTo22Limit(E + strictReduceTo22Limit(A + E)) },
-            { title: "Svadhisthana", fill: "var(--orange-main)", p: strictReduceTo22Limit(C + D), e: svadhisthana, em: strictReduceTo22Limit(strictReduceTo22Limit(C + D) + svadhisthana) },
-            { title: "Muladhara", fill: "var(--red-main)", p: A, e: muladhara_in, em: strictReduceTo22Limit(A + muladhara_in) }
+    function renderHealthCard(A, B, C, D, E, ajna, vissudha, anahata, svadhisthana, muladhara_in) {
+        const rows = [
+            { name: "Сахасрара", color: "#9c27b0", p: B, e: B, em: reduceArcana(B + B) },
+            { name: "Аджна", color: "#2196f3", p: reduceArcana(A + B), e: ajna, em: reduceArcana(reduceArcana(A + B) + ajna) },
+            { name: "Вишудха", color: "#00bcd4", p: reduceArcana(A + C), e: vissudha, em: reduceArcana(reduceArcana(A + C) + vissudha) },
+            { name: "Анахата", color: "#4caf50", p: reduceArcana(A + D), e: anahata, em: reduceArcana(reduceArcana(A + D) + anahata) },
+            { name: "Манипура", color: "#ffca28", p: E, e: reduceArcana(A + E), em: reduceArcana(E + reduceArcana(A + E)) },
+            { name: "Свадхистана", color: "#ff9800", p: reduceArcana(C + D), e: svadhisthana, em: reduceArcana(reduceArcana(C + D) + svadhisthana) },
+            { name: "Муладхара", color: "#ef5350", p: A, e: muladhara_in, em: reduceArcana(A + muladhara_in) }
         ];
 
-        let summaryP = 0, summaryE = 0, summaryEm = 0;
-        const targetElementBody = document.getElementById('healthSheetContainer');
-        targetElementBody.innerHTML = '';
+        let sumP = 0, sumE = 0, sumEm = 0;
+        const tbody = document.getElementById('healthTableBody');
+        tbody.innerHTML = '';
 
-        matrixSchema.forEach(rowItem => {
-            summaryP += rowItem.p;
-            summaryE += rowItem.e;
-            summaryEm += rowItem.em;
-
-            const tableRowNode = document.createElement('tr');
-            tableRowNode.innerHTML = `
-                <td><div class="chakra-cell"><span class="chakra-dot" style="background-color: ${rowItem.fill}"></span>${rowItem.title}</div></td>
-                <td>${rowItem.p}</td>
-                <td>${rowItem.e}</td>
-                <td>${rowItem.em}</td>
+        rows.forEach(r => {
+            sumP += r.p; sumE += r.e; sumEm += r.em;
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><div class="chakra-mark"><span class="chakra-badge" style="background-color: ${r.color}"></span>${r.name}</div></td>
+                <td>${r.p}</td>
+                <td>${r.e}</td>
+                <td>${r.em}</td>
             `;
-            targetElementBody.appendChild(tableRowNode);
+            tbody.appendChild(tr);
         });
 
-        const totalRowNode = document.createElement('tr');
-        totalRowNode.className = 'total-row';
-        totalRowNode.innerHTML = `
-            <td>Total Result</td>
-            <td>${strictReduceTo22Limit(summaryP)}</td>
-            <td>${strictReduceTo22Limit(summaryE)}</td>
-            <td>${strictReduceTo22Limit(summaryEm)}</td>
+        const totalTr = document.createElement('tr');
+        totalTr.className = 'total-summary';
+        totalTr.innerHTML = `
+            <td>ИТОГО</td>
+            <td>${reduceArcana(sumP)}</td>
+            <td>${reduceArcana(sumE)}</td>
+            <td>${reduceArcana(sumEm)}</td>
         `;
-        targetElementBody.appendChild(totalRowNode);
+        tbody.appendChild(totalTr);
     }
 
-    function injectMicroYearCircleNodes(A, ancTL, B, ancTR, C, ancBR, D, ancBL) {
-        const outerShellLayer = document.getElementById('outerYearMicroLayer');
-        outerShellLayer.innerHTML = '';
+    function renderMicroYears(A, anc10, B, anc30, C, anc50, D, anc70) {
+        const container = document.getElementById('microYearsGroup');
+        container.innerHTML = '';
 
-        // Perfect trigonometric outer perimeter mapping coordinates (Center 400, 400, Radius 280)
-        // Calculated sequentially for 5, 15, 25, 35, 45, 55, 65, 75 micro periods
-        const outerPillarsData = [
-            { value: strictReduceTo22Limit(A + ancTL), cx: 202.02, cy: 317.98, age: "5" },
-            { value: strictReduceTo22Limit(ancTL + B), cx: 317.98, cy: 202.02, age: "15" },
-            { value: strictReduceTo22Limit(B + ancTR), cx: 482.02, cy: 202.02, age: "25" },
-            { value: strictReduceTo22Limit(ancTR + C), cx: 597.98, cy: 317.98, age: "35" },
-            { value: strictReduceTo22Limit(C + ancBR), cx: 597.98, cy: 482.02, age: "45" },
-            { value: strictReduceTo22Limit(ancBR + D), cx: 482.02, cy: 597.98, age: "55" },
-            { value: strictReduceTo22Limit(D + ancBL), cx: 317.98, cy: 597.98, age: "65" },
-            { value: strictReduceTo22Limit(ancBL + A), cx: 202.02, cy: 482.02, age: "75" }
+        // Координаты внешнего кольца (Радиус 260 от центра 400, 400)
+        const points = [
+            { val: reduceArcana(A + anc10), cx: 216.16, cy: 308.08, age: "5 лет", ox: -25, oy: 4 },
+            { val: reduceArcana(anc10 + B), cx: 308.08, cy: 216.16, age: "15 лет", ox: 0, oy: -15 },
+            { val: reduceArcana(B + anc30), cx: 491.92, cy: 216.16, age: "25 лет", ox: 0, oy: -15 },
+            { val: reduceArcana(anc30 + C), cx: 583.84, cy: 308.08, age: "35 лет", ox: 25, oy: 4 },
+            { val: reduceArcana(C + anc50), cx: 583.84, cy: 491.92, age: "45 лет", ox: 25, oy: 4 },
+            { val: reduceArcana(anc50 + D), cx: 491.92, cy: 583.84, age: "55 лет", ox: 0, oy: 18 },
+            { val: reduceArcana(D + anc70), cx: 308.08, cy: 583.84, age: "65 лет", ox: 0, oy: 18 },
+            { val: reduceArcana(anc70 + A), cx: 216.16, cy: 491.92, age: "75 лет", ox: -25, oy: 4 }
         ];
 
-        outerPillarsData.forEach(itemNode => {
-            // Circle Node Component
-            const circleNode = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-            circleNode.setAttribute('cx', itemNode.cx);
-            circleNode.setAttribute('cy', itemNode.cy);
-            circleNode.setAttribute('r', '10');
-            circleNode.setAttribute('fill', '#ffffff');
-            circleNode.setAttribute('stroke', '#6c757d');
-            circleNode.setAttribute('stroke-width', '1');
-            outerShellLayer.appendChild(circleNode);
+        points.forEach(p => {
+            // Кружок микро-аркана
+            const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            c.setAttribute('cx', p.cx);
+            c.setAttribute('cy', p.cy);
+            c.setAttribute('r', '9');
+            c.setAttribute('fill', '#ffffff');
+            c.setAttribute('stroke', '#adb5bd');
+            c.setAttribute('stroke-width', '1');
+            container.appendChild(c);
 
-            // Inner Arcana Text Inside Node
-            const textNode = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-            textNode.setAttribute('x', itemNode.cx);
-            textNode.setAttribute('y', itemNode.cy + 4);
-            textNode.setAttribute('font-size', '10');
-            textNode.setAttribute('fill', '#1a1d20');
-            textNode.setAttribute('text-anchor', 'middle');
-            textNode.textContent = itemNode.value;
-            outerShellLayer.appendChild(textNode);
+            // Текст аркана внутри
+            const t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            t.setAttribute('x', p.cx);
+            t.setAttribute('y', p.cy + 3);
+            t.setAttribute('font-size', '9');
+            t.setAttribute('fill', '#212529');
+            t.setAttribute('text-anchor', 'middle');
+            t.textContent = p.val;
+            container.appendChild(t);
 
-            // Outer Age Description Marker Label Placement
-            const labelNode = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-            
-            // Smart layout offsets to push texts safely outside the geometric perimeter ring
-            let offsetX = 0, offsetY = 0;
-            if (itemNode.cx < 400) offsetX = -22;
-            else offsetX = 22;
-            if (itemNode.cy < 400) offsetY = -12;
-            else offsetY = 16;
-
-            labelNode.setAttribute('x', itemNode.cx + offsetX);
-            labelNode.setAttribute('y', itemNode.cy + offsetY);
-            labelNode.setAttribute('font-size', '10');
-            labelNode.setAttribute('fill', '#6c757d');
-            labelNode.setAttribute('font-weight', '500');
-            labelNode.setAttribute('text-anchor', 'middle');
-            labelNode.textContent = itemNode.age + " y.o.";
-            outerShellLayer.appendChild(labelNode);
+            // Текст возраста снаружи
+            const l = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            l.setAttribute('x', p.cx + p.ox);
+            l.setAttribute('y', p.cy + p.oy);
+            l.setAttribute('font-size', '9');
+            l.setAttribute('fill', '#868e96');
+            l.setAttribute('font-weight', '500');
+            l.setAttribute('text-anchor', 'middle');
+            l.textContent = p.age;
+            container.appendChild(l);
         });
     }
 
-    // Initialize layout stack execution lifecycle hook
-    window.onload = calculateClassicMatrix;
+    window.onload = calculateMatrix;
 </script>
 
 </body>
