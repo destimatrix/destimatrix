@@ -1,270 +1,325 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Matrix of Destiny — by destimatrix</title>
+<title>Matrix of Destiny — by destimatrix</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Philosopher:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
     :root{
-      --ink:#1f2530;
+      --ink:#222831;
+      --muted:#6b7280;
+      --line:#e6e8ee;
       --purple:#8a46a3;
       --blue:#4d6dff;
       --cyan:#45cfe1;
-      --green:#9be15d;
       --yellow:#ffe44d;
       --orange:#ffb02e;
       --red:#ef4141;
+      --gray:#c2c8d0;
       --money:#9bd454;
+      --accent:#f2a873;
     }
     *{box-sizing:border-box;}
-    body{margin:0;background:#ffffff;color:var(--ink);font-family:"Source Sans Pro",Arial,sans-serif;-webkit-font-smoothing:antialiased;}
-    .page{max-width:1180px;margin:0 auto;padding:30px 16px 70px;}
+    body{margin:0;background:#fff;color:var(--ink);font-family:"Roboto",Arial,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased;}
+    .page{max-width:1200px;margin:0 auto;padding:30px 18px 80px;}
+    h1,h2,h3,.h6{font-family:"Philosopher",Georgia,serif;}
     .brand{text-align:center;font-size:13px;letter-spacing:.32em;text-transform:uppercase;color:#9aa3b2;font-weight:700;margin-bottom:6px;}
-    h1{margin:0 0 24px;text-align:center;font-size:38px;line-height:1.05;font-weight:900;letter-spacing:-0.03em;}
-    .form-card{max-width:560px;border:1px solid #e7e9ee;border-radius:14px;padding:18px 20px;margin:0 auto 30px;display:grid;grid-template-columns:1fr auto;gap:16px;align-items:end;box-shadow:0 10px 30px rgba(17,24,39,.07);}
-    label{display:block;margin-bottom:8px;font-weight:700;font-size:15px;}
-    input{width:100%;height:52px;border:1px solid #d7dbe2;border-radius:9px;padding:0 16px;font-size:20px;font-weight:600;color:var(--ink);font-family:inherit;}
-    input:focus{outline:none;border-color:var(--orange);box-shadow:0 0 0 3px rgba(255,176,46,.2);}
-    button{height:52px;padding:0 26px;border:0;border-radius:9px;background:linear-gradient(180deg,#ff9b57,#f27f3f);color:#fff;font-size:17px;font-weight:900;font-family:inherit;cursor:pointer;white-space:nowrap;}
-    button:hover{filter:brightness(1.04);}
-    .chart-wrap{width:100%;overflow:auto;padding:6px 0 20px;}
-    .matrix{display:block;width:min(100%,1000px);min-width:780px;height:auto;margin:0 auto;overflow:visible;}
+    h1{margin:0 0 6px;text-align:center;font-size:42px;line-height:1.05;font-weight:700;}
+    .subtitle{text-align:center;color:var(--muted);max-width:620px;margin:0 auto 28px;font-weight:300;}
+    .form-card{max-width:560px;border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin:0 auto 14px;display:grid;grid-template-columns:1fr auto;gap:16px;align-items:end;box-shadow:0 10px 30px rgba(17,24,39,.07);}
+    label{display:block;margin-bottom:8px;font-weight:500;font-size:14px;color:var(--muted);}
+    input{width:100%;height:52px;border:1px solid #d7dbe2;border-radius:9px;padding:0 16px;font-size:20px;font-weight:500;color:var(--ink);font-family:inherit;}
+    input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(242,168,115,.25);}
+    button{height:52px;padding:0 30px;border:0;border-radius:9px;background:var(--accent);color:#fff;font-size:16px;font-weight:700;font-family:inherit;cursor:pointer;white-space:nowrap;letter-spacing:.02em;}
+    button:hover{filter:brightness(1.05);}
+    .hint{text-align:center;color:var(--muted);font-size:13px;margin:0 0 36px;}
+
+    .top-content{display:grid;grid-template-columns:minmax(320px,440px) 1fr;gap:30px;align-items:start;}
+    @media (max-width:980px){.top-content{grid-template-columns:1fr;}}
+
+    /* health card */
+    .card-title{font-size:22px;font-weight:700;margin:0 0 12px;}
+    .health-table{width:100%;border-collapse:collapse;font-size:13px;}
+    .health-table th,.health-table td{padding:7px 8px;text-align:center;border-bottom:1px solid var(--line);}
+    .health-table thead th{font-family:"Roboto";font-weight:700;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.04em;}
+    .health-table td.chakra{text-align:left;}
+    .chakra-name{font-family:"Philosopher",serif;font-size:16px;font-weight:700;line-height:1.2;}
+    .chakra-sub{font-size:11px;color:var(--muted);line-height:1.3;}
+    .health-table .rownum{font-weight:700;color:#fff;width:26px;}
+    .health-table td.val{font-size:18px;font-weight:700;width:48px;}
+    .r-purple .rownum{background:var(--purple);} .r-blue .rownum{background:var(--blue);}
+    .r-cyan .rownum{background:var(--cyan);} .r-green .rownum{background:var(--green);color:var(--ink);}
+    .r-yellow .rownum{background:var(--yellow);color:var(--ink);} .r-orange .rownum{background:var(--orange);}
+    .r-red .rownum{background:var(--red);} .r-gray .rownum{background:var(--gray);color:var(--ink);}
+    .r-gray td{font-weight:700;background:#f7f8fa;}
+    .has-tip{border-bottom:1px dotted #aeb4be;cursor:help;}
+
+    /* diagram */
+    .chart-wrap{width:100%;overflow:auto;padding:6px 0 10px;}
+    .matrix{display:block;width:100%;height:auto;margin:0 auto;overflow:visible;min-width:680px;}
     .line-main{stroke:var(--ink);stroke-width:3.2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
     .line-thin{stroke:var(--ink);stroke-width:1.3;fill:none;}
     .line-male{stroke:var(--purple);stroke-width:3;fill:none;marker-end:url(#arrowPurple);}
     .line-female{stroke:var(--red);stroke-width:3;fill:none;marker-end:url(#arrowRed);}
     .line-channel{stroke:var(--ink);stroke-width:1.3;stroke-dasharray:7 7;fill:none;}
     .circle-white{fill:#fff;stroke:var(--ink);stroke-width:3;}
-    .circle-purple{fill:var(--purple);}
-    .circle-blue{fill:var(--blue);}
-    .circle-cyan{fill:var(--cyan);}
-    .circle-green{fill:var(--green);}
-    .circle-yellow{fill:var(--yellow);}
-    .circle-orange{fill:var(--orange);}
-    .circle-red{fill:var(--red);}
-    .num{text-anchor:middle;dominant-baseline:central;font-weight:700;fill:var(--ink);font-family:"Source Sans Pro",Arial,sans-serif;}
-    .num-white{fill:#fff;}
-    .num-dark{fill:var(--ink);}
-    .num-big{font-size:52px;font-weight:700;}
-    .num-mid{font-size:38px;font-weight:700;}
-    .num-small{font-size:26px;font-weight:700;}
+    .circle-purple{fill:var(--purple);} .circle-blue{fill:var(--blue);} .circle-cyan{fill:var(--cyan);}
+    .circle-green{fill:var(--green);} .circle-yellow{fill:var(--yellow);} .circle-orange{fill:var(--orange);} .circle-red{fill:var(--red);}
+    .num{text-anchor:middle;dominant-baseline:central;font-weight:700;fill:var(--ink);font-family:"Roboto",Arial,sans-serif;}
+    .num-white{fill:#fff;} .num-dark{fill:var(--ink);}
+    .num-big{font-size:52px;} .num-mid{font-size:38px;} .num-small{font-size:26px;}
     .outer-arcana{text-anchor:middle;dominant-baseline:central;font-size:21px;font-weight:600;fill:#0d1b2a;}
-    .age-major{text-anchor:middle;font-size:13px;fill:#111827;font-weight:900;}
-    .age-range{text-anchor:middle;dominant-baseline:central;font-size:9px;fill:#5b6573;font-weight:600;}
+    .age-major{text-anchor:middle;font-size:13px;fill:#111827;font-weight:700;}
+    .age-range{text-anchor:middle;dominant-baseline:central;font-size:9px;fill:#5b6573;font-weight:500;}
     .tick-dot{fill:var(--ink);stroke:var(--ink);stroke-width:1;}
     .tick-open{fill:#fff;stroke:var(--ink);stroke-width:2;}
-    .line-label{font-size:19px;fill:#1f2530;font-weight:600;}
+    .line-label{font-size:19px;fill:var(--ink);font-weight:500;}
     .symbol{font-size:38px;font-weight:900;text-anchor:middle;dominant-baseline:central;}
+
+    /* generation lines row */
+    .gen-row{display:flex;flex-wrap:wrap;gap:30px;justify-content:center;margin:26px 0 8px;}
+    .gen-item{display:flex;align-items:center;gap:12px;}
+    .gen-item .h6{font-size:15px;font-weight:700;margin:0;}
+    .gen-vals{display:flex;gap:8px;}
+    .pill{width:42px;height:42px;border-radius:50%;border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:17px;}
+    .pill.power{background:var(--ink);color:#fff;border-color:var(--ink);}
+
+    /* zones */
+    .zones{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:40px;}
+    @media (max-width:780px){.zones{grid-template-columns:1fr;}}
+    .zone{border:1px solid var(--line);border-radius:14px;padding:20px;box-shadow:0 6px 18px rgba(17,24,39,.05);}
+    .zone__title{font-size:20px;font-weight:700;margin:0 0 8px;}
+    .zone__desc{color:var(--muted);font-size:14px;font-weight:300;margin:0 0 16px;min-height:60px;}
+    .zone__vals{display:flex;gap:18px;align-items:center;}
+    .zone__val{text-align:center;}
+    .zone__val .lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;}
+    .zone__val .num2{width:46px;height:46px;border-radius:50%;border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;margin:4px auto 0;}
+    .zone__val.center .num2{background:var(--accent);color:#fff;border-color:var(--accent);}
+
     @media (max-width:720px){
-      .page{padding:18px 10px 40px;}
-      h1{font-size:30px;}
+      .page{padding:18px 10px 50px;} h1{font-size:32px;}
       .form-card{grid-template-columns:1fr;gap:14px;padding:16px;}
-      .matrix{min-width:740px;}
     }
   </style>
 </head>
-<body>
   <main class="page">
     <p class="brand">by destimatrix</p>
     <h1>Matrix of Destiny</h1>
+    <p class="subtitle">Enter your date of birth to build your personal Destiny Matrix, Health Card and life missions.</p>
+
     <form class="form-card" id="chartForm">
       <div>
         <label for="birthdate">Date of birth</label>
-        <input id="birthdate" type="text" value="28.05.1994" placeholder="DD.MM.YYYY" autocomplete="off" inputmode="numeric">
       </div>
       <button type="submit">Calculate</button>
     </form>
+    <p class="hint">Example: 28.05.1994</p>
 
-    <div class="chart-wrap">
-      <svg class="matrix" viewBox="0 0 1000 1000" aria-label="Destiny Matrix personal chart">
-        <defs>
-          <marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#8a46a3"></path></marker>
-          <marker id="arrowRed" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#ef4141"></path></marker>
-        </defs>
+    <div class="top-content">
+      <!-- HEALTH CARD -->
+      <div class="health">
+        <h2 class="card-title">Health card</h2>
+        <table class="health-table">
+          <thead>
+            <tr><th></th><th>Chakra</th><th>Physics</th><th>Energy</th><th>Emotions</th></tr>
+          </thead>
+          <tbody id="healthBody"></tbody>
+        </table>
+      </div>
 
-        <!-- octagon + inner squares -->
-        <polygon class="line-main" points="500,64 779,180 936,500 779,820 500,936 221,820 64,500 221,180"></polygon>
-        <polygon class="line-main" points="500,104 896,500 500,896 104,500"></polygon>
-        <rect class="line-main" x="221" y="221" width="558" height="558"></rect>
+      <!-- DIAGRAM -->
+      <div class="chart-wrap">
+        <svg class="matrix" viewBox="0 0 1000 1000" aria-label="Destiny Matrix personal chart">
+          <defs>
+            <marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#8a46a3"></path></marker>
+            <marker id="arrowRed" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#ef4141"></path></marker>
+          </defs>
+          <polygon class="line-main" points="500,64 779,180 936,500 779,820 500,936 221,820 64,500 221,180"></polygon>
+          <polygon class="line-main" points="500,104 896,500 500,896 104,500"></polygon>
+          <rect class="line-main" x="221" y="221" width="558" height="558"></rect>
+          <line class="line-thin" x1="500" y1="104" x2="500" y2="896"></line>
+          <line class="line-thin" x1="104" y1="500" x2="896" y2="500"></line>
+          <line class="line-male" x1="221" y1="221" x2="779" y2="779"></line>
+          <line class="line-female" x1="779" y1="221" x2="221" y2="779"></line>
+          <line class="line-channel" x1="500" y1="779" x2="779" y2="500"></line>
+          <text class="line-label" x="356" y="388" transform="rotate(45 356 388)">male generation line</text>
+          <text class="line-label" x="640" y="392" transform="rotate(-45 640 392)">female generation line</text>
+          <text class="symbol" x="650" y="575" fill="#9bd454">$</text>
+          <text class="symbol" x="548" y="668" fill="#ef4141">&#10084;</text>
+          <g id="perimeter"></g>
+          <g id="fixedAges"></g>
+          <g id="dynamicYearArcana"></g>
+          <g id="circleLayer"></g>
+        </svg>
+      </div>
+    </div>
 
-        <!-- thin cross -->
-        <line class="line-thin" x1="500" y1="104" x2="500" y2="896"></line>
-        <line class="line-thin" x1="104" y1="500" x2="896" y2="500"></line>
+    <!-- GENERATION LINES -->
+    <div class="gen-row">
+      <div class="gen-item">
+        <p class="h6">Male generation lines:</p>
+        <div class="gen-vals" id="maleLine"></div>
+      </div>
+      <div class="gen-item">
+        <p class="h6">Female generation lines:</p>
+        <div class="gen-vals" id="femaleLine"></div>
+      </div>
+      <div class="gen-item">
+        <p class="h6">Ancestral power:</p>
+        <div class="gen-vals"><span class="pill power" id="ancestralPower"></span></div>
+      </div>
+    </div>
 
-        <!-- generation lines -->
-        <line class="line-male" x1="221" y1="221" x2="779" y2="779"></line>
-        <line class="line-female" x1="779" y1="221" x2="221" y2="779"></line>
-        <line class="line-channel" x1="500" y1="779" x2="779" y2="500"></line>
-
-        <!-- labels + symbols -->
-        <text class="line-label" x="356" y="388" transform="rotate(45 356 388)">male generation line</text>
-        <text class="line-label" x="640" y="392" transform="rotate(-45 640 392)">female generation line</text>
-        <text class="symbol" x="650" y="575" fill="#9bd454">$</text>
-        <text class="symbol" x="548" y="668" fill="#ef4141">&#10084;</text>
-
-        <g id="perimeter"></g>
-        <g id="fixedAges"></g>
-        <g id="dynamicYearArcana"></g>
-        <g id="circleLayer"></g>
-      </svg>
+    <!-- ZONES / MISSIONS -->
+    <div class="zones">
+      <div class="zone">
+        <h3 class="zone__title">Soul searching</h3>
+        <p class="zone__desc">Mix of male and female. Building relationships. Skills. First mission, from 20 to 40 years old.</p>
+        <div class="zone__vals">
+          <div class="zone__val"><span class="lbl">Sky</span><span class="num2" id="z-h"></span></div>
+          <div class="zone__val"><span class="lbl">Earth</span><span class="num2" id="z-j"></span></div>
+          <div class="zone__val center"><span class="lbl">Mission</span><span class="num2" id="z-m"></span></div>
+        </div>
+      </div>
+      <div class="zone">
+        <h3 class="zone__title">Socialization</h3>
+        <p class="zone__desc">Social and family systems. Result and public acceptance. Second mission, from 40 to 60 years old.</p>
+        <div class="zone__vals">
+          <div class="zone__val"><span class="lbl">M</span><span class="num2" id="z-n"></span></div>
+          <div class="zone__val"><span class="lbl">F</span><span class="num2" id="z-t"></span></div>
+          <div class="zone__val center"><span class="lbl">Mission</span><span class="num2" id="z-z"></span></div>
+        </div>
+      </div>
+      <div class="zone">
+        <h3 class="zone__title">Spiritual knowledge</h3>
+        <p class="zone__desc">Spiritual exam. Who am I for the God? The third mission, from 60 years old — runs through your whole life.</p>
+        <div class="zone__vals">
+          <div class="zone__val center"><span class="lbl">Mission</span><span class="num2" id="z-s"></span></div>
+        </div>
+      </div>
     </div>
   </main>
 
 <script>
 const POINTS={top:[500,64],topRight:[779,180],right:[936,500],bottomRight:[779,820],bottom:[500,936],bottomLeft:[221,820],left:[64,500],topLeft:[221,180]};
 
-/* circle layout: [key, x, y, radius, color, sizeClass, textColor] */
 const CIRCLE_POSITIONS=[
-  /* vertical top arm: crown -> center */
   ['b',500,104,56,'purple','big','white'],
   ['b2',500,180,38,'blue','mid','white'],
   ['b1',500,250,28,'cyan','small','white'],
   ['b3',500,372,27,'green','small','dark'],
-  /* vertical bottom arm */
   ['d',500,896,56,'red','big','white'],
   ['d2',500,820,38,'white','mid','dark'],
   ['d1',500,750,28,'orange','small','white'],
-  /* horizontal left arm */
   ['a',104,500,56,'purple','big','white'],
   ['a2',180,500,38,'blue','mid','white'],
   ['a1',250,500,28,'cyan','small','white'],
   ['a3',372,500,27,'green','small','dark'],
-  /* horizontal right arm */
   ['c',896,500,56,'red','big','white'],
   ['c2',820,500,38,'white','mid','dark'],
   ['c1',750,500,28,'orange','small','white'],
-  /* center */
   ['e',500,500,56,'yellow','big','dark'],
   ['e1',570,500,30,'white','small','dark'],
   ['e2',628,500,26,'white','small','dark'],
-  /* diagonal corners (white) */
   ['f',236,196,52,'white','big','dark'],
   ['f2',292,262,35,'white','mid','dark'],
   ['f3',342,316,27,'white','small','dark'],
-  ['g',764,196,52,'white','big','dark'],
-  ['g2',708,262,35,'white','mid','dark'],
-  ['g3',658,316,27,'white','small','dark'],
-  ['y',764,804,52,'white','big','dark'],
-  ['y2',708,738,35,'white','mid','dark'],
-  ['y3',658,684,27,'white','small','dark'],
   ['k',236,804,52,'white','big','dark'],
   ['k2',292,738,35,'white','mid','dark'],
   ['k3',342,684,27,'white','small','dark'],
-  /* love/money channel circles (center-bottom-right) */
   ['x1',555,705,27,'white','small','dark'],
   ['x',620,620,27,'white','small','dark'],
   ['x2',690,548,27,'white','small','dark']
+  [972,504,'40\nyears\nold'],[850,876,'50\nyears\nold'],[500,978,'60\nyears\nold'],[150,876,'70\nyears\nold']
 ];
 
-const AGE_MAJOR=[
-  [28,504,'0\nyears\nold'],[150,140,'10\nyears\nold'],[500,30,'20\nyears\nold'],[850,140,'30\nyears\nold'],
-  [972,504,'40\nyears\nold'],[850,876,'50\nyears\nold'],[500,978,'60\nyears\nold'],[150,876,'70\nyears\nold']
+const CHAKRAS=[
+  ['1','r-purple','Sahasrara','Mission','a','b','l','Responsible for the condition of the hair, brain and the top of the skull.'],
+  ['2','r-blue','Ajna','Destiny, egregores','a2','b2','l1','Responsible for the condition of the eyes, ears, face, thyroid gland, shoulders and arms.'],
+  ['3','r-cyan','Vishuddha','Destiny, egregores','a1','b1','l2','Responsible for the condition of the throat, lower jaw, thyroid gland, shoulders and arms.'],
+  ['4','r-green','Anahata','Relationships, picture of the world','a3','b3','l3','Responsible for the condition of the heart, lungs, bronchi, ribs and chest.'],
+  ['5','r-yellow','Manipura','Status, possessions','e','e','l4','Responsible for the condition of the middle of the spine, and the liver.'],
+  ['6','r-orange','Svadhisthana','Love of children, Joy','c1','d1','l5','Responsible for the condition of the kidneys, large intestine, adrenal glands and genitals.'],
+  ['7','r-red','Muladhara','Body, materia','c','d','l6','Responsible for the condition of the legs, anus, sacrum and genitourinary system.'],
+  ['','r-gray','Result','Common energy-zone','d3','c3','e3','Responsible for the condition of the bone, lymphatic, circulatory systems and excess weight.']
 ];
 
 function reduceArcana(number){let n=Number(number);while(n>22){n=String(n).split('').reduce((s,d)=>s+Number(d),0)}return n}
 function parseDate(value){const m=String(value).trim().match(/^(\d{1,2})[./-](\d{1,2})[./-](\d{4})$/);if(!m)return null;return{day:Number(m[1]),month:Number(m[2]),year:m[3]}}
+
 function calculate(dateValue){
-  const p=parseDate(dateValue);if(!p){alert('Please enter date as DD.MM.YYYY');return null}
+  const p=parseDate(dateValue);if(!p){alert('Please enter the date as DD.MM.YYYY');return null}
   const a=reduceArcana(p.day);
   const b=reduceArcana(p.month);
   const c=reduceArcana(String(p.year).split('').reduce((s,d)=>s+Number(d),0));
-  const d=reduceArcana(a+b+c);
-  const e=reduceArcana(a+b+c+d);
-  const a1=reduceArcana(a+e),a2=reduceArcana(a+a1),a3=reduceArcana(a1+e);
-  const b1=reduceArcana(b+e),b2=reduceArcana(b+b1),b3=reduceArcana(b1+e);
-  const c1=reduceArcana(c+e),c2=reduceArcana(c+c1);
-  const d1=reduceArcana(d+e),d2=reduceArcana(d+d1);
-  const e1=reduceArcana(c1+d1),e2=reduceArcana(c1+e1);
-  const f=reduceArcana(a+b),g=reduceArcana(b+c),y=reduceArcana(c+d),k=reduceArcana(d+a);
-  const generationPower=reduceArcana(f+g+y+k);
-  const f3=reduceArcana(f+generationPower),f2=reduceArcana(f+f3);
-  const g3=reduceArcana(g+generationPower),g2=reduceArcana(g+g3);
   const y3=reduceArcana(y+generationPower),y2=reduceArcana(y+y3);
   const k3=reduceArcana(k+generationPower),k2=reduceArcana(k+k3);
   const x=reduceArcana(c1+d1),x2=reduceArcana(c1+x),x1=reduceArcana(d1+x);
-  return{a,b,c,d,e,a1,a2,a3,b1,b2,b3,c1,c2,d1,d2,e1,e2,f,g,y,k,f2,f3,g2,g3,y2,y3,k2,k3,x,x1,x2}
+
+  /* Health card — Emotions column = reduce(Physics + Energy) */
+  const l=reduceArcana(a+b),l1=reduceArcana(a2+b2),l2=reduceArcana(a1+b1),l3=reduceArcana(a3+b3);
+  const l4=reduceArcana(e+e),l5=reduceArcana(c1+d1),l6=reduceArcana(c+d);
+  /* Result row = sum of each column */
+  const d3=reduceArcana(a+a2+a1+a3+e+c1+c);
+  const c3=reduceArcana(b+b2+b1+b3+e+d1+d);
+  const e3=reduceArcana(l+l1+l2+l3+l4+l5+l6);
+
+  /* Generation line trinity codes + ancestral power */
+  const o=reduceArcana(f+y);   /* male line sum */
+  const u=reduceArcana(g+k);   /* female line sum */
+  const ancestralPower=reduceArcana(o+u);
+
+  /* Missions */
+  const h=reduceArcana(b+d);   /* Sky / heavenly purpose */
+  const j=reduceArcana(a+c);   /* Earth / earthly purpose */
+  const m=reduceArcana(h+j);   /* 1st mission */
+  const n=o, t=u;              /* social interaction M / F */
+  const z=reduceArcana(n+t);   /* 2nd mission */
+  const s=reduceArcana(m+z);   /* 3rd mission */
+
+  return{a,b,c,d,e,a1,a2,a3,b1,b2,b3,c1,c2,d1,d2,e1,e2,f,g,y,k,f2,f3,g2,g3,y2,y3,k2,k3,x,x1,x2,
+    l,l1,l2,l3,l4,l5,l6,d3,c3,e3,o,u,ancestralPower,h,j,m,n,t,z,s}
 }
+
 function arcanaBetween(start,end){
   const mid=reduceArcana(start+end);
   const leftMid=reduceArcana(start+mid);
-  const rightMid=reduceArcana(mid+end);
-  const leftLeft=reduceArcana(start+leftMid);
-  const leftRight=reduceArcana(leftMid+mid);
-  const rightLeft=reduceArcana(mid+rightMid);
-  const rightRight=reduceArcana(rightMid+end);
-  return[leftLeft,leftMid,leftRight,mid,rightLeft,rightMid,rightRight]
-}
-function pointAt(p1,p2,t){return[p1[0]+(p2[0]-p1[0])*t,p1[1]+(p2[1]-p1[1])*t]}
-function normal(p1,p2,distance){const dx=p2[0]-p1[0],dy=p2[1]-p1[1],len=Math.sqrt(dx*dx+dy*dy)||1;return[-dy/len*distance,dx/len*distance]}
-
-function drawStaticAgesAndTicks(){
-  const perimeter=document.getElementById('perimeter');
-  const ages=document.getElementById('fixedAges');
-  const corners=[POINTS.left,POINTS.topLeft,POINTS.top,POINTS.topRight,POINTS.right,POINTS.bottomRight,POINTS.bottom,POINTS.bottomLeft];
-  const majorAgeLabels=[0,10,20,30,40,50,60,70];
-  let tickHtml='';let ageHtml='';
-  AGE_MAJOR.forEach(([x,y,label])=>{
-    const lines=label.split('\n');
-    ageHtml+=`<text class="age-major" x="${x}" y="${y}">`;
     lines.forEach((line,i)=>{ageHtml+=`<tspan x="${x}" dy="${i===0?0:12}">${line}</tspan>`});
     ageHtml+='</text>';
   });
-  const midTick=4; /* single milestone in the middle of each side */
+  const midTick=4;
   for(let side=0;side<corners.length;side++){
     const p1=corners[side];const p2=corners[(side+1)%corners.length];
     const inward=normal(p1,p2,side>=0&&side<=3?20:-20);
-    for(let i=1;i<=8;i++){
-      const t=(i===midTick)?0.5:i/9;
-      const [x,y]=pointAt(p1,p2,t);
-      const isMilestone=(i===midTick);
-      const cls=isMilestone?'tick-open':'tick-dot';
-      const r=isMilestone?5:3.4;
-      tickHtml+=`<circle class="${cls}" cx="${x}" cy="${y}" r="${r}"></circle>`;
-      const lx=x+inward[0];const ly=y+inward[1];
-      if(isMilestone){
-        const bigAge=majorAgeLabels[side]+5;
-        ageHtml+=`<text class="age-major" x="${lx}" y="${ly-6}">${bigAge}<tspan x="${lx}" dy="10">years</tspan><tspan x="${lx}" dy="10">old</tspan></text>`;
-      }else{
-        const ageStart=majorAgeLabels[side]+(i-1)*1.25;
-        const ageEnd=ageStart+1.25;
-        const fmt=v=>String(v).replace('.25',',25').replace('.5',',5').replace('.75',',75');
-        ageHtml+=`<text class="age-range" x="${lx}" y="${ly}">${fmt(ageStart)}-${fmt(ageEnd)}</text>`;
-      }
-    }
-  }
-  perimeter.innerHTML=tickHtml;ages.innerHTML=ageHtml;
-}
-
-function drawYearArcana(data){
-  const group=document.getElementById('dynamicYearArcana');
-  const order=[['a',POINTS.left],['f',POINTS.topLeft],['b',POINTS.top],['g',POINTS.topRight],['c',POINTS.right],['y',POINTS.bottomRight],['d',POINTS.bottom],['k',POINTS.bottomLeft]];
-  let html='';
-  for(let side=0;side<order.length;side++){
-    const[startKey,p1]=order[side];
-    const[endKey,p2]=order[(side+1)%order.length];
-    const values=arcanaBetween(data[startKey],data[endKey]);
-    const out=normal(p1,p2,side>=0&&side<=3?-33:33);
-    values.forEach((value,index)=>{
-      const[x,y]=pointAt(p1,p2,(index+1)/8);
-      html+=`<text class="outer-arcana" x="${x+out[0]}" y="${y+out[1]}">${value}</text>`;
-    });
-  }
-  group.innerHTML=html;
-}
-
-function drawCircles(data){
-  const layer=document.getElementById('circleLayer');
-  let html='';
-  CIRCLE_POSITIONS.forEach(([key,x,y,r,color,size,textColor])=>{
-    const circleClass=color==='white'?'circle-white':`circle-${color}`;
-    const textClass=size==='big'?'num-big':size==='mid'?'num-mid':'num-small';
-    const tColor=textColor==='white'?'num-white':'num-dark';
-    html+=`<circle class="${circleClass}" cx="${x}" cy="${y}" r="${r}"></circle><text class="num ${textClass} ${tColor}" x="${x}" y="${y}">${data[key]??''}</text>`;
-  });
   layer.innerHTML=html;
+}
+
+function drawHealthCard(data){
+  const body=document.getElementById('healthBody');
+  let html='';
+  CHAKRAS.forEach(([num,cls,name,sub,ph,en,em,tip])=>{
+    html+=`<tr class="${cls}">
+      <td class="rownum">${num}</td>
+      <td class="chakra"><div class="chakra-name"><span class="has-tip" title="${tip}">${name}</span></div><div class="chakra-sub">${sub}</div></td>
+      <td class="val">${data[ph]??''}</td>
+      <td class="val">${data[en]??''}</td>
+      <td class="val">${data[em]??''}</td>
+    </tr>`;
+  });
+  body.innerHTML=html;
+}
+
+function drawGenerationAndZones(data){
+  const male=document.getElementById('maleLine');
+  const female=document.getElementById('femaleLine');
+  male.innerHTML=`<span class="pill">${data.f}</span><span class="pill">${data.y}</span><span class="pill power">${data.o}</span>`;
+  female.innerHTML=`<span class="pill">${data.g}</span><span class="pill">${data.k}</span><span class="pill power">${data.u}</span>`;
+  document.getElementById('ancestralPower').textContent=data.ancestralPower;
+  document.getElementById('z-h').textContent=data.h;
+  document.getElementById('z-j').textContent=data.j;
+  document.getElementById('z-m').textContent=data.m;
+  document.getElementById('z-n').textContent=data.n;
+  document.getElementById('z-t').textContent=data.t;
+  document.getElementById('z-z').textContent=data.z;
+  document.getElementById('z-s').textContent=data.s;
 }
 
 function render(){
@@ -272,11 +327,8 @@ function render(){
   if(!result)return;
   drawCircles(result);
   drawYearArcana(result);
+  drawHealthCard(result);
+  drawGenerationAndZones(result);
 }
 
 document.getElementById('chartForm').addEventListener('submit',e=>{e.preventDefault();render()});
-drawStaticAgesAndTicks();
-render();
-</script>
-</body>
-</html>
