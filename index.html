@@ -3,25 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DestiMatrix - Destiny Matrix Calculator</title>
+    <title>DestiMatrix - Classic Destiny Matrix</title>
     <style>
         :root {
-            --bg-color: #f8f9fa;
+            --bg-color: #fcfbfa;
             --card-bg: #ffffff;
-            --text-main: #212529;
-            --text-muted: #6c757d;
-            --accent-color: #4f46e5;
-            --border-color: #e9ecef;
+            --text-main: #2D3142;
+            --text-muted: #9095A9;
+            --accent-color: #7209B7;
+            --border-color: #E2E4E9;
             --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             
-            /* Chakra Colors */
-            --sahasrara: #9c27b0;
-            --ajna: #3f51b5;
-            --vissudha: #03a9f4;
-            --anahata: #4caf50;
-            --manipura: #ffeb3b;
-            --svadhisthana: #ff9800;
-            --muladhara: #f44336;
+            /* Calibrated Chakra & Node Colors */
+            --c-purple: #B5179E;   /* Sahasrara / Top */
+            --c-blue: #4CC9F0;     /* Ajna */
+            --c-cyan: #4895EF;     /* Vissudha */
+            --c-green: #4CAF50;    /* Anahata / Money Channel Base */
+            --c-yellow: #F72585;   /* Manipura / Center (Classic Magenta/Pink accent) */
+            --c-orange: #F57C00;   /* Svadhisthana / Love Channel Base */
+            --c-red: #E63946;      /* Muladhara / Bottom */
         }
 
         * {
@@ -34,197 +34,210 @@
             font-family: var(--font-family);
             background-color: var(--bg-color);
             color: var(--text-main);
-            line-height: 1.5;
             padding: 20px;
+            display: flex;
+            justify-content: center;
         }
 
         .container {
+            width: 100%;
             max-width: 1200px;
-            margin: 0 auto;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 30px;
+            gap: 24px;
         }
 
         header {
             text-align: center;
-            margin-top: 20px;
+            margin: 10px 0;
         }
 
         header h1 {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 800;
+            letter-spacing: -0.04em;
             color: var(--text-main);
-            letter-spacing: -0.05em;
-            margin-bottom: 5px;
+            text-transform: uppercase;
         }
 
         header p {
             color: var(--text-muted);
-            font-size: 1rem;
+            font-size: 0.95rem;
+            margin-top: 4px;
         }
 
         .calculator-card {
             background: var(--card-bg);
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            padding: 24px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
             width: 100%;
-            max-width: 500px;
+            max-width: 440px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
             text-align: center;
         }
 
         .input-group {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
             text-align: left;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         .input-group label {
             font-weight: 600;
-            font-size: 0.9rem;
-            color: var(--text-main);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
         }
 
         .input-group input {
-            padding: 12px 16px;
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
+            padding: 14px 16px;
+            border: 1.5px solid var(--border-color);
+            border-radius: 12px;
             font-size: 1rem;
+            font-family: inherit;
+            color: var(--text-main);
             outline: none;
-            transition: border-color 0.2s ease;
+            background-color: #F8F9FA;
+            transition: all 0.2s ease;
         }
 
         .input-group input:focus {
             border-color: var(--accent-color);
+            background-color: #fff;
+            box-shadow: 0 0 0 4px rgba(114, 9, 183, 0.1);
         }
 
         .btn-calc {
-            background-color: var(--accent-color);
+            background-color: var(--text-main);
             color: white;
             border: none;
-            padding: 14px 24px;
+            padding: 14px;
             font-size: 1rem;
             font-weight: 600;
-            border-radius: 8px;
+            border-radius: 12px;
             cursor: pointer;
             width: 100%;
-            transition: opacity 0.2s ease;
+            transition: background-color 0.2s;
         }
 
         .btn-calc:hover {
-            opacity: 0.9;
+            background-color: var(--accent-color);
         }
 
         .workspace {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 40px;
+            gap: 32px;
             width: 100%;
-            margin-top: 20px;
+            margin-top: 10px;
         }
 
         @media (min-width: 992px) {
             .workspace {
-                grid-template-columns: 1.2fr 0.8fr;
+                grid-template-columns: 1.1fr 0.9fr;
                 align-items: start;
             }
         }
 
         .diagram-container {
             background: var(--card-bg);
-            padding: 20px;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            padding: 16px;
+            border-radius: 24px;
+            border: 1px solid var(--border-color);
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 100%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
         }
 
         svg {
             width: 100%;
-            max-width: 700px;
+            max-width: 640px;
             height: auto;
-            overflow: visible;
-        }
-
-        .results-container {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
         }
 
         .health-card {
             background: var(--card-bg);
-            padding: 25px;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            padding: 24px;
+            border-radius: 24px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
         }
 
         .health-card h2 {
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             font-weight: 700;
-            margin-bottom: 15px;
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 10px;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            text-align: left;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
 
         th, td {
-            padding: 12px 10px;
+            padding: 12px 8px;
             border-bottom: 1px solid var(--border-color);
         }
 
         th {
             font-weight: 600;
             color: var(--text-muted);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
         }
 
-        .chakra-badge {
-            display: inline-block;
-            width: 12px;
-            height: 12px;
+        .chakra-target {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+
+        .chakra-dot {
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
-            margin-right: 8px;
-            vertical-align: middle;
         }
 
         tr.result-row {
             font-weight: 700;
-            background-color: var(--bg-color);
+            background-color: #F8F9FA;
+        }
+        
+        tr.result-row td {
+            border-bottom: none;
         }
 
-        /* SVG Text Styling */
+        /* SVG Typographic enhancements */
         text {
             font-family: var(--font-family);
             font-weight: 700;
             user-select: none;
         }
-        .age-text {
+        .age-lbl {
             font-size: 11px;
-            fill: #495057;
-            font-weight: 600;
+            fill: #7A8293;
+            font-weight: 500;
         }
-        .year-text {
+        .year-lbl {
             font-size: 10px;
-            fill: #6c757d;
-            font-weight: 400;
+            fill: #2D3142;
+            font-weight: 700;
         }
-        .line-label {
-            font-size: 12px;
-            fill: #495057;
-            font-weight: 600;
-            letter-spacing: 0.05em;
+        .gen-line-text {
+            font-size: 10px;
+            fill: #A0A5B5;
+            font-weight: 500;
+            letter-spacing: 0.03em;
         }
     </style>
 </head>
@@ -233,330 +246,308 @@
 <div class="container">
     <header>
         <h1>DestiMatrix</h1>
-        <p>Classic Destiny Matrix Calculator</p>
+        <p>Classic 22 Arcana Personal Destiny Diagram</p>
     </header>
 
     <div class="calculator-card">
         <div class="input-group">
-            <label for="birthdate">Enter Your Birthdate</label>
+            <label for="birthdate">Date of Birth</label>
             <input type="date" id="birthdate" value="1994-05-28">
         </div>
-        <button class="btn-calc" onclick="calculateMatrix()">Calculate</button>
+        <button class="btn-calc" onclick="runDestinyCalculation()">Generate Matrix</button>
     </div>
 
     <div class="workspace">
         <div class="diagram-container">
-            <svg id="matrixSvg" viewBox="0 0 800 800">
-                <defs>
-                    <style>
-                        .grid-line { stroke: #212529; stroke-width: 1.5; fill: none; }
-                        .diagonal-line { stroke: #6c757d; stroke-width: 1; stroke-dasharray: 4,4; fill: none; }
-                        .male-line { stroke: #9c27b0; stroke-width: 1.5; fill: none; }
-                        .female-line { stroke: #ff5722; stroke-width: 1.5; fill: none; }
-                    </style>
-                </defs>
+            <svg id="matrixCanvas" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+                <g id="gridGeometry">
+                    <circle cx="400" cy="400" r="250" stroke="#E2E4E9" stroke-width="1" fill="none" />
+                    <circle cx="400" cy="400" r="150" stroke="#E2E4E9" stroke-width="1" stroke-dasharray="4,4" fill="none" />
 
-                <rect x="150" y="150" width="500" height="500" transform="rotate(45 400 400)" class="grid-line" stroke="#cccccc" />
-                <rect x="150" y="150" width="500" height="500" class="grid-line" />
-                
-                <circle cx="400" cy="400" r="180" stroke="#212529" stroke-width="1.2" fill="none" />
+                    <rect x="223.22" y="223.22" width="353.55" height="353.55" transform="rotate(45 400 400)" stroke="#9095A9" stroke-width="1.2" fill="none" />
+                    <rect x="223.22" y="223.22" width="353.55" height="353.55" stroke="#2D3142" stroke-width="1.5" fill="none" />
 
-                <line x1="150" y1="400" x2="650" y2="400" class="grid-line" />
-                <line x1="400" y1="150" x2="400" y2="650" class="grid-line" />
+                    <line x1="150" y1="400" x2="650" y2="400" stroke="#2D3142" stroke-width="1" />
+                    <line x1="400" y1="150" x2="400" y2="650" stroke="#2D3142" stroke-width="1" />
 
-                <line x1="223" y1="223" x2="577" y2="577" class="male-line" id="maleLineGeo" />
-                <line x1="577" y1="223" x2="223" y2="577" class="female-line" id="femaleLineGeo" />
+                    <line x1="223.22" y1="223.22" x2="576.78" y2="576.78" stroke="#9095A9" stroke-width="1" stroke-dasharray="2,2" />
+                    <line x1="576.78" y1="223.22" x2="223.22" y2="576.78" stroke="#9095A9" stroke-width="1" stroke-dasharray="2,2" />
+                    
+                    <line x1="400" y1="400" x2="576.78" y2="576.78" stroke="#2D3142" stroke-width="1.2" />
+                </g>
 
-                <line x1="400" y1="400" x2="577" y2="577" class="diagonal-line" />
+                <g id="staticLabels">
+                    <text x="290" y="280" class="gen-line-text" transform="rotate(45 290 280)" text-anchor="middle">male generation line</text>
+                    <text x="510" y="280" class="gen-line-text" transform="rotate(-45 510 280)" text-anchor="middle">female generation line</text>
 
-                <text x="310" y="295" class="line-label" transform="rotate(45 310 295)" text-anchor="middle">male generation line</text>
-                <text x="490" y="295" class="line-label" transform="rotate(-45 490 295)" text-anchor="middle">female generation line</text>
+                    <text x="400" y="190" class="age-lbl" text-anchor="middle">20 y.o.</text>
+                    <text x="590" y="240" class="age-lbl" text-anchor="start">30 y.o.</text>
+                    <text x="610" y="405" class="age-lbl" text-anchor="end">40 y.o.</text>
+                    <text x="590" y="570" class="age-lbl" text-anchor="start">50 y.o.</text>
+                    <text x="400" y="620" class="age-lbl" text-anchor="middle">60 y.o.</text>
+                    <text x="210" y="570" class="age-lbl" text-anchor="end">70 y.o.</text>
+                    <text x="190" y="405" class="age-lbl" text-anchor="start">0 y.o.</text>
+                    <text x="210" y="240" class="age-lbl" text-anchor="end">10 y.o.</text>
+                </g>
 
-                <circle cx="400" cy="150" r="28" fill="#9c27b0" />
-                <text x="400" y="155" id="node_B" fill="white" font-size="18" text-anchor="middle"></text>
-                
-                <circle cx="150" cy="400" r="28" fill="#9c27b0" />
-                <text x="150" y="406" id="node_A" fill="white" font-size="18" text-anchor="middle"></text>
+                <g id="interactiveNodes">
+                    <circle cx="400" cy="150" r="22" fill="#E8D7F5" stroke="#B5179E" stroke-width="2" />
+                    <text x="400" y="156" id="v_B" fill="#2D3142" font-size="16" text-anchor="middle"></text>
 
-                <circle cx="650" cy="400" r="28" fill="#f44336" />
-                <text x="650" y="406" id="node_C" fill="white" font-size="18" text-anchor="middle"></text>
+                    <circle cx="650" cy="400" r="22" fill="#FFE3E3" stroke="#E63946" stroke-width="2" />
+                    <text x="650" y="406" id="v_C" fill="#2D3142" font-size="16" text-anchor="middle"></text>
 
-                <circle cx="400" cy="650" r="28" fill="#f44336" />
-                <text x="400" y="656" id="node_D" fill="white" font-size="18" text-anchor="middle"></text>
+                    <circle cx="400" cy="650" r="22" fill="#FFE3E3" stroke="#E63946" stroke-width="2" />
+                    <text x="400" y="656" id="v_D" fill="#2D3142" font-size="16" text-anchor="middle"></text>
 
-                <circle cx="400" cy="400" r="32" fill="#ffeb3b" />
-                <text x="400" y="407" id="node_E" fill="#212529" font-size="20" text-anchor="middle"></text>
+                    <circle cx="150" cy="400" r="22" fill="#E8D7F5" stroke="#B5179E" stroke-width="2" />
+                    <text x="150" y="406" id="v_A" fill="#2D3142" font-size="16" text-anchor="middle"></text>
 
-                <circle cx="400" cy="210" r="16" fill="#3f51b5" />
-                <text x="400" y="215" id="node_ajna" fill="white" font-size="12" text-anchor="middle"></text>
-                
-                <circle cx="400" cy="260" r="14" fill="#03a9f4" />
-                <text x="400" y="264" id="node_vissudha" fill="white" font-size="11" text-anchor="middle"></text>
+                    <circle cx="400" cy="400" r="26" fill="#FFF0F5" stroke="#F72585" stroke-width="2.5" />
+                    <text x="400" y="406" id="v_E" fill="#2D3142" font-size="18" text-anchor="middle"></text>
 
-                <circle cx="400" cy="330" r="14" fill="#4caf50" />
-                <text x="400" y="334" id="node_anahata" fill="white" font-size="11" text-anchor="middle"></text>
+                    <circle cx="223.22" cy="223.22" r="18" fill="#ffffff" stroke="#9095A9" stroke-width="1.5" />
+                    <text x="223.22" y="228" id="v_anc_tl" fill="#2D3142" font-size="13" text-anchor="middle"></text>
+                    <circle cx="576.78" cy="223.22" r="18" fill="#ffffff" stroke="#9095A9" stroke-width="1.5" />
+                    <text x="576.78" y="228" id="v_anc_tr" fill="#2D3142" font-size="13" text-anchor="middle"></text>
+                    <circle cx="576.78" cy="576.78" r="18" fill="#ffffff" stroke="#9095A9" stroke-width="1.5" />
+                    <text x="576.78" y="582" id="v_anc_br" fill="#2D3142" font-size="13" text-anchor="middle"></text>
+                    <circle cx="223.22" cy="576.78" r="18" fill="#ffffff" stroke="#9095A9" stroke-width="1.5" />
+                    <text x="223.22" y="582" id="v_anc_bl" fill="#2D3142" font-size="13" text-anchor="middle"></text>
 
-                <circle cx="330" cy="400" r="14" fill="#4caf50" />
-                <text x="330" y="404" id="node_manipura_l" fill="white" font-size="11" text-anchor="middle"></text>
+                    <circle cx="400" cy="220" r="13" fill="#E3F2FD" stroke="#4CC9F0" stroke-width="1.5" />
+                    <text x="400" y="224" id="v_ch_ajna" fill="#2D3142" font-size="11" text-anchor="middle"></text>
 
-                <circle cx="400" cy="540" r="14" fill="#ff9800" />
-                <text x="400" y="544" id="node_svadhisthana" fill="white" font-size="11" text-anchor="middle"></text>
+                    <circle cx="400" cy="280" r="13" fill="#E3F2FD" stroke="#4895EF" stroke-width="1.5" />
+                    <text x="400" y="284" id="v_ch_vissudha" fill="#2D3142" font-size="11" text-anchor="middle"></text>
 
-                <circle cx="400" cy="590" r="16" fill="white" stroke="#212529" stroke-width="1.5" />
-                <text x="400" y="594" id="node_muladhara_in" fill="#212529" font-size="12" text-anchor="middle"></text>
+                    <circle cx="400" cy="340" r="13" fill="#E8F5E9" stroke="#4CAF50" stroke-width="1.5" />
+                    <text x="400" y="344" id="v_ch_anahata" fill="#2D3142" font-size="11" text-anchor="middle"></text>
 
-                <circle cx="540" cy="400" r="14" fill="#ff9800" />
-                <text x="540" y="404" id="node_money_ent" fill="white" font-size="11" text-anchor="middle"></text>
+                    <circle cx="330" cy="400" r="13" fill="#E8F5E9" stroke="#4CAF50" stroke-width="1.5" />
+                    <text x="330" y="404" id="v_ch_manipura_l" fill="#2D3142" font-size="11" text-anchor="middle"></text>
 
-                <circle cx="590" cy="400" r="16" fill="white" stroke="#212529" stroke-width="1.5" />
-                <text x="590" y="404" id="node_money_mid" fill="#212529" font-size="12" text-anchor="middle"></text>
+                    <circle cx="400" cy="520" r="13" fill="#FFF3E0" stroke="#F57C00" stroke-width="1.5" />
+                    <text x="400" y="524" id="v_ch_svadhisthana" fill="#2D3142" font-size="11" text-anchor="middle"></text>
 
-                <circle cx="460" cy="460" r="14" fill="#ff9800" />
-                <text x="460" y="464" id="node_rel_ent" fill="white" font-size="11" text-anchor="middle"></text>
+                    <circle cx="400" cy="580" r="13" fill="#FFE3E3" stroke="#E63946" stroke-width="1.5" />
+                    <text x="400" y="584" id="v_ch_muladhara_in" fill="#2D3142" font-size="11" text-anchor="middle"></text>
 
-                <circle cx="495" cy="495" r="15" fill="white" stroke="#212529" stroke-width="1.5" />
-                <text x="495" y="499" id="node_well_bal" fill="#212529" font-size="12" text-anchor="middle"></text>
+                    <circle cx="450" cy="450" r="13" fill="#FFF3E0" stroke="#F57C00" stroke-width="1.5" />
+                    <text x="450" y="454" id="v_ch_rel_ent" fill="#2D3142" font-size="11" text-anchor="middle"></text>
 
-                <circle cx="530" cy="460" r="14" fill="white" stroke="#212529" stroke-width="1.5" />
-                <text x="530" y="464" id="node_prof" fill="#212529" font-size="11" text-anchor="middle"></text>
+                    <circle cx="520" cy="400" r="13" fill="#E8F5E9" stroke="#4CAF50" stroke-width="1.5" />
+                    <text x="520" y="404" id="v_ch_money_ent" fill="#2D3142" font-size="11" text-anchor="middle"></text>
 
-                <circle cx="460" cy="530" r="14" fill="white" stroke="#212529" stroke-width="1.5" />
-                <text x="460" y="534" id="node_partner" fill="#212529" font-size="11" text-anchor="middle"></text>
+                    <circle cx="580" cy="400" r="13" fill="#FFE3E3" stroke="#E63946" stroke-width="1.5" />
+                    <text x="580" y="404" id="v_ch_money_mid" fill="#2D3142" font-size="11" text-anchor="middle"></text>
 
-                <text x="545" y="445" fill="#4caf50" font-size="16" font-weight="bold">$</text>
-                <path d="M 435 490 F 440 485 F 445 490 F 445 495 L 435 505 L 425 495 F 425 490 Z" fill="#f44336" transform="translate(10, -5) scale(0.7)"/>
+                    <circle cx="488.39" cy="488.39" r="14" fill="#ffffff" stroke="#2D3142" stroke-width="1.5" />
+                    <text x="488.39" y="492.5" id="v_ch_well_bal" fill="#2D3142" font-size="11" text-anchor="middle"></text>
 
-                <circle cx="223" cy="223" r="22" fill="white" stroke="#212529" stroke-width="2" />
-                <text x="223" y="229" id="node_anc_tl" fill="#212529" font-size="15" text-anchor="middle"></text>
-                <circle cx="577" cy="223" r="22" fill="white" stroke="#212529" stroke-width="2" />
-                <text x="577" y="229" id="node_anc_tr" fill="#212529" font-size="15" text-anchor="middle"></text>
-                <circle cx="577" cy="577" r="22" fill="white" stroke="#212529" stroke-width="2" />
-                <text x="577" y="583" id="node_anc_br" fill="#212529" font-size="15" text-anchor="middle"></text>
-                <circle cx="223" cy="577" r="22" fill="white" stroke="#212529" stroke-width="2" />
-                <text x="223" y="583" id="node_anc_bl" fill="#212529" font-size="15" text-anchor="middle"></text>
+                    <circle cx="525" cy="450" r="13" fill="#ffffff" stroke="#4CAF50" stroke-width="1.2" />
+                    <text x="525" y="454" id="v_ch_prof" fill="#2D3142" font-size="11" text-anchor="middle"></text>
 
-                <circle cx="280" cy="280" r="12" fill="white" stroke="#212529" />
-                <text x="280" y="284" id="node_anc_tl_in" fill="#212529" font-size="10" text-anchor="middle"></text>
+                    <circle cx="450" cy="525" r="13" fill="#ffffff" stroke="#F57C00" stroke-width="1.2" />
+                    <text x="450" y="529" id="v_ch_partner" fill="#2D3142" font-size="11" text-anchor="middle"></text>
+                </g>
 
-                <circle cx="520" cy="280" r="12" fill="white" stroke="#212529" />
-                <text x="520" y="284" id="node_anc_tr_in" fill="#212529" font-size="10" text-anchor="middle"></text>
-
-                <circle cx="520" cy="520" r="12" fill="white" stroke="#212529" />
-                <text x="520" y="520" id="node_anc_br_in" fill="#212529" font-size="10" text-anchor="middle"></text>
-
-                <circle cx="280" cy="520" r="12" fill="white" stroke="#212529" />
-                <text x="280" y="524" id="node_anc_bl_in" fill="#212529" font-size="10" text-anchor="middle"></text>
-
-                <text x="400" y="115" class="age-text" text-anchor="middle">20 years old</text>
-                <text x="685" y="405" class="age-text" text-anchor="start">40 years old</text>
-                <text x="400" y="695" class="age-text" text-anchor="middle">60 years old</text>
-                <text x="115" y="405" class="age-text" text-anchor="end">0 years old</text>
-
-                <text x="595" y="200" class="age-text" text-anchor="start">30 years old</text>
-                <text x="595" y="605" class="age-text" text-anchor="start">50 years old</text>
-                <text x="205" y="605" class="age-text" text-anchor="end">70 years old</text>
-                <text x="205" y="200" class="age-text" text-anchor="end">10 years old</text>
-
-                <g id="outerYearArcanas"></g>
+                <g id="outerYearRingLayer"></g>
             </svg>
         </div>
 
-        <div class="results-container">
-            <div class="health-card">
-                <h2>Health Card</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Chakra Name</th>
-                            <th>Physics</th>
-                            <th>Energy</th>
-                            <th>Emotions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="healthCardBody">
-                        </tbody>
-                </table>
-            </div>
+        <div class="health-card">
+            <h2>Health Card Matrix</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Chakra Spectrum Designation</th>
+                        <th>Physics (P)</th>
+                        <th>Energy (E)</th>
+                        <th>Emotions (Em)</th>
+                    </tr>
+                </thead>
+                <tbody id="healthTableDataBody">
+                    </tbody>
+            </table>
         </div>
     </div>
 </div>
 
 <script>
-    // Universal reduction formula under 22 arcana rule
-    function reduceArcana(num) {
-        if (num <= 0) return 22; 
-        while (num > 22) {
-            num = String(num).split('').reduce((acc, digit) => acc + parseInt(digit), 0);
+    // Pure 22 Matrix Base Reduction Helper Rule
+    function parseToArcanaLimit(computedValue) {
+        if (computedValue <= 0) return 22;
+        while (computedValue > 22) {
+            computedValue = String(computedValue).split('').reduce((sum, strDigit) => sum + parseInt(strDigit, 10), 0);
         }
-        return num;
+        return computedValue;
     }
 
-    function calculateMatrix() {
-        const dateInput = document.getElementById('birthdate').value;
-        if (!dateInput) return;
+    function runDestinyCalculation() {
+        const structuralDateInput = document.getElementById('birthdate').value;
+        if (!structuralDateInput) return;
 
-        const dateObj = new Date(dateInput);
-        const day = dateObj.getDate();
-        const month = dateObj.getMonth() + 1;
-        const year = dateObj.getFullYear();
+        const dateParts = new Date(structuralDateInput);
+        const dayRaw = dateParts.getDate();
+        const monthRaw = dateParts.getMonth() + 1;
+        const yearRaw = dateParts.getFullYear();
 
-        // 1. Personal Square Corner Arcana Calculations
-        const A = reduceArcana(day);
-        const B = reduceArcana(month);
-        const C = reduceArcana(year);
-        const D = reduceArcana(A + B + C);
-        const E = reduceArcana(A + B + C + D); // Center
+        // Major Coordinate Points Formulations
+        const A = parseToArcanaLimit(dayRaw);
+        const B = parseToArcanaLimit(monthRaw);
+        const C = parseToArcanaLimit(yearRaw);
+        const D = parseToArcanaLimit(A + B + C);
+        const E = parseToArcanaLimit(A + B + C + D);
 
-        // Update UI Personal Nodes
-        document.getElementById('node_A').textContent = A;
-        document.getElementById('node_B').textContent = B;
-        document.getElementById('node_C').textContent = C;
-        document.getElementById('node_D').textContent = D;
-        document.getElementById('node_E').textContent = E;
+        // Map Values onto Core Visible Nodes
+        document.getElementById('v_A').textContent = A;
+        document.getElementById('v_B').textContent = B;
+        document.getElementById('v_C').textContent = C;
+        document.getElementById('v_D').textContent = D;
+        document.getElementById('v_E').textContent = E;
 
-        // 2. Ancestral Square Corner Arcana Calculations
-        const ancTL = reduceArcana(A + B);
-        const ancTR = reduceArcana(B + C);
-        const ancBR = reduceArcana(C + D);
-        const ancBL = reduceArcana(D + A);
+        // Ancestral Lineage Corner Points Calculations
+        const ancTL = parseToArcanaLimit(A + B);
+        const ancTR = parseToArcanaLimit(B + C);
+        const ancBR = parseToArcanaLimit(C + D);
+        const ancBL = parseToArcanaLimit(D + A);
 
-        document.getElementById('node_anc_tl').textContent = ancTL;
-        document.getElementById('node_anc_tr').textContent = ancTR;
-        document.getElementById('node_anc_br').textContent = ancBR;
-        document.getElementById('node_anc_bl').textContent = ancBL;
+        document.getElementById('v_anc_tl').textContent = ancTL;
+        document.getElementById('v_anc_tr').textContent = ancTR;
+        document.getElementById('v_anc_br').textContent = ancBR;
+        document.getElementById('v_anc_bl').textContent = ancBL;
 
-        // Ladini Method for inner Generation Lines
-        const E2 = reduceArcana(ancTL + ancTR + ancBR + ancBL);
-        
-        document.getElementById('node_anc_tl_in').textContent = reduceArcana(ancTL + E2);
-        document.getElementById('node_anc_tr_in').textContent = reduceArcana(ancTR + E2);
-        document.getElementById('node_anc_br_in').textContent = reduceArcana(ancBR + E2);
-        document.getElementById('node_anc_bl_in').textContent = reduceArcana(ancBL + E2);
+        // Internalized Systemic Chakra Nodes
+        const ajna = parseToArcanaLimit(B + E);
+        const vissudha = parseToArcanaLimit(B + ajna);
+        const anahata = parseToArcanaLimit(E + vissudha);
+        const manipura_l = parseToArcanaLimit(A + E);
+        const svadhisthana = parseToArcanaLimit(D + E);
+        const muladhara_in = parseToArcanaLimit(D + svadhisthana);
 
-        // 3. Chakra System Inner Positions Calculations
-        const ajna = reduceArcana(B + E);
-        const vissudha = reduceArcana(B + ajna);
-        const anahata = reduceArcana(E + vissudha);
+        document.getElementById('v_ch_ajna').textContent = ajna;
+        document.getElementById('v_ch_vissudha').textContent = vissudha;
+        document.getElementById('v_ch_anahata').textContent = anahata;
+        document.getElementById('v_ch_manipura_l').textContent = manipura_l;
+        document.getElementById('v_ch_svadhisthana').textContent = svadhisthana;
+        document.getElementById('v_ch_muladhara_in').textContent = muladhara_in;
 
-        const manipura_l = reduceArcana(A + E);
-        const svadhisthana = reduceArcana(D + E);
-        const muladhara_in = reduceArcana(D + svadhisthana);
+        // Specific Wealth and Relationship Channels Logic mapping
+        const money_ent = parseToArcanaLimit(C + E);
+        const money_mid = parseToArcanaLimit(C + money_ent);
+        const rel_ent = parseToArcanaLimit(D + E);
+        const well_bal = parseToArcanaLimit(money_ent + rel_ent);
+        const prof = parseToArcanaLimit(money_ent + well_bal);
+        const partner = parseToArcanaLimit(rel_ent + well_bal);
 
-        document.getElementById('node_ajna').textContent = ajna;
-        document.getElementById('node_vissudha').textContent = vissudha;
-        document.getElementById('node_anahata').textContent = anahata;
-        document.getElementById('node_manipura_l').textContent = manipura_l;
-        document.getElementById('node_svadhisthana').textContent = svadhisthana;
-        document.getElementById('node_muladhara_in').textContent = muladhara_in;
+        document.getElementById('v_ch_money_ent').textContent = money_ent;
+        document.getElementById('v_ch_money_mid').textContent = money_mid;
+        document.getElementById('v_ch_rel_ent').textContent = rel_ent;
+        document.getElementById('v_ch_well_bal').textContent = well_bal;
+        document.getElementById('v_ch_prof').textContent = prof;
+        document.getElementById('v_ch_partner').textContent = partner;
 
-        // 4. Financial & Relationship Channels
-        const money_ent = reduceArcana(C + E);
-        const money_mid = reduceArcana(C + money_ent);
+        // Populate Health Matrix Output Elements
+        renderHealthDataCard(A, B, C, D, E, ajna, vissudha, anahata, manipura_l, svadhisthana, muladhara_in);
 
-        const rel_ent = reduceArcana(D + E); // maps close to svadhisthana anchor base
-        const well_bal = reduceArcana(money_ent + rel_ent);
-        const prof = reduceArcana(money_ent + well_bal);
-        const partner = reduceArcana(rel_ent + well_bal);
-
-        document.getElementById('node_money_ent').textContent = money_ent;
-        document.getElementById('node_money_mid').textContent = money_mid;
-        document.getElementById('node_rel_ent').textContent = rel_ent;
-        document.getElementById('node_well_bal').textContent = well_bal;
-        document.getElementById('node_prof').textContent = prof;
-        document.getElementById('node_partner').textContent = partner;
-
-        // 5. Build and render Health Card Data
-        buildHealthCard(A, B, C, D, E, ajna, vissudha, anahata, manipura_l, svadhisthana, muladhara_in);
-
-        // 6. Calculate and Render Outer Year Arcanas
-        renderOuterYears(A, ancTL, B, ancTR, C, ancBR, D, ancBL);
+        // Inject Dynamic External Year Points Outside Border Shell Boundary Lines
+        generateExternalYearLabels(A, ancTL, B, ancTR, C, ancBR, D, ancBL);
     }
 
-    function buildHealthCard(A, B, C, D, E, ajna, vissudha, anahata, manipura_l, svadhisthana, muladhara_in) {
-        // Chakra structural calculations matching Physics, Energy, Emotions schema
-        const chakras = [
-            { name: 'Sahasrara', color: 'var(--sahasrara)', p: B, e: B, em: reduceArcana(B + B) },
-            { name: 'Ajna', color: 'var(--ajna)', p: reduceArcana(A + B), e: ajna, em: reduceArcana(reduceArcana(A + B) + ajna) },
-            { name: 'Vissudha', color: 'var(--vissudha)', p: reduceArcana(A + C), e: vissudha, em: reduceArcana(reduceArcana(A + C) + vissudha) },
-            { name: 'Anahata', color: 'var(--anahata)', p: reduceArcana(A + D), e: anahata, em: reduceArcana(reduceArcana(A + D) + anahata) },
-            { name: 'Manipura', color: 'var(--manipura)', p: E, e: manipura_l, em: reduceArcana(E + manipura_l) },
-            { name: 'Svadhisthana', color: 'var(--svadhisthana)', p: reduceArcana(C + D), e: svadhisthana, em: reduceArcana(reduceArcana(C + D) + svadhisthana) },
-            { name: 'Muladhara', color: 'var(--muladhara)', p: A, e: muladhara_in, em: reduceArcana(A + muladhara_in) }
+    function renderHealthDataCard(A, B, C, D, E, ajna, vissudha, anahata, manipura_l, svadhisthana, muladhara_in) {
+        const schema = [
+            { id: "Sahasrara", clr: "var(--c-purple)", p: B, e: B, em: parseToArcanaLimit(B + B) },
+            { id: "Ajna", clr: "var(--c-blue)", p: parseToArcanaLimit(A + B), e: ajna, em: parseToArcanaLimit(parseToArcanaLimit(A + B) + ajna) },
+            { id: "Vissudha", clr: "var(--c-cyan)", p: parseToArcanaLimit(A + C), e: vissudha, em: parseToArcanaLimit(parseToArcanaLimit(A + C) + vissudha) },
+            { id: "Anahata", clr: "var(--c-green)", p: parseToArcanaLimit(A + D), e: anahata, em: parseToArcanaLimit(parseToArcanaLimit(A + D) + anahata) },
+            { id: "Manipura", clr: "var(--c-yellow)", p: E, e: manipura_l, em: parseToArcanaLimit(E + manipura_l) },
+            { id: "Svadhisthana", clr: "var(--c-orange)", p: parseToArcanaLimit(C + D), e: svadhisthana, em: parseToArcanaLimit(parseToArcanaLimit(C + D) + svadhisthana) },
+            { id: "Muladhara", clr: "var(--c-red)", p: A, e: muladhara_in, em: parseToArcanaLimit(A + muladhara_in) }
         ];
 
         let totalP = 0, totalE = 0, totalEm = 0;
-        const tbody = document.getElementById('healthCardBody');
-        tbody.innerHTML = '';
+        const targetBody = document.getElementById('healthTableDataBody');
+        targetBody.innerHTML = '';
 
-        chakras.forEach(ch => {
-            totalP += ch.p;
-            totalE += ch.e;
-            totalEm += ch.em;
+        schema.forEach(item => {
+            totalP += item.p;
+            totalE += item.e;
+            totalEm += item.em;
 
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td><span class="chakra-badge" style="background-color: ${ch.color}"></span>${ch.name}</td>
-                <td>${ch.p}</td>
-                <td>${ch.e}</td>
-                <td>${ch.em}</td>
+            const trNode = document.createElement('tr');
+            trNode.innerHTML = `
+                <td><div class="chakra-target"><span class="chakra-dot" style="background-color: ${item.clr}"></span>${item.id}</div></td>
+                <td>${item.p}</td>
+                <td>${item.e}</td>
+                <td>${item.em}</td>
             `;
-            tbody.appendChild(row);
+            targetBody.appendChild(trNode);
         });
 
-        // Add Result row
-        const resultRow = document.createElement('tr');
-        resultRow.className = 'result-row';
-        resultRow.innerHTML = `
-            <td>Result</td>
-            <td>${reduceArcana(totalP)}</td>
-            <td>${reduceArcana(totalE)}</td>
-            <td>${reduceArcana(totalEm)}</td>
+        const totalRow = document.createElement('tr');
+        totalRow.className = 'result-row';
+        totalRow.innerHTML = `
+            <td><strong>Result Summary</strong></td>
+            <td><strong>${parseToArcanaLimit(totalP)}</strong></td>
+            <td><strong>${parseToArcanaLimit(totalE)}</strong></td>
+            <td><strong>${parseToArcanaLimit(totalEm)}</strong></td>
         `;
-        tbody.appendChild(resultRow);
+        targetBody.appendChild(totalRow);
     }
 
-    function renderOuterYears(A, ancTL, B, ancTR, C, ancBR, D, ancBL) {
-        const container = document.getElementById('outerYearArcanas');
-        container.innerHTML = '';
+    function generateExternalYearLabels(A, ancTL, B, ancTR, C, ancBR, D, ancBL) {
+        const outerTargetGroup = document.getElementById('outerYearRingLayer');
+        outerTargetGroup.innerHTML = '';
 
-        // Accurate geometric coordinates mapping for 0-80 edge sectors clockwise
-        // Injecting primary custom outer point representations
-        const dataPoints = [
-            { value: reduceArcana(A + ancTL), x: 165, y: 285, label: '5 yo' },
-            { value: reduceArcana(ancTL + B), x: 285, y: 165, label: '15 yo' },
-            { value: reduceArcana(B + ancTR), x: 515, y: 165, label: '25 yo' },
-            { value: reduceArcana(ancTR + C), x: 635, y: 285, label: '35 yo' },
-            { value: reduceArcana(C + ancBR), x: 635, y: 515, label: '45 yo' },
-            { value: reduceArcana(ancBR + D), x: 515, y: 635, label: '55 yo' },
-            { value: reduceArcana(D + ancBL), x: 285, y: 635, label: '65 yo' },
-            { value: reduceArcana(ancBL + A), x: 165, y: 515, label: '75 yo' }
+        // Explicit outer shell vertex parameters to map out secondary macro periods (5, 15, 25... 75)
+        const mappings = [
+            { val: parseToArcanaLimit(A + ancTL), cx: 223.22, cy: 311.61, offX: -22, offY: 4, tag: "5" },
+            { val: parseToArcanaLimit(ancTL + B), cx: 311.61, cy: 223.22, offX: -4, offY: -16, tag: "15" },
+            { val: parseToArcanaLimit(B + ancTR), cx: 488.39, cy: 223.22, offX: 4, offY: -16, tag: "25" },
+            { val: parseToArcanaLimit(ancTR + C), cx: 576.78, cy: 311.61, offX: 22, offY: 4, tag: "35" },
+            { val: parseToArcanaLimit(C + ancBR), cx: 576.78, cy: 488.39, offX: 22, offY: 4, tag: "45" },
+            { val: parseToArcanaLimit(ancBR + D), cx: 488.39, cy: 576.78, offX: 4, offY: 20, tag: "55" },
+            { val: parseToArcanaLimit(D + ancBL), cx: 311.61, cy: 576.78, offX: -4, offY: 20, tag: "65" },
+            { val: parseToArcanaLimit(ancBL + A), cx: 223.22, cy: 488.39, offX: -22, offY: 4, tag: "75" }
         ];
 
-        dataPoints.forEach(pt => {
-            // Circle node indicator
-            const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-            circle.setAttribute('cx', pt.x);
-            circle.setAttribute('cy', pt.y);
-            circle.setAttribute('r', '9');
-            circle.setAttribute('fill', 'white');
-            circle.setAttribute('stroke', '#6c757d');
-            circle.setAttribute('stroke-width', '1');
-            container.appendChild(circle);
+        mappings.forEach(pt => {
+            // Circle Anchor Node
+            const cNode = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            cNode.setAttribute('cx', pt.cx);
+            cNode.setAttribute('cy', pt.cy);
+            cNode.setAttribute('r', '11');
+            cNode.setAttribute('fill', '#ffffff');
+            cNode.setAttribute('stroke', '#9095A9');
+            cNode.setAttribute('stroke-width', '1');
+            outerTargetGroup.appendChild(cNode);
 
-            // Arcana number text inside or adjacent
-            const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-            text.setAttribute('x', pt.x);
-            text.setAttribute('y', pt.y + 3);
-            text.setAttribute('font-size', '9');
-            text.setAttribute('text-anchor', 'middle');
-            text.setAttribute('fill', '#212529');
-            text.textContent = pt.value;
-            container.appendChild(text);
+            // Arcana Digit Placement
+            const tNode = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            tNode.setAttribute('x', pt.cx);
+            tNode.setAttribute('y', pt.cy + 4);
+            tNode.setAttribute('font-size', '11');
+            tNode.setAttribute('fill', '#2D3142');
+            tNode.setAttribute('text-anchor', 'middle');
+            tNode.textContent = pt.val;
+            outerTargetGroup.appendChild(tNode);
+
+            // Exterior Age Caption Text Tag
+            const capNode = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            capNode.setAttribute('x', pt.cx + pt.offX);
+            capNode.setAttribute('y', pt.cy + pt.offY);
+            capNode.setAttribute('font-size', '10');
+            capNode.setAttribute('fill', '#9095A9');
+            capNode.setAttribute('font-weight', '500');
+            capNode.setAttribute('text-anchor', 'middle');
+            capNode.textContent = pt.tag + " y.o.";
+            outerTargetGroup.appendChild(capNode);
         });
     }
 
-    // Run initial execution on load
-    window.onload = calculateMatrix;
+    // Immediate initial lifecycle invocation fallback
+    window.onload = runDestinyCalculation;
 </script>
 
 </body>
